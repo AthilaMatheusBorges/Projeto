@@ -1,8 +1,9 @@
 package principal;
 
-public class Aluno {
+public class Aluno implements Comparable<Aluno> {
 	private String matricula, nome, telefone, email;
 	private int codigoCurso;
+	private double nota;
 	
 	public Aluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
 		this.nome = nome;
@@ -37,5 +38,10 @@ public class Aluno {
 			return getMatricula() + " - " + getNome() + " - " + getCodigoCurso() + " - " + getEmail();
 		}
 		return getMatricula() + " - " + getNome() + " - " + getCodigoCurso() + " - " + getTelefone() + " - " + getEmail();
+	}
+
+	@Override
+	public int compareTo(Aluno outroAluno) {
+		return getNome().compareTo(outroAluno.getNome());
 	}
 }

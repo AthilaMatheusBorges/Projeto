@@ -7,7 +7,7 @@ public class Fachada {
 	Sistema sistema = new Sistema();
 	
 	public static void main(String[] args) {
-		args = new String[] {"principal.Fachada","acceptance_test/us1_test.txt","acceptance_test/us2_test.txt"};
+		args = new String[] {"principal.Fachada","acceptance_test/us1_test.txt","acceptance_test/us2_test.txt","acceptance_test/us3_test.txt"};
 		EasyAccept.main(args);
 	}
 	
@@ -34,5 +34,13 @@ public class Fachada {
     
     public String listarTutores() {
     	return sistema.listarTutores();
+    }
+    
+    public void cadastrarHorario(String email, String horario, String dia) {
+    	sistema.cadastrarHorario(email,horario,dia);
+    }
+    
+    public void cadastrarLocalDeAtendimento(String email, String local) {
+    	sistema.cadastrarLocalDeAtendimento(email,local);
     }
 }

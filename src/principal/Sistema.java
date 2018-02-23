@@ -92,7 +92,7 @@ public class Sistema {
 		Tutor tutor = new Tutor(aluno, disciplina, proficiencia);
 		this.listaDeAlunos.replace(matricula, tutor);
 	}
-	
+
 	public String recuperaTutor(String matricula) {
 		return recuperaAluno(matricula);
 	}
@@ -100,18 +100,39 @@ public class Sistema {
 	public String listarTutores() {
 		String saida = "";
 		for (String matricula : listaDeAlunos.keySet()) {
-			if(verificaTutor(matricula)) {
+			if (verificaTutor(matricula)) {
 				saida += listaDeAlunos.get(matricula).toString() + ", ";
 			}
 		}
 		return saida.substring(0, saida.length() - 2);
-	
+
 	}
-	
+
 	public boolean verificaTutor(String matricula) {
-		if(listaDeAlunos.get(matricula).getTipo().equals("tutor")) {
+		if (listaDeAlunos.get(matricula).getTipo().equals("tutor")) {
 			return true;
 		}
 		return false;
+	}
+
+	public Tutor recuperaTutorPorEmail(String email){
+		for (Aluno aluno : listaDeAlunos.values()) {
+			if (aluno.getEmail().equalsIgnoreCase(email)) {
+				if (verificaTutor(aluno.getMatricula())) {
+					Tutor tutor = (Tutor) aluno;
+					return tutor;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public void cadastrarHorario(String email, String horario, String dia) {
+		recuperaTutorPorEmail(email).cadastrarHorario(horario, dia);
+	}
+
+	public void cadastrarLocalDeAtendimento(String email, String local) {
+		recuperaTutorPorEmail(email).cadastrarLocalDeAtendimento(local);
+		
 	}
 }

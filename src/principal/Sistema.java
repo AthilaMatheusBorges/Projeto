@@ -90,36 +90,36 @@ public class Sistema {
 //		}
 //	}
 
-//	public void tornarTutor(String matricula, String disciplina, int proficiencia) {
-//		if(auxiliarController.verificaDadosParaTornarTutor(listaDeAlunos, matricula, disciplina, proficiencia)) {
-//			Aluno aluno = this.listaDeAlunos.get(matricula);
-//			Tutor tutor = new Tutor(aluno, disciplina, proficiencia);
-//			this.listaDeAlunos.replace(matricula, tutor);
-//		}
-//		else {
-//			String email = listaDeAlunos.get(matricula).getEmail();
-//			auxiliarController.recuperaTutorPorEmail(listaDeAlunos, email).adicionaDisciplina(disciplina);
-//		}
-//	}
-
-	private boolean verificaDadosParaTornarTutor(String matricula, String disciplina, int proficiencia) {
-		if(!listaDeAlunos.containsKey(matricula)) {
-			throw new IllegalArgumentException("Erro na definicao de papel: Tutor nao encontrado");
+	public void tornarTutor(String matricula, String disciplina, int proficiencia) {
+		if(auxiliarController.verificaDadosParaTornarTutor(listaDeAlunos, matricula, disciplina, proficiencia)) {
+			Aluno aluno = this.listaDeAlunos.get(matricula);
+			Tutor tutor = new Tutor(aluno, disciplina, proficiencia);
+			this.listaDeAlunos.replace(matricula, tutor);
 		}
-		else if(proficiencia < 1 || proficiencia > 5) {
-			throw new IllegalArgumentException("Erro na definicao de papel: Proficiencia invalida");
-		}
-		else if(listaDeAlunos.get(matricula).getTipo().equals("tutor")) {
+		else {
 			String email = listaDeAlunos.get(matricula).getEmail();
-			if(auxiliarController.recuperaTutorPorEmail(listaDeAlunos, email).confereSeJaEtutorDaDisciplina(disciplina)) {
-				throw new IllegalArgumentException("Erro na definicao de papel: Ja eh tutor dessa disciplina");
-			}
-			else {
-				return false;
-			}
+			auxiliarController.recuperaTutorPorEmail(listaDeAlunos, email).adicionaDisciplina(disciplina);
 		}
-		return true;
 	}
+
+//	private boolean verificaDadosParaTornarTutor(String matricula, String disciplina, int proficiencia) {
+//		if(!listaDeAlunos.containsKey(matricula)) {
+//			throw new IllegalArgumentException("Erro na definicao de papel: Tutor nao encontrado");
+//		}
+//		else if(proficiencia < 1 || proficiencia > 5) {
+//			throw new IllegalArgumentException("Erro na definicao de papel: Proficiencia invalida");
+//		}
+//		else if(listaDeAlunos.get(matricula).getTipo().equals("tutor")) {
+//			String email = listaDeAlunos.get(matricula).getEmail();
+//			if(auxiliarController.recuperaTutorPorEmail(listaDeAlunos, email).confereSeJaEtutorDaDisciplina(disciplina)) {
+//				throw new IllegalArgumentException("Erro na definicao de papel: Ja eh tutor dessa disciplina");
+//			}
+//			else {
+//				return false;
+//			}
+//		}
+//		return true;
+//	}
 
 	public String recuperaTutor(String matricula) {
 		if(!this.listaDeAlunos.containsKey(matricula)) {

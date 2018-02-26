@@ -10,6 +10,7 @@ public class Atendimento {
 	
 	public Atendimento() {
 		this.horarios = new HashMap<>();
+		this.locais = new ArrayList<>();
 	}
 	
 	public void cadastrarLocalDeAtendimento(String local) {

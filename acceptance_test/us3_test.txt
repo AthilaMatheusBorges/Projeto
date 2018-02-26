@@ -62,7 +62,7 @@ expectError "Erro no cadastrar horario: dia nao pode ser vazio ou em branco" cad
 
 expectError "Erro no cadastrar local de atendimento: tutor nao cadastrado" cadastrarLocalDeAtendimento email="annah.go@ccc.ufcg.edu.br" locaL="LCC3"
 expectError "Erro no cadastrar local de atendimento: email nao pode ser vazio ou em branco" cadastrarLocalDeAtendimento email="" locaL="LCC3"
-expectError "Erro no ccadastrar local de atendimento: email nao pode ser vazio ou em branco" cadastrarLocalDeAtendimento email="     " locaL="LCC3"
+expectError "Erro no cadastrar local de atendimento: email nao pode ser vazio ou em branco" cadastrarLocalDeAtendimento email="     " locaL="LCC3"
 
 expectError "Erro no cadastrar local de atendimento: local nao pode ser vazio ou em branco" cadastrarLocalDeAtendimento email="matthew.met@ccc.ufcg.edu.br" locaL=""
 expectError "Erro no cadastrar local de atendimento: local nao pode ser vazio ou em branco" cadastrarLocalDeAtendimento email="matthew.met@ccc.ufcg.edu.br" locaL="    "

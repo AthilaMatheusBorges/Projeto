@@ -13,7 +13,7 @@ expect "115260904 - Matthew Melio - 10000 - matthew.met@ccc.ufcg.edu.br, 1152123
 
 # Testes com exception
 
-expectError "Erro na busca por tutor: Tutor nao encontrado" matricula="1112212"
+expectError "Erro na busca por tutor: Tutor nao encontrado" recuperaTutor matricula="1112212"
 expectError "Erro na definicao de papel: Ja eh tutor dessa disciplina" tornarTutor matricula="115260904" disciplina="Programacao 2" proficiencia=5
 expectError "Erro na definicao de papel: Proficiencia invalida" tornarTutor matricula="115260904" disciplina="ATAL" proficiencia=-2
 expectError "Erro na definicao de papel: Tutor nao encontrado" tornarTutor matricula="1111221" disciplina="ATAL" proficiencia=2

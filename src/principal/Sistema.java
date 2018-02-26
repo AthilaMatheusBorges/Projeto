@@ -90,17 +90,17 @@ public class Sistema {
 //		}
 //	}
 
-	public void tornarTutor(String matricula, String disciplina, int proficiencia) {
-		if(auxiliarController.verificaDadosParaTornarTutor(listaDeAlunos, matricula, disciplina, proficiencia)) {
-			Aluno aluno = this.listaDeAlunos.get(matricula);
-			Tutor tutor = new Tutor(aluno, disciplina, proficiencia);
-			this.listaDeAlunos.replace(matricula, tutor);
-		}
-		else {
-			String email = listaDeAlunos.get(matricula).getEmail();
-			auxiliarController.recuperaTutorPorEmail(listaDeAlunos, email).adicionaDisciplina(disciplina);
-		}
-	}
+//	public void tornarTutor(String matricula, String disciplina, int proficiencia) {
+//		if(auxiliarController.verificaDadosParaTornarTutor(listaDeAlunos, matricula, disciplina, proficiencia)) {
+//			Aluno aluno = this.listaDeAlunos.get(matricula);
+//			Tutor tutor = new Tutor(aluno, disciplina, proficiencia);
+//			this.listaDeAlunos.replace(matricula, tutor);
+//		}
+//		else {
+//			String email = listaDeAlunos.get(matricula).getEmail();
+//			auxiliarController.recuperaTutorPorEmail(listaDeAlunos, email).adicionaDisciplina(disciplina);
+//		}
+//	}
 
 	private boolean verificaDadosParaTornarTutor(String matricula, String disciplina, int proficiencia) {
 		if(!listaDeAlunos.containsKey(matricula)) {

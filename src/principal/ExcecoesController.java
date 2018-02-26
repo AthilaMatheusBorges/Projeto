@@ -3,7 +3,7 @@ package principal;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Auxiliar {
+public class ExcecoesController {
 
 	/**
 	 * Verifica se o e-mail é valido, se a matrícula está cadastrada no sistema de
@@ -18,11 +18,11 @@ public class Auxiliar {
 	 * @param email
 	 *            email do aluno em String
 	 */
-	public void verificaCadastroAluno(Map<String, Aluno> listaDeAlunos, String nome, String matricula, String email) {
+	public void verificaCadastroAluno(boolean emailValido, String nome, String matricula, String email) {
 		String erro = "";
 		if (!verificaEmail(email)) {
 			erro = "Email invalido";
-		} else if (listaDeAlunos.containsKey(matricula)) {
+		} else if (emailValido) {
 			erro = "Aluno de mesma matricula ja cadastrado";
 		} else if (nome.trim().equals("") || nome == null) {
 			erro = "Nome nao pode ser vazio ou nulo";
@@ -90,15 +90,15 @@ public class Auxiliar {
 	 *            valor de proficiencia em inteiro
 	 * @return um booleano true se tiver tudo ok e false se nao
 	 */
-	public boolean verificaDadosParaTornarTutor(Map<String, Aluno> listaDeAlunos, String matricula, String disciplina,
+	public boolean verificaDadosParaTornarTutor(boolean emailValido, boolean ehTutor, Tutor tutor, String disciplina,
 			int proficiencia) {
-		if (!listaDeAlunos.containsKey(matricula)) {
+		if (!emailValido) {
 			throw new IllegalArgumentException("Erro na definicao de papel: Tutor nao encontrado");
 		} else if (proficiencia < 1 || proficiencia > 5) {
 			throw new IllegalArgumentException("Erro na definicao de papel: Proficiencia invalida");
-		} else if (listaDeAlunos.get(matricula).getTipo().equals("tutor")) {
-			String email = listaDeAlunos.get(matricula).getEmail();
-			if (recuperaTutorPorEmail(listaDeAlunos, email).confereSeJaEtutorDaDisciplina(disciplina)) {
+		} else if (ehTutor) {
+			
+			if(tutor.confereSeJaEtutorDaDisciplina(disciplina)) {
 				throw new IllegalArgumentException("Erro na definicao de papel: Ja eh tutor dessa disciplina");
 			} else {
 				return false;
@@ -107,43 +107,6 @@ public class Auxiliar {
 		return true;
 	}
 
-	/**
-	 * recupera um tutor pelo email
-	 * 
-	 * @param listaDeAlunos
-	 *            hashMap de alunos com a chave sendo a String matricula
-	 * @param email
-	 *            email do aluno em String
-	 * @return o Tutor procurado
-	 */
-
-	public Tutor recuperaTutorPorEmail(Map<String, Aluno> listaDeAlunos, String email) {
-		for (Aluno aluno : listaDeAlunos.values()) {
-			if (aluno.getEmail().equalsIgnoreCase(email)) {
-				if (verificaTutor(listaDeAlunos, aluno.getMatricula())) {
-					Tutor tutor = (Tutor) aluno;
-					return tutor;
-				}
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * Verifica se o aluno é tutor ou nao
-	 * 
-	 * @param listaDeAlunos
-	 *            hashMap de alunos com a chave sendo a String matricula
-	 * @param matricula
-	 *            matricula do aluno em String
-	 * @return um booleano de sim para caso ja seja tuto e false caso nao
-	 */
-	public boolean verificaTutor(Map<String, Aluno> listaDeAlunos, String matricula) {
-		if (listaDeAlunos.get(matricula).getTipo().equals("tutor")) {
-			return true;
-		}
-		return false;
-	}
 
 	/**
 	 * Vai conferir se o email eh de um tutor, se o email eh vazio ou em branco se o
@@ -159,11 +122,11 @@ public class Auxiliar {
 	 *            dia do encontro em String
 	 */
 
-	public void confereCadastrarHorario(Map<String, Aluno> listaDeAlunos, String email, String horario, String dia) {
+	public void confereCadastrarHorario(Tutor tutor, String email, String horario, String dia) {
 		String erro = "";
 		if (email.trim().equals("")){
 			erro = "email nao pode ser vazio ou em branco" ;
-		}else if (recuperaTutorPorEmail(listaDeAlunos, email) == null)  {
+		}else if (tutor == null)  {
 			erro = "tutor nao cadastrado";
 		} else if (horario.trim().equals("")) {
 			erro = "horario nao pode ser vazio ou em branco";
@@ -187,11 +150,11 @@ public class Auxiliar {
 	 * @param local
 	 *            local para o encontro em String
 	 */
-	public void confereCadastrarLocalDeAtendimento(Map<String, Aluno> listaDeAlunos, String email, String local) {
+	public void confereCadastrarLocalDeAtendimento(Tutor tutor, String email, String local) {
 		String erro = "";
 		if (email.trim().equals("")) {
 			erro = "email nao pode ser vazio ou em branco";
-		}else if (recuperaTutorPorEmail(listaDeAlunos, email) == null) {
+		}else if (tutor == null) {
 			erro = "tutor nao cadastrado";
 		} 
 		else if (local.trim().equals("")) {

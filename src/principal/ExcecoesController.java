@@ -9,8 +9,8 @@ public class ExcecoesController {
 	 * Verifica se o e-mail é valido, se a matrícula está cadastrada no sistema de
 	 * alunos e se o nome é vazio ou null
 	 * 
-	 * @param listaDeAlunos
-	 *            hashMap de alunos com a chave sendo a String matricula
+	 * @param matriculaValida
+	 *            Um booleano true caso a matricula esteja no hashMap e false caso nao
 	 * @param nome
 	 *            nome do aluno em String
 	 * @param matricula
@@ -18,11 +18,11 @@ public class ExcecoesController {
 	 * @param email
 	 *            email do aluno em String
 	 */
-	public void verificaCadastroAluno(boolean emailValido, String nome, String matricula, String email) {
+	public void verificaCadastroAluno(boolean matriculaValida, String nome, String matricula, String email) {
 		String erro = "";
 		if (!verificaEmail(email)) {
 			erro = "Email invalido";
-		} else if (emailValido) {
+		} else if (matriculaValida) {
 			erro = "Aluno de mesma matricula ja cadastrado";
 		} else if (nome.trim().equals("") || nome == null) {
 			erro = "Nome nao pode ser vazio ou nulo";
@@ -59,18 +59,18 @@ public class ExcecoesController {
 	 * Verifica se a matricula nos metodos de getInfoAluno e recuperaAluno sao
 	 * validas e foram cadastradas no map de alunos
 	 * 
-	 * @param listaDeAlunos
-	 *            hashMap de alunos com a chave sendo a String matricula
+	 * @param matriculaValida
+	 *            um booleano true caso a matricula esteja no hashMap e false caso nao
 	 * @param metodo
 	 *            nome do metodo que chama esse método em String
 	 * @param matricula
 	 *            do aluno em String
 	 */
 
-	public void verificaMatricula(Map<String, Aluno> listaDeAlunos, String metodo, String matricula) {
-		if (metodo.equals("getInfoAluno") && !listaDeAlunos.containsKey(matricula)) {
+	public void verificaMatricula(boolean matriculaValida, String metodo, String matricula) {
+		if (metodo.equals("getInfoAluno") && !matriculaValida) {
 			throw new IllegalArgumentException("Erro na obtencao de informacao de aluno: Aluno nao encontrado");
-		} else if (metodo.equals("recuperaAluno") && !listaDeAlunos.containsKey(matricula)) {
+		} else if (metodo.equals("recuperaAluno") && !matriculaValida) {
 			throw new IllegalArgumentException("Erro na busca por aluno: Aluno nao encontrado");
 		}
 
@@ -80,19 +80,22 @@ public class ExcecoesController {
 	 * Verifica se a matricula eh valida, so o valor de proficiencia eh valido, e se
 	 * o possivel tutor ja eh tutor dessa disciplina
 	 * 
-	 * @param listaDeAlunos
-	 *            hashMap de alunos com a chave sendo a String matricula
-	 * @param matricula
-	 *            do aluno em String
+	 * @param matriculaValida
+	 *            Um booleano true caso a matricula esteja no hashMap e false caso nao
+	 * @param ehTutor
+	 *            um booleano true caso seja tutor e false caso nao seja
+	 * @param tutor
+	 *            Um tutor da classe Tutor
 	 * @param disciplina
-	 *            nome da disciplina em String
+	 * 			  uma String com o nome da disciplina
 	 * @param proficiencia
 	 *            valor de proficiencia em inteiro
 	 * @return um booleano true se tiver tudo ok e false se nao
 	 */
-	public boolean verificaDadosParaTornarTutor(boolean emailValido, boolean ehTutor, Tutor tutor, String disciplina,
+	public boolean verificaDadosParaTornarTutor(boolean matriculaValida, boolean ehTutor, Tutor tutor, String disciplina,
 			int proficiencia) {
-		if (!emailValido) {
+		
+		if (!matriculaValida) {
 			throw new IllegalArgumentException("Erro na definicao de papel: Tutor nao encontrado");
 		} else if (proficiencia < 1 || proficiencia > 5) {
 			throw new IllegalArgumentException("Erro na definicao de papel: Proficiencia invalida");
@@ -112,8 +115,8 @@ public class ExcecoesController {
 	 * Vai conferir se o email eh de um tutor, se o email eh vazio ou em branco se o
 	 * horario eh vaziou ou em branco e se o dia eh vazio ou em branco
 	 * 
-	 * @param listaDeAlunos
-	 *            hashMap de alunos com a chave sendo a String matricula
+	 * @param tutor
+	 *            tutor da classe Tutor
 	 * @param email
 	 *            email do aluno em String
 	 * @param horario
@@ -143,8 +146,8 @@ public class ExcecoesController {
 	 * Confere se o email eh de um tutor, se o email eh vazio ou em branco e se o
 	 * local eh vazio ou em branco
 	 * 
-	 * @param listaDeAlunos
-	 *            hashMap de alunos com a chave sendo a String matricula
+	 * @param tutor
+	 *            um tutor da classe Tutor
 	 * @param email
 	 *            email do aluno em String
 	 * @param local

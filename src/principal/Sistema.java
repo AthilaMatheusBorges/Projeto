@@ -24,7 +24,7 @@ public class Sistema {
 	}
 
 	public String recuperaAluno(String matricula) {
-		auxiliarController.verificaMatricula(listaDeAlunos, "recuperaAluno", matricula);
+		auxiliarController.verificaMatricula(listaDeAlunos.containsKey(matricula), "recuperaAluno", matricula);
 		return this.listaDeAlunos.get(matricula).toString();
 	}
 
@@ -41,7 +41,7 @@ public class Sistema {
 	}
 
 	public String getInfoAluno(String matricula, String atributo) {
-		auxiliarController.verificaMatricula(this.listaDeAlunos, "getInfoAluno", matricula);
+		auxiliarController.verificaMatricula(this.listaDeAlunos.containsKey(matricula), "getInfoAluno", matricula);
 		switch (atributo.toLowerCase()) {
 		case "nome":
 			return this.listaDeAlunos.get(matricula).getNome();
@@ -59,14 +59,14 @@ public class Sistema {
 		if(!listaDeAlunos.containsKey(matricula)) {
 			throw new IllegalArgumentException("Erro na definicao de papel: Tutor nao encontrado");
 		}
-		String email = this.listaDeAlunos.get(matricula).getEmail();
-		if(auxiliarController.verificaDadosParaTornarTutor(listaDeAlunos.containsKey(matricula), listaDeAlunos.get(matricula).getTipo().equals("tutor"), recuperaTutorPorEmail(email), disciplina, proficiencia)) {
+		
+		if(auxiliarController.verificaDadosParaTornarTutor(listaDeAlunos.containsKey(matricula), listaDeAlunos.get(matricula).getTipo().equals("tutor"), recuperaTutorPelaMatricula(matricula), disciplina, proficiencia)) {
 			Aluno aluno = this.listaDeAlunos.get(matricula);
 			Tutor tutor = new Tutor(aluno, disciplina, proficiencia);
 			this.listaDeAlunos.replace(matricula, tutor);
 		}
 		else {
-			recuperaTutorPorEmail(email).adicionaDisciplina(disciplina);
+			recuperaTutorPelaMatricula(matricula).adicionaDisciplina(disciplina);
 		}
 	}
 
@@ -122,13 +122,13 @@ public class Sistema {
 		return null;
 	}
 	
-//	public Tutor recuperaTutorPelaMatricula(String matricula){
-//		if(listaDeAlunos.containsKey(matricula)) {
-//			Tutor tutor = (Tutor)listaDeAlunos.get(matricula);
-//			return tutor;
-//		}
-//		return null;
-//	}
+	public Tutor recuperaTutorPelaMatricula(String matricula){
+		if(listaDeAlunos.containsKey(matricula) && listaDeAlunos.get(matricula).getTipo().equals("tutor")) {
+			Tutor tutor = (Tutor)listaDeAlunos.get(matricula);
+			return tutor;
+		}
+		return null;
+	}
 	
 	
 	public void cadastrarHorario(String email, String horario, String dia) {

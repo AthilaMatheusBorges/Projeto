@@ -30,6 +30,23 @@ public class Atendimento {
 			return true;
 		return false;
 	}
+
+	public boolean consultaHorario(String horario, String dia) {
+		if(temDia(dia))
+			for(String hora : this.horarios.get(dia)) {
+				if(hora.equals(horario))
+					return true;
+			}
+		return false;
+	}
+	
+	public boolean consultaLocal(String local) {
+		for(String localAtendimento : this.locais) {
+			if(localAtendimento.equalsIgnoreCase(local))
+				return true;
+		}
+		return false;
+	}
 	
 	
 }

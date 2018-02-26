@@ -169,10 +169,17 @@ public class Sistema {
 		
 	}
 
-//	public boolean consultaHorario(String email, String horario, String dia) {
-//		auxiliarController.confereConsultaHorario
-//		
-//	}
+	public boolean consultaHorario(String email, String horario, String dia) {
+		if(auxiliarController.recuperaTutorPorEmail(listaDeAlunos, email) == null)
+			return false;	
+		return auxiliarController.recuperaTutorPorEmail(listaDeAlunos, email).consultaHorario(horario, dia);	
+	}
+	
+	public boolean consultaLocal(String email, String local) {
+		if(auxiliarController.recuperaTutorPorEmail(listaDeAlunos, email) == null)
+			return false;	
+		return auxiliarController.recuperaTutorPorEmail(listaDeAlunos, email).consultaLocal(local);	
+	}
 	
 	
 }

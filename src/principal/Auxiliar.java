@@ -161,10 +161,10 @@ public class Auxiliar {
 
 	public void confereCadastrarHorario(Map<String, Aluno> listaDeAlunos, String email, String horario, String dia) {
 		String erro = "";
-		if (recuperaTutorPorEmail(listaDeAlunos, email) == null) {
+		if (email.trim().equals("")){
+			erro = "email nao pode ser vazio ou em branco" ;
+		}else if (recuperaTutorPorEmail(listaDeAlunos, email) == null)  {
 			erro = "tutor nao cadastrado";
-		} else if (email.trim().equals("")) {
-			erro = "email nao pode ser vazio ou em branco";
 		} else if (horario.trim().equals("")) {
 			erro = "horario nao pode ser vazio ou em branco";
 		} else if (dia.trim().equals("")) {
@@ -189,11 +189,12 @@ public class Auxiliar {
 	 */
 	public void confereCadastrarLocalDeAtendimento(Map<String, Aluno> listaDeAlunos, String email, String local) {
 		String erro = "";
-		if (recuperaTutorPorEmail(listaDeAlunos, email) == null) {
-			erro = "tutor nao cadastrado";
-		} else if (email.trim().equals("")) {
+		if (email.trim().equals("")) {
 			erro = "email nao pode ser vazio ou em branco";
-		} else if (local.trim().equals("")) {
+		}else if (recuperaTutorPorEmail(listaDeAlunos, email) == null) {
+			erro = "tutor nao cadastrado";
+		} 
+		else if (local.trim().equals("")) {
 			erro = "local nao pode ser vazio ou em branco";
 		}
 		if (!erro.equals("")) {

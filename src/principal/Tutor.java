@@ -41,4 +41,11 @@ public class Tutor extends Aluno {
 		this.atendimento.cadastrarLocalDeAtendimento(local);
 	}
 
+	public boolean consultaHorario(String horario, String dia) {
+		return atendimento.consultaHorario(horario, dia);
+	}
+
+	public boolean consultaLocal(String local) {
+		return atendimento.consultaLocal(local);
+	}
 }

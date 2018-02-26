@@ -44,7 +44,11 @@ public class Fachada {
     	sistema.cadastrarLocalDeAtendimento(email,local);
     }
     
-//    public boolean consultaHorario(String email, String horario, String dia) {
-//    	return sistema.consultaHorario(email, horario, dia);
-//    }
+    public boolean consultaHorario(String email, String horario, String dia) {
+    	return sistema.consultaHorario(email, horario, dia);
+    }
+    
+    public boolean consultaLocal(String email, String local) {
+    	return sistema.consultaLocal(email, local);
+    }
 }

@@ -34,7 +34,7 @@ public class Atendimento {
 	public boolean consultaHorario(String horario, String dia) {
 		if(temDia(dia))
 			for(String hora : this.horarios.get(dia)) {
-				if(hora.equals(horario))
+				if(hora.equalsIgnoreCase(horario))
 					return true;
 			}
 		return false;

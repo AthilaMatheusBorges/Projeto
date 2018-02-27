@@ -2,68 +2,81 @@ package principal;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class AlunoTest {
 
-	@Test
-	public void testAluno() {
-		fail("Not yet implemented");
+	Aluno a1;
+	Aluno a2;
+	Sistema sistema;
+
+	@Before
+	public void inicializa() {
+		sistema = new Sistema();
+		a1 = new Aluno("Marcelo", "123", 10, "99999999", "marcelobonito@bol.com");
+		a2 = new Aluno("Flavio", "321", 10, " ", "flavinho@yahoo.com");
 	}
 
 	@Test
 	public void testGetTipo() {
-		fail("Not yet implemented");
+		assertEquals("aluno", a1.getTipo());
+		assertEquals("aluno", a2.getTipo());
 	}
 
 	@Test
 	public void testSetTipo() {
-		fail("Not yet implemented");
+		a1.setTipo("tutor");
+		assertEquals("tutor", a1.getTipo());
 	}
 
 	@Test
 	public void testGetMatricula() {
-		fail("Not yet implemented");
+		assertEquals("123", a1.getMatricula());
+		assertEquals("321", a2.getMatricula());
 	}
 
 	@Test
 	public void testGetNome() {
-		fail("Not yet implemented");
+		assertEquals("Marcelo", a1.getNome());
+		assertEquals("Flavio", a2.getNome());
 	}
 
 	@Test
 	public void testGetTelefone() {
-		fail("Not yet implemented");
+		assertEquals("99999999", a1.getTelefone());
+		assertEquals("", a2.getTelefone());
 	}
 
 	@Test
 	public void testGetEmail() {
-		fail("Not yet implemented");
+		assertEquals("marcelobonito@bol.com", a1.getEmail());
+		assertEquals("flavinho@yahoo.com", a2.getEmail());
 	}
 
 	@Test
 	public void testGetCodigoCurso() {
-		fail("Not yet implemented");
+		assertEquals(10, a1.getCodigoCurso());
+		assertEquals(10, a2.getCodigoCurso());
 	}
 
 	@Test
 	public void testGetNota() {
-		fail("Not yet implemented");
+		assertEquals(5, 0, a1.getNota());
+		assertEquals(5, 0, a2.getNota());
 	}
 
 	@Test
 	public void testSetNota() {
-		fail("Not yet implemented");
+		a1.setNota(4.3);
+		assertEquals(4, 3, a1.getNota());
 	}
 
 	@Test
 	public void testToString() {
-		fail("Not yet implemented");
-	}
+		assertEquals("123 - Marcelo - 10 - 99999999 - marcelobonito@bol.com", a1.toString());
+		assertEquals("321 - Flavio - 10 - flavinho@yahoo.com", a2.toString());
 
-	@Test
-	public void testCompareTo() {
-		fail("Not yet implemented");
 	}
 
 }

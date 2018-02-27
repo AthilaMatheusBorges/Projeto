@@ -21,31 +21,56 @@ public class AtendimentoTest {
 	}
 
 	/**
-	 * Testa se a consulta de horarios esta retornando o Boolean correto para
-	 * cada caso, incluindo casos nos quais a consulta utiliza letras maiusculas,
-	 * minusculas ou ambas.
+	 * Testa se a consulta de horarios esta retornando True caso um horario existente
+	 * for consultado.
 	 */
 	@Test
-	public void testConsultaHorario() {
+	public void testConsultaHorarioExistente() {
 		assertTrue(atendimento.consultaHorario("10:00", "seg"));
-		assertTrue(atendimento.consultaHorario("10:00", "SEG"));
-		assertTrue(atendimento.consultaHorario("10:00", "Seg"));
+	}
+	
+	/**
+	 * Testa se a consulta de horarios esta retornando False caso um horario inexistente
+	 * for consultado.
+	 */
+	@Test
+	public void testConsultaHorarioInexistente() {
 		assertFalse(atendimento.consultaHorario("12:00", "qua"));
-		assertFalse(atendimento.consultaHorario("08:00", "ter"));
 	}
 
 	/**
-	 * Testa se a consulta de local esta retornando o Boolean correto para
-	 * cada caso, incluindo casos nos quais a consulta utiliza letras maiusculas,
-	 * minusculas ou ambas.
+	 * Testa se a consulta de local retorna True caso um local existente for consultado
+	 * utilizando letras maiusculas.
 	 */
 	@Test
-	public void testConsultaLocal() {
+	public void testConsultaLocalExistenteLetraMaiuscula() {
 		assertTrue(atendimento.consultaLocal("LCC2"));
+	}
+	
+	/**
+	 * Testa se a consulta de local retorna True caso um local existente for consultado
+	 * utilizando letras maiusculas.
+	 */
+	@Test
+	public void testConsultaLocalExistenteLetraMinuscula() {
 		assertTrue(atendimento.consultaLocal("lcc2"));
+	}
+	
+	/**
+	 * Testa se a consulta de local retorna True caso um local existente for consultado
+	 * utilizando letras maiusculas e minusculas.
+	 */
+	@Test
+	public void testConsultaLocalLetraMaiusculaEMinuscula() {
 		assertTrue(atendimento.consultaLocal("Lcc2"));
+	}
+	
+	/**
+	 * Testa se a consulta de local retorna False caso um local inexistente for consultado.
+	 */
+	@Test
+	public void testConsultaLocalInexistente() {
 		assertFalse(atendimento.consultaLocal("LCC1"));
-		assertFalse(atendimento.consultaLocal("Praca de Alimentacao"));
 	}
 
 }

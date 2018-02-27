@@ -25,7 +25,6 @@ public class AlunoTest {
 	@Test
 	public void testGetTipo() {
 		assertEquals("aluno", a1.getTipo());
-		assertEquals("aluno", a2.getTipo());
 	}
 
 	/**
@@ -43,7 +42,6 @@ public class AlunoTest {
 	@Test
 	public void testGetMatricula() {
 		assertEquals("123", a1.getMatricula());
-		assertEquals("321", a2.getMatricula());
 	}
 
 	/**
@@ -52,16 +50,22 @@ public class AlunoTest {
 	@Test
 	public void testGetNome() {
 		assertEquals("Marcelo", a1.getNome());
-		assertEquals("Flavio", a2.getNome());
 	}
 
 	/**
-	 * Testa se o metodo esta retornando o numero de telefone corretamente, mesmo
-	 * quando estiver vazio.
+	 * Testa se o metodo esta retornando o numero de telefone corretamente.
 	 */
 	@Test
 	public void testGetTelefone() {
 		assertEquals("99999999", a1.getTelefone());
+	}
+
+	/**
+	 * Testa se o metodo esta retornando uma String vazia caso o aluno nao tenha
+	 * telefone.
+	 */
+	@Test
+	public void testGetTelefoneVazio() {
 		assertEquals("", a2.getTelefone());
 	}
 
@@ -71,7 +75,6 @@ public class AlunoTest {
 	@Test
 	public void testGetEmail() {
 		assertEquals("marcelobonito@bol.com", a1.getEmail());
-		assertEquals("flavinho@yahoo.com", a2.getEmail());
 	}
 
 	/**
@@ -80,7 +83,6 @@ public class AlunoTest {
 	@Test
 	public void testGetCodigoCurso() {
 		assertEquals(10, a1.getCodigoCurso());
-		assertEquals(10, a2.getCodigoCurso());
 	}
 
 	/**
@@ -89,7 +91,6 @@ public class AlunoTest {
 	@Test
 	public void testGetNota() {
 		assertEquals(5, 0, a1.getNota());
-		assertEquals(5, 0, a2.getNota());
 	}
 
 	/**
@@ -102,12 +103,22 @@ public class AlunoTest {
 	}
 
 	/**
-	 * Testa se a representacao textual esta sendo retornada corretamente, mesmo
-	 * quando o aluno nao possuir um numero de telefone.
+	 * Testa se a representacao textual com numero esta sendo retornada
+	 * corretamente.
 	 */
 	@Test
-	public void testToString() {
+	public void testToStringComTelefone() {
 		assertEquals("123 - Marcelo - 10 - 99999999 - marcelobonito@bol.com", a1.toString());
+		assertEquals("321 - Flavio - 10 - flavinho@yahoo.com", a2.toString());
+
+	}
+
+	/**
+	 * Testa se a representacao textual sem numero esta sendo retornada
+	 * corretamente.
+	 */
+	@Test
+	public void testToStringSemTelefone() {
 		assertEquals("321 - Flavio - 10 - flavinho@yahoo.com", a2.toString());
 
 	}

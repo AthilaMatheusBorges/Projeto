@@ -3,7 +3,7 @@ package principal;
 import java.util.ArrayList;
 
 public class Tutor extends Aluno {
-	private int proficiencia;
+	private int proficiencia, idTutor;
 	private ArrayList<String> disciplinas;
 	private double nota, saldo;
 	private Atendimento atendimento;
@@ -18,13 +18,13 @@ public class Tutor extends Aluno {
 	 * @param proficiencia
 	 *            eh a proficiencia do tutor sobre a discipĺina.
 	 */
-	public Tutor(Aluno aluno, String disciplina, int proficiencia) {
+	public Tutor(Aluno aluno, String disciplina, int proficiencia, int idTutor) {
 		super(aluno.getNome(), aluno.getMatricula(), aluno.getCodigoCurso(), aluno.getTelefone(), aluno.getEmail());
 		this.proficiencia = proficiencia;
 		this.disciplinas = new ArrayList<>();
 		adicionaDisciplina(disciplina);
 		this.nota = 4;
-		this.saldo = 0;
+		this.idTutor = idTutor;
 		super.setTipo("tutor");
 		this.atendimento = new Atendimento();
 	}
@@ -100,5 +100,14 @@ public class Tutor extends Aluno {
 	 */
 	public boolean consultaLocal(String local) {
 		return atendimento.consultaLocal(local);
+	}
+
+	/**
+	 * Retorna o idenficador do Tutor.
+	 * 
+	 * @return retorna o id do tutor.
+	 */
+	public int getId() {
+		return this.idTutor;
 	}
 }

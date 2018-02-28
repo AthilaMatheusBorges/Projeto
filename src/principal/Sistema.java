@@ -6,16 +6,22 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 
+ * @author athilambb
+ *
+ */
 public class Sistema {
 
 	private Map<String, Aluno> listaDeAlunos;
+	private Map<Integer, PedidoDeAjuda> pedidosDeAjuda;
 
 	/**
 	 * Constroi um novo sistema.
 	 */
 	public Sistema() {
 		this.listaDeAlunos = new HashMap<>();
-
+		this.pedidosDeAjuda = new HashMap<>();
 	}
 
 	/**
@@ -126,7 +132,7 @@ public class Sistema {
 	/**
 	 * Lista os alunos do sistema.
 	 * 
-	 * @return uma String com a lista de alunos
+	 * @return
 	 */
 	public String listarAlunos() {
 		ArrayList<Aluno> alunos = new ArrayList<Aluno>(this.listaDeAlunos.values());
@@ -183,7 +189,7 @@ public class Sistema {
 				listaDeAlunos.get(matricula).getTipo().equals("tutor"), recuperaTutorPelaMatricula(matricula),
 				disciplina, proficiencia)) {
 			Aluno aluno = this.listaDeAlunos.get(matricula);
-			Tutor tutor = new Tutor(aluno, disciplina, proficiencia);
+			Tutor tutor = new Tutor(aluno, disciplina, proficiencia, getQntdAlunos());
 			this.listaDeAlunos.replace(matricula, tutor);
 		} else {
 			recuperaTutorPelaMatricula(matricula).adicionaDisciplina(disciplina);
@@ -230,7 +236,7 @@ public class Sistema {
 	 * 
 	 * @param matricula,
 	 *            matricula do aluno
-	 * @return retorna o toString do aluno procurado
+	 * @return
 	 */
 	public String recuperaTutor(String matricula) {
 		if (!this.listaDeAlunos.containsKey(matricula)) {
@@ -242,7 +248,7 @@ public class Sistema {
 	/**
 	 * Lista todos os tutores do sistema.
 	 * 
-	 * @return uma String com todos os tutores
+	 * @return
 	 */
 	public String listarTutores() {
 		String saida = "";
@@ -296,7 +302,7 @@ public class Sistema {
 	 * 
 	 * @param matricula,
 	 *            suposta matricula do tutor.
-	 * @return retorna o tutor procurado ou null caso n exista
+	 * @return
 	 */
 	public Tutor recuperaTutorPelaMatricula(String matricula) {
 		if (listaDeAlunos.containsKey(matricula) && listaDeAlunos.get(matricula).getTipo().equals("tutor")) {
@@ -402,7 +408,7 @@ public class Sistema {
 	 *            que esta sendo consultado.
 	 * @param dia,
 	 *            dia que esta sendo consultado.
-	 * @return um booleano se o tutor tiver tal horario live
+	 * @return
 	 */
 	public boolean consultaHorario(String email, String horario, String dia) {
 		if (recuperaTutorPorEmail(email) == null)
@@ -417,7 +423,7 @@ public class Sistema {
 	 *            email do tutor.
 	 * @param local,
 	 *            local a ser consultado.
-	 * @return retorna um booleano se o tutor tiver tal horario livre
+	 * @return
 	 */
 	public boolean consultaLocal(String email, String local) {
 		if (recuperaTutorPorEmail(email) == null)
@@ -425,4 +431,191 @@ public class Sistema {
 		return recuperaTutorPorEmail(email).consultaLocal(local);
 	}
 
+	/**
+	 * Recupera um Pedido de Ajuda a partir do identificador da ajuda.
+	 * 
+	 * @param idAjuda
+	 *            eh o identificador do pedido de ajuda.
+	 * @return returna um Pedido de Ajuda.
+	 */
+	public PedidoDeAjuda getPedidoDeAjuda(int idAjuda) {
+		return this.pedidosDeAjuda.get(idAjuda);
+	}
+
+	/**
+	 * Cria e armazena um pedido de Ajuda Presencial com os parametros passados.
+	 * 
+	 * @param disciplina
+	 *            eh a disciplina da ajuda.
+	 * @param horario
+	 *            eh o horario da ajuda.
+	 * @param dia
+	 *            eh o dia da ajuda.
+	 * @param localInteresse
+	 *            eh o local da ajuda.
+	 * @return retorna o identificador do Pedido de Ajuda.
+	 */
+	public int pedirAjudaPresencial(String disciplina, String horario, String dia, String localInteresse) {
+		String tutorMatricula = escolheTutorAjudaPresencial(disciplina, horario, dia, localInteresse).getMatricula();
+		PedidoDeAjuda pedido = new AjudaPresencial(disciplina, tutorMatricula, dia, horario, localInteresse,
+				getQntdPedidosAjuda() + 1);
+		this.pedidosDeAjuda.put(pedido.getIdAjuda(), pedido);
+		return pedido.getIdAjuda();
+	}
+
+	/**
+	 * Cria e armazena um pedido de Ajuda Online.
+	 * 
+	 * @param disciplina
+	 *            eh a disciplina da ajuda.
+	 * @return retorna o identificador do Pedido de Ajuda.
+	 */
+	public int pedirAjudaOnline(String disciplina) {
+		String tutorMatricula = escolheTutorAjudaOnline(disciplina).getMatricula();
+		PedidoDeAjuda pedido = new AjudaOnline(disciplina, tutorMatricula, getQntdPedidosAjuda() + 1);
+		this.pedidosDeAjuda.put(pedido.getIdAjuda(), pedido);
+		return pedido.getIdAjuda();
+	}
+
+	/**
+	 * Escolhe o tutor para associar a um pedido de Ajuda Presencial.
+	 * 
+	 * @param disciplina
+	 *            eh a disciplina da ajuda.
+	 * @param horario
+	 *            eh o horario da ajuda.
+	 * @param dia
+	 *            eh o dia da ajuda.
+	 * @param localInteresse
+	 *            eh o local da ajuda.
+	 * @return retorna o Tutor que melhor se encaixe nos requisitos.
+	 */
+	private Tutor escolheTutorAjudaPresencial(String disciplina, String horario, String dia, String localInteresse) {
+		Tutor possivelTutor = null;
+		Tutor tutorVerificado = null;
+		for (Aluno aluno : this.listaDeAlunos.values()) {
+			if (aluno.getTipo().equals("tutor")) {
+				tutorVerificado = (Tutor) aluno;
+				if (tutorVerificado.consultaLocal(localInteresse) && tutorVerificado.consultaHorario(horario, dia)) {
+					if (possivelTutor == null)
+						possivelTutor = tutorVerificado;
+					else {
+						if (tutorVerificado.getNota() > possivelTutor.getNota())
+							possivelTutor = tutorVerificado;
+						else if (tutorVerificado.getNota() == possivelTutor.getNota())
+							if (tutorVerificado.getId() < possivelTutor.getId())
+								possivelTutor = tutorVerificado;
+					}
+				}
+			}
+		}
+		return possivelTutor;
+	}
+
+	/**
+	 * Escolhe o tutor para associar a um pedido de Ajuda Online.
+	 * 
+	 * @param disciplina
+	 *            eh a disciplina da ajuda.
+	 * @return retorna o Tutor que melhor se encaixe nos requisitos.
+	 */
+	private Tutor escolheTutorAjudaOnline(String disciplina) {
+		Tutor possivelTutor = null;
+		Tutor tutorVerificado = null;
+		for (Aluno aluno : this.listaDeAlunos.values()) {
+			if (aluno.getTipo().equals("tutor")) {
+				tutorVerificado = (Tutor) aluno;
+				if (tutorVerificado.confereSeJaEtutorDaDisciplina(disciplina))
+					if (possivelTutor == null)
+						possivelTutor = tutorVerificado;
+					else {
+						if (tutorVerificado.getNota() > possivelTutor.getNota())
+							possivelTutor = tutorVerificado;
+						else if (tutorVerificado.getNota() == possivelTutor.getNota())
+							if (tutorVerificado.getId() < possivelTutor.getId())
+								possivelTutor = tutorVerificado;
+					}
+			}
+		}
+		return possivelTutor;
+	}
+
+	/**
+	 * Recupera a matricula do tutor responsavel pelo pedido de ajuda a partir de
+	 * identificador do pedido.
+	 * 
+	 * @param idAjuda
+	 *            eh o identificador do pedido de ajuda.
+	 * @return retorna a matricula do tutor responsavel pelo pedido de ajuda.
+	 */
+	public String pegarTutor(int idAjuda) {
+		return this.pedidosDeAjuda.get(idAjuda).getTutorMatricula();
+	}
+
+	/**
+	 * Recupera um Pedido de Ajuda a partir do identificador.
+	 * 
+	 * @param idAjuda
+	 *            eh o identificador do Pedido de Ajuda.
+	 * @return retorna um Pedido de Ajuda.
+	 */
+	public PedidoDeAjuda getAjuda(int idAjuda) {
+		return this.pedidosDeAjuda.get(idAjuda);
+	}
+
+	/**
+	 * Retorna uma informacao do Pedido de Ajuda a partir do identificador do pedido
+	 * e da informacao passada como atrinuto.
+	 * 
+	 * @param idAjuda
+	 *            eh o identificador do pedido de ajuda.
+	 * @param atributo
+	 *            eh a informacao que o usuario quer sobre o pedido de ajuda.
+	 * @return retorna a informacao referente ao pedido de ajuda.
+	 */
+	public String getInfoAjuda(int idAjuda, String atributo) {
+		switch (atributo.toLowerCase()) {
+		case "tutor":
+			return this.pedidosDeAjuda.get(idAjuda).getTutorMatricula();
+		case "disciplina":
+			return this.pedidosDeAjuda.get(idAjuda).getDisciplina();
+		case "dia":
+			if (getAjuda(idAjuda) instanceof AjudaOnline)
+				throw new IllegalArgumentException("Erro na obtencao de informacao de ajuda: Ajuda Online nao tem dia");
+			AjudaPresencial ajudaDia = (AjudaPresencial) getAjuda(idAjuda);
+			return ajudaDia.getDia();
+		case "horario":
+			if (getAjuda(idAjuda) instanceof AjudaOnline)
+				throw new IllegalArgumentException(
+						"Erro na obtencao de informacao de ajuda: Ajuda Online nao tem horario");
+			AjudaPresencial ajudaHorario = (AjudaPresencial) getAjuda(idAjuda);
+			return ajudaHorario.getHorario();
+		case "local":
+			if (getAjuda(idAjuda) instanceof AjudaOnline)
+				throw new IllegalArgumentException(
+						"Erro na obtencao de informacao de ajuda: Ajuda Online nao tem local");
+			AjudaPresencial ajudaLocal = (AjudaPresencial) getAjuda(idAjuda);
+			return ajudaLocal.getLocalInteresse();
+		default:
+			throw new IllegalArgumentException("Erro na obtencao de informacao de ajuda: Atributo invalido");
+		}
+	}
+
+	/**
+	 * Retorna a quantidade de pedidos de ajuda cadastrados.
+	 * 
+	 * @return retorna a quantidade de pedidos de ajuda cadastrados.
+	 */
+	private int getQntdPedidosAjuda() {
+		return this.pedidosDeAjuda.values().size();
+	}
+
+	/**
+	 * Retorna a quantidade de alunos cadastrados.
+	 * 
+	 * @return retorna a quantidade de alunos cadastrados.
+	 */
+	private int getQntdAlunos() {
+		return this.listaDeAlunos.values().size();
+	}
 }

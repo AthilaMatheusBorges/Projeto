@@ -24,6 +24,7 @@ public class Tutor extends Aluno {
 		this.disciplinas = new ArrayList<>();
 		adicionaDisciplina(disciplina);
 		this.nota = 4;
+		this.saldo = 0;
 		super.setTipo("tutor");
 		this.atendimento = new Atendimento();
 	}

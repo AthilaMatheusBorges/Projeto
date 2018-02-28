@@ -132,7 +132,7 @@ public class Sistema {
 	/**
 	 * Lista os alunos do sistema.
 	 * 
-	 * @return
+	 * @return uma String com a lista de alunos.
 	 */
 	public String listarAlunos() {
 		ArrayList<Aluno> alunos = new ArrayList<Aluno>(this.listaDeAlunos.values());
@@ -236,7 +236,7 @@ public class Sistema {
 	 * 
 	 * @param matricula,
 	 *            matricula do aluno
-	 * @return
+	 * @return retorna o toString do aluno procurado.
 	 */
 	public String recuperaTutor(String matricula) {
 		if (!this.listaDeAlunos.containsKey(matricula)) {
@@ -248,7 +248,7 @@ public class Sistema {
 	/**
 	 * Lista todos os tutores do sistema.
 	 * 
-	 * @return
+	 * @return uma String com todos os tutores.
 	 */
 	public String listarTutores() {
 		String saida = "";
@@ -302,7 +302,7 @@ public class Sistema {
 	 * 
 	 * @param matricula,
 	 *            suposta matricula do tutor.
-	 * @return
+	 * @return retorna o tutor procurado ou null caso nao exista.
 	 */
 	public Tutor recuperaTutorPelaMatricula(String matricula) {
 		if (listaDeAlunos.containsKey(matricula) && listaDeAlunos.get(matricula).getTipo().equals("tutor")) {
@@ -408,7 +408,7 @@ public class Sistema {
 	 *            que esta sendo consultado.
 	 * @param dia,
 	 *            dia que esta sendo consultado.
-	 * @return
+	 * @return um booleano se o tutor tiver o horario.
 	 */
 	public boolean consultaHorario(String email, String horario, String dia) {
 		if (recuperaTutorPorEmail(email) == null)
@@ -423,7 +423,7 @@ public class Sistema {
 	 *            email do tutor.
 	 * @param local,
 	 *            local a ser consultado.
-	 * @return
+	 * @return retorna um booleano se o tutor tiver o horario
 	 */
 	public boolean consultaLocal(String email, String local) {
 		if (recuperaTutorPorEmail(email) == null)

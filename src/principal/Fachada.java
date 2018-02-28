@@ -4,11 +4,10 @@ import easyaccept.EasyAccept;
 
 /**
  * 
- * @authores Jonathan Allisson de Lima Silva -- 117110926
- * 			 Marcelo Fagner da Silva Andrade -- 117110910
- * 			 Flavio Roberto Pires Quirino Farias -- 117111444
- * 			 Athila Matheus Barros Borges -- 117110913
- * 			 ****UFCG - COMPUTACAO 2017.2****
+ * @authores Jonathan Allisson de Lima Silva -- 117110926 Marcelo Fagner da
+ *           Silva Andrade -- 117110910 Flavio Roberto Pires Quirino Farias --
+ *           117111444 Athila Matheus Barros Borges -- 117110913 ****UFCG -
+ *           COMPUTACAO 2017.2****
  */
 public class Fachada {
 
@@ -158,5 +157,58 @@ public class Fachada {
 	 */
 	public boolean consultaLocal(String email, String local) {
 		return sistema.consultaLocal(email, local);
+	}
+
+	/**
+	 * Cadastra um pedido de Ajuda Presencial.
+	 * 
+	 * @param disciplina
+	 *            eh a disciplina da ajuda.
+	 * @param horario
+	 *            eh o horario da ajuda.
+	 * @param dia
+	 *            eh o dia da ajuda.
+	 * @param localInteresse
+	 *            eh o local da ajuda.
+	 * @return retorna o identificador do pedido de ajuda.
+	 */
+	public int pedirAjudaPresencial(String disciplina, String horario, String dia, String localInteresse) {
+		return sistema.pedirAjudaPresencial(disciplina, horario, dia, localInteresse);
+	}
+
+	/**
+	 * Cadastra um pedido de Ajuda Online.
+	 * 
+	 * @param disciplina
+	 *            eh a disciplina da ajuda.
+	 * @return retorna o identificador do pedido de ajuda.
+	 */
+	public int pedirAjudaOnline(String disciplina) {
+		return sistema.pedirAjudaOnline(disciplina);
+	}
+
+	/**
+	 * Recupera a matricula do tutor responsavel pelo pedido de ajuda a partir do id
+	 * do pedido.
+	 * 
+	 * @param idAjuda
+	 *            eh o identificador do pedido de ajuda.
+	 * @return retorna a matricula do tutor responsavel pelo pedido de ajuda.
+	 */
+	public String pegarTutor(int idAjuda) {
+		return sistema.pegarTutor(idAjuda);
+	}
+
+	/**
+	 * Recupera uma informacao sobre o pedido de ajuda.
+	 * 
+	 * @param idAjuda
+	 *            eh o identificador do pedido de ajuda.
+	 * @param atributo
+	 *            eh a informacao que o usario quer sobre o pedido de ajudar.
+	 * @return retorna a informacao pedida pelo usuario.
+	 */
+	public String getInfoAjuda(int idAjuda, String atributo) {
+		return sistema.getInfoAjuda(idAjuda, atributo);
 	}
 }

@@ -618,4 +618,44 @@ public class Sistema {
 	private int getQntdAlunos() {
 		return this.listaDeAlunos.values().size();
 	}
+
+	/**
+	 * Metodo que avalia o tutor apartir da nota de uma ajuda
+	 * 
+	 * @param idAjuda
+	 *            identificacao da ajuda
+	 * @param nota
+	 *            nota da ajuda
+	 * @return retorna uma String se tutor foi avaliado com sucesso ou nao
+	 */
+	public String avaliarTutor(int idAjuda, int nota) {
+		if (pedidosDeAjuda.get(idAjuda).avaliarTutor()) {
+			String matricula = pedidosDeAjuda.get(idAjuda).getTutorMatricula();
+			recuperaTutorPelaMatricula(matricula).avaliarTutor(nota);
+			return "Tutor avaliado";
+		}
+		return "Ajuda ja avaliada";
+	}
+
+	/**
+	 * Metodo que pega a nota de avalicao de um tutor
+	 * 
+	 * @param matriculaTutor
+	 *            matricula do tutor
+	 * @return retorna um valor booleano da nota do tutor
+	 */
+	public double pegarNota(String matriculaTutor) {
+		return recuperaTutorPelaMatricula(matriculaTutor).getNota();
+	}
+
+	/**
+	 * Metodo que recupera o nivel de um determinado tutor
+	 * 
+	 * @param matriculaTutor
+	 *            matricula de um tutor
+	 * @return retorna a avalicao do tutor em String
+	 */
+	public String pegarNivel(String matriculaTutor) {
+		return recuperaTutorPelaMatricula(matriculaTutor).pegarNivel();
+	}
 }

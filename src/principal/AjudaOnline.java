@@ -2,8 +2,9 @@ package principal;
 
 public class AjudaOnline implements PedidoDeAjuda {
 
-	String disciplina, tutorMatricula;
-	int idAjuda;
+	private String disciplina, tutorMatricula;
+	private int idAjuda;
+	private boolean avaliado;
 
 	/**
 	 * Constroi o pedido de Ajuda Online com o parametros passados.
@@ -20,6 +21,7 @@ public class AjudaOnline implements PedidoDeAjuda {
 		this.disciplina = disciplina;
 		this.idAjuda = idAjuda;
 		this.tutorMatricula = tutorMatricula;
+		this.avaliado = false;
 	}
 
 	/**
@@ -61,6 +63,33 @@ public class AjudaOnline implements PedidoDeAjuda {
 	private void verificaDisciplina(String disciplina) {
 		if (disciplina.trim().equals("") || disciplina == null)
 			throw new IllegalArgumentException("Erro no pedido de ajuda online: Disciplina nao pode ser vazio ou nulo");
+	}
+
+	/**
+	 * Retorna se ja foi feita a avaliacao do tutor pela ajuda
+	 * 
+	 * @return retorna um booleano true caso ainda nao tenha sido avaliada a ajuda e
+	 *         false caso ja tenha
+	 */
+
+	@Override
+	public boolean avaliarTutor() {
+		if (avaliado == true) {
+			return false;
+		}
+		setAvaliado(true);
+		;
+		return true;
+	}
+
+	/**
+	 * Altera o valor booleano de avaliado
+	 * 
+	 * @param avaliacao
+	 *            um booleano informando se ja foi alterado
+	 */
+	private void setAvaliado(boolean avaliacao) {
+		this.avaliado = avaliacao;
 	}
 
 }

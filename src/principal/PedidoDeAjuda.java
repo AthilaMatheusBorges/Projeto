@@ -23,4 +23,12 @@ public interface PedidoDeAjuda {
 	 */
 	public int getIdAjuda();
 
+	/**
+	 * Retorna se ja foi feita a avaliacao do tutor pela ajuda
+	 * 
+	 * @return retorna um booleano true caso ainda nao tenha sido avaliada a ajuda e
+	 *         false caso ja tenha
+	 */
+	public boolean avaliarTutor();
+
 }

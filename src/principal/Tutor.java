@@ -110,4 +110,36 @@ public class Tutor extends Aluno {
 	public int getId() {
 		return this.idTutor;
 	}
+
+	/**
+	 * Metodo que faz o calculo de avaliacao do tutor
+	 * 
+	 * @param nota2
+	 *            valor da nota de uma ajuda em double
+	 */
+	public void avaliarTutor(int nota2) {
+		this.nota = (this.nota * 5 + nota2) / 6;
+	}
+
+	/**
+	 * metodo que retorna o valor da nota do tutor
+	 */
+	public double getNota() {
+		return this.nota;
+	}
+
+	/**
+	 * Metodo que apartir da nota de avaliacao do tutor retorna um String com o
+	 * nivel dele
+	 * 
+	 * @return retorna uma String que representa o nivel do tutor
+	 */
+	public String pegarNivel() {
+		if (this.nota > 4.5) {
+			return "TOP";
+		} else if (this.nota > 3 || this.nota <= 4.5) {
+			return "Tutor";
+		}
+		return "Aprendiz";
+	}
 }

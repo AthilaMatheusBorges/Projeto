@@ -16,7 +16,6 @@ public class Sistema {
 	private Map<String, Aluno> listaDeAlunos;
 	private Map<Integer, PedidoDeAjuda> pedidosDeAjuda;
 	private int caixa;
-
 	/**
 	 * Constroi um novo sistema.
 	 */
@@ -674,12 +673,12 @@ public class Sistema {
 		int valorSistema = 0;
 		if (nivel.equals("TOP")) {
 			valorSistema = (int) (1
-					- (90 + ((recuperaTutorPelaMatricula(matriculaTutor).getNota() - 4.5) / 100) * totalCentavos));
+					- (90 + (((recuperaTutorPelaMatricula(matriculaTutor).getNota() - 4.5) * 10) / 100) * totalCentavos));
 		} else if (nivel.equals("Tutor")) {
-			valorSistema = (int) (1 - (80 / 100) * totalCentavos);
+			valorSistema = (int)((0.2) * totalCentavos);
 		} else if (nivel.equals("Aprendiz")) {
 			valorSistema = (int) (1
-					- (40 - ((3.0 - recuperaTutorPelaMatricula(matriculaTutor).getNota()) / 100) * totalCentavos));
+					- (40 - (((3.0 - recuperaTutorPelaMatricula(matriculaTutor).getNota())* 10) / 100) * totalCentavos));
 		}
 		this.caixa += valorSistema;
 		recuperaTutorPelaMatricula(matriculaTutor).receberDoacao(totalCentavos - valorSistema);

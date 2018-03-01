@@ -529,34 +529,106 @@ public class SistemaTest {
 	public void testAvaliarTutorNotaInvalida() {
 		sistema.avaliarTutor(1, 6);
 	}
-	
+
 	/**
 	 * Testa se o metodo esta retornando a nota corretamente.
 	 */
 	@Test
 	public void testPegarNota() {
 		sistema.avaliarTutor(1, 5);
-		assertEquals(4.1666666666667,sistema.pegarNota("2323"), 0.0001);
+		assertEquals(4.1666666666667, sistema.pegarNota("2323"), 0.0001);
 	}
-	
+
 	/**
-	 * Testa se uma excecao eh lancada caso o parametro "matricula" passe uma matricula invalida.
+	 * Testa se uma excecao eh lancada caso o parametro "matricula" passe uma
+	 * matricula invalida.
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testPegarNotaMatriculaInvalida() {
 		sistema.pegarNota("117110");
 	}
-	
+
+	/**
+	 * Testa se o metodo esta retornando o nivel correto.
+	 */
 	@Test
 	public void testPegarNivel() {
-		assertEquals("Tutor",sistema.pegarNivel("2323"));
+		assertEquals("Tutor", sistema.pegarNivel("2323"));
 	}
-	
+
+	/**
+	 * Testa se uma excecao eh lancada caso a matricula do tutor seja invalida.
+	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testPegarNivelMatriculaInvalida() {
 		sistema.pegarNivel("117110");
 	}
-	
-	
+
+	/**
+	 * Testa se uma excecao eh lancada caso a matricula do tutor seja vazia.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testPegarNivelMatriculaVazia() {
+		sistema.pegarNivel("");
+	}
+
+	/**
+	 * Testa se uma excecao eh lancada caso a matricula seja invalida.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testDoarMatriculaInvalida() {
+		sistema.doar("117110", 100);
+	}
+
+	/**
+	 * Testa se uma excecao eh lancada caso a matricula seja vazia.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testDoarMatriculaVazia() {
+		sistema.doar("", 100);
+	}
+
+	/**
+	 * Testa se uma excecao eh lancada caso o dinheiro oferecido ao tutor seja
+	 * negativo.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testDoarDinheiroNegativo() {
+		sistema.doar("2323", -1);
+	}
+
+	/**
+	 * Testa se o metodo esta retornando o dinheiro correto.
+	 */
+	@Test
+	public void testTotalDinheiroTutor() {
+		sistema.doar("2323", 100);
+		assertEquals(80, sistema.totalDinheiroTutor("somdojapones@sbt.com"));
+	}
+
+	/**
+	 * Testa se uma excecao eh lancada caso o email esteja vazio.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testTotalDinheiroTutorEmailVazio() {
+		sistema.totalDinheiroTutor("");
+	}
+
+	/**
+	 * Testa se uma excecao eh lancada caso o email seja invalido.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testTotalDinheiroTutorEmailInvalido() {
+		sistema.totalDinheiroTutor("somdojapones");
+	}
+
+	/**
+	 * Testa se o metodo esta retornando o dinheiro corretamente.
+	 */
+	@Test
+	public void testTotalDinheiroSistema() {
+		sistema.doar("2323", 100);
+		assertEquals(20, sistema.totalDinheiroSistema());
+	}
 
 }

@@ -406,27 +406,19 @@ public class SistemaTest {
 	}
 
 	/**
-	 * Testa se uma excecao eh lancada caso o parametro "idAjuda" esteja nulo.
-	 */
-	@Test(expected = NullPointerException.class)
-	public void testPegarTutorAjudaNula() {
-		sistema.pegarTutor(null);
-	}
-	
-	/**
 	 * Testa se o metodo esta retornando a disciplina corretamente.
 	 */
 	@Test
 	public void testGetInfoAjudaDisciplina() {
-		assertEquals("P3",sistema.getInfoAjuda(1,"disciplina"));
+		assertEquals("P3", sistema.getInfoAjuda(1, "disciplina"));
 	}
-	
+
 	/**
 	 * Testa se o metodo esta retornando o horario corretamente.
 	 */
 	@Test
 	public void testGetInfoAjudaHorario() {
-		assertEquals("14:00",sistema.getInfoAjuda(1,"horario"));
+		assertEquals("14:00", sistema.getInfoAjuda(1, "horario"));
 	}
 
 	/**
@@ -434,7 +426,7 @@ public class SistemaTest {
 	 */
 	@Test
 	public void testGetInfoAjudaDia() {
-		assertEquals("qua",sistema.getInfoAjuda(1,"dia"));
+		assertEquals("qua", sistema.getInfoAjuda(1, "dia"));
 	}
 
 	/**
@@ -442,56 +434,129 @@ public class SistemaTest {
 	 */
 	@Test
 	public void testGetInfoAjudaLocal() {
-		assertEquals("CAA",sistema.getInfoAjuda(1,"local"));
+		assertEquals("CAA", sistema.getInfoAjuda(1, "local"));
 	}
-	
+
 	/**
-	 * Testa se uma excecao eh lancada caso o parametro "idAjuda" passe um id invalido.
+	 * Testa se uma excecao eh lancada caso o parametro "idAjuda" passe um id
+	 * invalido.
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetInfoAjudaInvalida() {
-		sistema.getInfoAjuda(-1,"disciplina");
+		sistema.getInfoAjuda(-1, "disciplina");
 	}
-	
+
 	/**
-	 * Testa se uma excecao eh lancada caso o parametro "idAjuda" passe um id de uma Ajuda nao cadastrada.
+	 * Testa se uma excecao eh lancada caso o parametro "idAjuda" passe um id de uma
+	 * Ajuda nao cadastrada.
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetInfoAjudaNaoCadastrada() {
-		sistema.getInfoAjuda(5,"disciplina");
+		sistema.getInfoAjuda(5, "disciplina");
 	}
-	
-	/**
-	 * Testa se uma excecao eh lancada caso o parametro "idAjuda" seja nulo.
-	 */
-	@Test(expected = NullPointerException.class)
-	public void testGetInfoAjudaNula() {
-		sistema.getInfoAjuda(null,"disciplina");
-	}
-	
+
 	/**
 	 * Testa se uma excecao eh lancada caso o parametro "atributo" esteja vazio.
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetInfoAjudaAtributoVazio() {
-		sistema.getInfoAjuda(1,"");
+		sistema.getInfoAjuda(1, "");
 	}
-	
+
 	/**
 	 * Testa se uma excecao eh lancada caso o parametro "atributo" esteja nulo.
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testGetInfoAjudaAtributoNulo() {
-		sistema.getInfoAjuda(1,null);
+		sistema.getInfoAjuda(1, null);
 	}
-	
+
 	/**
 	 * Testa se uma excecao eh lancada caso o parametro "atributo" seja invalido.
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetInfoAjudaAtributoInvalido() {
-		sistema.getInfoAjuda(1,"comida favorita");
+		sistema.getInfoAjuda(1, "comida favorita");
 	}
 
+	/**
+	 * Testa se o metodo retorna uma String dizendo que o tutor foi avaliado com
+	 * sucesso.
+	 */
+	@Test
+	public void testAvaliarTutorNaoAvaliado() {
+		assertEquals("Tutor avaliado", sistema.avaliarTutor(1, 4));
+	}
+
+	/**
+	 * Testa se o metodo retorna uma String dizendo que a ajuda ja foi avaliada.
+	 */
+	@Test
+	public void testAvaliarTutorJaAvaliado() {
+		assertEquals("Ajuda ja avaliada", sistema.avaliarTutor(1, 5));
+	}
+
+	/**
+	 * Testa se uma excecao eh lancada caso o parametro "idAjuda" seja negativo.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testAvaliarTutorIdNegativo() {
+		sistema.avaliarTutor(-1, 4);
+	}
+
+	/**
+	 * Testa se uma excecao eh lancada caso a ajuda avaliada ainda nao esteja
+	 * cadastrada.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testAvaliarTutorAjudaNaoCadastrada() {
+		sistema.avaliarTutor(5, 4);
+	}
+
+	/**
+	 * Testa se uma excecao eh lancada caso o parametro "nota" seja negativo.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testAvaliarTutorNotaNegativa() {
+		sistema.avaliarTutor(1, -1);
+	}
+
+	/**
+	 * Testa se uma excecao eh lancada caso o parametro "nota" seja maior que 5
+	 * (invalido).
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testAvaliarTutorNotaInvalida() {
+		sistema.avaliarTutor(1, 6);
+	}
+	
+	/**
+	 * Testa se o metodo esta retornando a nota corretamente.
+	 */
+	@Test
+	public void testPegarNota() {
+		sistema.avaliarTutor(1, 5);
+		assertEquals(4.1666666666667,sistema.pegarNota("2323"), 0.0001);
+	}
+	
+	/**
+	 * Testa se uma excecao eh lancada caso o parametro "matricula" passe uma matricula invalida.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testPegarNotaMatriculaInvalida() {
+		sistema.pegarNota("117110");
+	}
+	
+	@Test
+	public void testPegarNivel() {
+		assertEquals("Tutor",sistema.pegarNivel("2323"));
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testPegarNivelMatriculaInvalida() {
+		sistema.pegarNivel("117110");
+	}
+	
+	
 
 }

@@ -3,9 +3,9 @@ package principal;
 import java.util.ArrayList;
 
 public class Tutor extends Aluno {
-	private int proficiencia, idTutor;
+	private int proficiencia, idTutor, saldo;
 	private ArrayList<String> disciplinas;
-	private double nota, saldo;
+	private double nota;
 	private Atendimento atendimento;
 
 	/**
@@ -27,6 +27,7 @@ public class Tutor extends Aluno {
 		this.idTutor = idTutor;
 		super.setTipo("tutor");
 		this.atendimento = new Atendimento();
+		this.saldo = 0;
 	}
 
 	/**
@@ -141,5 +142,25 @@ public class Tutor extends Aluno {
 			return "Tutor";
 		}
 		return "Aprendiz";
+	}
+
+	/**
+	 * Esse metodo recebe uma doacao para o tutor
+	 * 
+	 * @param valor
+	 *            valor da doacao
+	 */
+	public void receberDoacao(int valor) {
+		this.saldo += valor;
+
+	}
+
+	/**
+	 * Retorna o saldo que o tutor tem
+	 * 
+	 * @return valor do saldo
+	 */
+	public int getSaldo() {
+		return saldo;
 	}
 }

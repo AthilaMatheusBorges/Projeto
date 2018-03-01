@@ -15,6 +15,7 @@ public class Sistema {
 
 	private Map<String, Aluno> listaDeAlunos;
 	private Map<Integer, PedidoDeAjuda> pedidosDeAjuda;
+	private int caixa;
 
 	/**
 	 * Constroi um novo sistema.
@@ -22,6 +23,7 @@ public class Sistema {
 	public Sistema() {
 		this.listaDeAlunos = new HashMap<>();
 		this.pedidosDeAjuda = new HashMap<>();
+		this.caixa = 0;
 	}
 
 	/**
@@ -657,5 +659,49 @@ public class Sistema {
 	 */
 	public String pegarNivel(String matriculaTutor) {
 		return recuperaTutorPelaMatricula(matriculaTutor).pegarNivel();
+	}
+
+	/**
+	 * Metodo que faz uma doacao a um tutor
+	 * 
+	 * @param matriculaTutor
+	 *            matricula do tutor
+	 * @param totalCentavos
+	 *            valor da doacao
+	 */
+	public void doar(String matriculaTutor, int totalCentavos) {
+		String nivel = pegarNivel(matriculaTutor);
+		int valorSistema = 0;
+		if (nivel.equals("TOP")) {
+			valorSistema = (int) (1
+					- (90 + ((recuperaTutorPelaMatricula(matriculaTutor).getNota() - 4.5) / 100) * totalCentavos));
+		} else if (nivel.equals("Tutor")) {
+			valorSistema = (int) (1 - (80 / 100) * totalCentavos);
+		} else if (nivel.equals("Aprendiz")) {
+			valorSistema = (int) (1
+					- (40 - ((3.0 - recuperaTutorPelaMatricula(matriculaTutor).getNota()) / 100) * totalCentavos));
+		}
+		this.caixa += valorSistema;
+		recuperaTutorPelaMatricula(matriculaTutor).receberDoacao(totalCentavos - valorSistema);
+	}
+
+	/**
+	 * Retorna o dinheiro de um tutor.
+	 * 
+	 * @param emailTutor
+	 *            email do tutor
+	 * @return dinheiro do tutor
+	 */
+	public int totalDinheiroTutor(String emailTutor) {
+		return recuperaTutorPorEmail(emailTutor).getSaldo();
+	}
+
+	/**
+	 * Retorna o caixa do sistema
+	 * 
+	 * @return dinheiro do sistema
+	 */
+	public int totalDinheiroSistema() {
+		return caixa;
 	}
 }

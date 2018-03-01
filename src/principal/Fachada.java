@@ -246,4 +246,36 @@ public class Fachada {
 	public String pegarNivel(String matriculaTutor) {
 		return sistema.pegarNivel(matriculaTutor);
 	}
+
+	/**
+	 * Metodo que serve para fazer uma doacao ao algum tutor.
+	 * 
+	 * @param matriculaTutor
+	 *            matricula de um tutor
+	 * @param totalCentavos
+	 *            valor a ser doado
+	 */
+	public void doar(String matriculaTutor, int totalCentavos) {
+		sistema.doar(matriculaTutor, totalCentavos);
+	}
+
+	/**
+	 * Retorna o total de dinheiro do tutor.
+	 * 
+	 * @param emailTutor
+	 *            email do tutor
+	 * @return dinheiro do tutor
+	 */
+	public int totalDinheiroTutor(String emailTutor) {
+		return sistema.totalDinheiroTutor(emailTutor);
+	}
+
+	/**
+	 * Retorna o dinheiro do sistema.
+	 * 
+	 * @return caixa do sistema
+	 */
+	public int totalDinheiroSistema() {
+		return sistema.totalDinheiroSistema();
+	}
 }

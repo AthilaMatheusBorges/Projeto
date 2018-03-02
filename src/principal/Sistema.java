@@ -1,26 +1,24 @@
 package principal;
 
-import java.awt.List;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * 
- * @author athilambb
- *
- */
+
 public class Sistema {
 
 	private Map<String, Aluno> listaDeAlunos;
+	private ArrayList<Disciplina> listaDeDisciplinas;
 	private Map<Integer, PedidoDeAjuda> pedidosDeAjuda;
 	private int caixa;
+
 	/**
 	 * Constroi um novo sistema.
 	 */
 	public Sistema() {
 		this.listaDeAlunos = new HashMap<>();
+		this.listaDeDisciplinas = new ArrayList<>();
 		this.pedidosDeAjuda = new HashMap<>();
 		this.caixa = 0;
 	}
@@ -40,7 +38,7 @@ public class Sistema {
 	 *            email do aluno.
 	 */
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
-		verificaCadastroAluno(this.listaDeAlunos.containsKey(matricula), nome, matricula, email);
+		verificaCadastroAluno(nome, matricula, telefone, email);
 		Aluno aluno = new Aluno(nome, matricula, codigoCurso, telefone, email);
 		this.listaDeAlunos.put(matricula, aluno);
 	}
@@ -49,30 +47,29 @@ public class Sistema {
 	 * Verifica se o e-mail é valido, se a matrícula está cadastrada no sistema de
 	 * alunos e se o nome é vazio ou null
 	 * 
-	 * @param matriculaValida
-	 *            Um booleano true caso a matricula esteja no hashMap e false caso
-	 *            nao
 	 * @param nome
 	 *            nome do aluno em String
 	 * @param matricula
 	 *            matricula do aluno em String
+	 * 
+	 * @param telefone
+	 *            eh o telefone.
 	 * @param email
 	 *            email do aluno em String
 	 */
-	public void verificaCadastroAluno(boolean matriculaValida, String nome, String matricula, String email) {
+	public void verificaCadastroAluno(String nome, String matricula, String telefone, String email) {
 		String erro = "";
-		if (!verificaEmail(email)) {
+		if (!verificaEmail(email))
 			erro = "Email invalido";
-		} else if (matriculaValida) {
+		else if (this.listaDeAlunos.containsKey(matricula))
 			erro = "Aluno de mesma matricula ja cadastrado";
-		} else if (nome.trim().equals("") || nome == null) {
+		else if (nome.trim().equals("") || nome == null)
 			erro = "Nome nao pode ser vazio ou nulo";
+		else if (telefone == null)
+			erro = "Telefone nao pode ser nulo";
 
-		}
-		if (!erro.equals("")) {
+		if (!erro.equals(""))
 			throw new IllegalArgumentException("Erro no cadastro de aluno: " + erro);
-		}
-
 	}
 
 	/**
@@ -104,7 +101,7 @@ public class Sistema {
 	 * @return
 	 */
 	public String recuperaAluno(String matricula) {
-		verificaMatricula(listaDeAlunos.containsKey(matricula), "recuperaAluno", matricula);
+		verificaMatricula("busca por aluno", matricula);
 		return this.listaDeAlunos.get(matricula).toString();
 	}
 
@@ -121,13 +118,9 @@ public class Sistema {
 	 *            do aluno em String
 	 */
 
-	public void verificaMatricula(boolean matriculaValida, String metodo, String matricula) {
-		if (metodo.equals("getInfoAluno") && !matriculaValida) {
-			throw new IllegalArgumentException("Erro na obtencao de informacao de aluno: Aluno nao encontrado");
-		} else if (metodo.equals("recuperaAluno") && !matriculaValida) {
-			throw new IllegalArgumentException("Erro na busca por aluno: Aluno nao encontrado");
-		}
-
+	public void verificaMatricula(String quemSouEu, String matricula) {
+		if (!this.listaDeAlunos.containsKey(matricula))
+			throw new IllegalArgumentException("Erro na " + quemSouEu + ": Aluno nao encontrado");
 	}
 
 	/**
@@ -142,6 +135,8 @@ public class Sistema {
 		for (Aluno aluno : alunos) {
 			lista += aluno.toString() + ", ";
 		}
+		if (lista.length() == 0)
+			return "";
 		String saida = lista.substring(0, lista.length() - 2);
 		return saida;
 
@@ -158,7 +153,7 @@ public class Sistema {
 	 * @return
 	 */
 	public String getInfoAluno(String matricula, String atributo) {
-		verificaMatricula(this.listaDeAlunos.containsKey(matricula), "getInfoAluno", matricula);
+		verificaMatricula("obtencao de informacao de aluno", matricula);
 		switch (atributo.toLowerCase()) {
 		case "nome":
 			return this.listaDeAlunos.get(matricula).getNome();
@@ -167,7 +162,7 @@ public class Sistema {
 		case "email":
 			return this.listaDeAlunos.get(matricula).getEmail();
 		default:
-			return "";
+			throw new IllegalArgumentException("Erro na obtencao de informacao de aluno: Atributo invalido.");
 		}
 	}
 
@@ -182,54 +177,23 @@ public class Sistema {
 	 *            nivel de proficiencia do mesmo na disciplina
 	 */
 	public void tornarTutor(String matricula, String disciplina, int proficiencia) {
-		if (!listaDeAlunos.containsKey(matricula)) {
+		if (!listaDeAlunos.containsKey(matricula))
 			throw new IllegalArgumentException("Erro na definicao de papel: Tutor nao encontrado");
-		}
-
-		if (verificaDadosParaTornarTutor(listaDeAlunos.containsKey(matricula),
-				listaDeAlunos.get(matricula).getTipo().equals("tutor"), recuperaTutorPelaMatricula(matricula),
-				disciplina, proficiencia)) {
-			Aluno aluno = this.listaDeAlunos.get(matricula);
-			Tutor tutor = new Tutor(aluno, disciplina, proficiencia, getQntdAlunos());
-			this.listaDeAlunos.replace(matricula, tutor);
-		} else {
-			recuperaTutorPelaMatricula(matricula).adicionaDisciplina(disciplina);
-		}
-	}
-
-	/**
-	 * Verifica se a matricula eh valida, so o valor de proficiencia eh valido, e se
-	 * o possivel tutor ja eh tutor dessa disciplina
-	 * 
-	 * @param matriculaValida
-	 *            Um booleano true caso a matricula esteja no hashMap e false caso
-	 *            nao
-	 * @param ehTutor
-	 *            um booleano true caso seja tutor e false caso nao seja
-	 * @param tutor
-	 *            Um tutor da classe Tutor
-	 * @param disciplina
-	 *            uma String com o nome da disciplina
-	 * @param proficiencia
-	 *            valor de proficiencia em inteiro
-	 * @return um booleano true se tiver tudo ok e false se nao
-	 */
-	public boolean verificaDadosParaTornarTutor(boolean matriculaValida, boolean ehTutor, Tutor tutor,
-			String disciplina, int proficiencia) {
-
-		if (!matriculaValida) {
-			throw new IllegalArgumentException("Erro na definicao de papel: Tutor nao encontrado");
-		} else if (proficiencia < 1 || proficiencia > 5) {
+		else if (proficiencia < 1 || proficiencia > 5)
 			throw new IllegalArgumentException("Erro na definicao de papel: Proficiencia invalida");
-		} else if (ehTutor) {
 
-			if (tutor.confereSeJaEtutorDaDisciplina(disciplina)) {
+		Tutor tutor = new Tutor(matricula, proficiencia, getQntdAlunos());
+
+		if (getDisciplina(disciplina) != null) {
+			if (!getDisciplina(disciplina).temTutor(matricula))
+				getDisciplina(disciplina).adicionarTutor(tutor);
+			else
 				throw new IllegalArgumentException("Erro na definicao de papel: Ja eh tutor dessa disciplina");
-			} else {
-				return false;
-			}
+
+		} else {
+			adicionaDisciplina(disciplina);
+			getDisciplina(disciplina).adicionarTutor(tutor);
 		}
-		return true;
 	}
 
 	/**
@@ -240,12 +204,13 @@ public class Sistema {
 	 * @return retorna o toString do aluno procurado.
 	 */
 	public String recuperaTutor(String matricula) {
-		if (!this.listaDeAlunos.containsKey(matricula)) {
+		if (!verificaTutor(matricula)) {
 			throw new IllegalArgumentException("Erro na busca por tutor: Tutor nao encontrado");
 		}
 		return recuperaAluno(matricula);
 	}
 
+	//Falta corrigir tutor repetido.
 	/**
 	 * Lista todos os tutores do sistema.
 	 * 
@@ -264,7 +229,7 @@ public class Sistema {
 	}
 
 	/**
-	 * Verifica se o aluno é tutor ou nao
+	 * Verifica se a matricula eh de um tutor
 	 * 
 	 * @param matricula
 	 *            matricula do aluno em String
@@ -272,8 +237,9 @@ public class Sistema {
 	 */
 
 	public boolean verificaTutor(String matricula) {
-		if (listaDeAlunos.get(matricula).getTipo().equals("tutor")) {
-			return true;
+		for (Disciplina disc : this.listaDeDisciplinas) {
+			if (disc.temTutor(matricula))
+				return true;
 		}
 		return false;
 	}
@@ -287,13 +253,10 @@ public class Sistema {
 	 */
 
 	public Tutor recuperaTutorPorEmail(String email) {
-		for (Aluno aluno : listaDeAlunos.values()) {
-			if (aluno.getEmail().equalsIgnoreCase(email)) {
-				if (verificaTutor(aluno.getMatricula())) {
-					Tutor tutor = (Tutor) aluno;
-					return tutor;
-				}
-			}
+		for (String matricula : listaDeAlunos.keySet()) {
+			if (getAluno(matricula).getEmail().equalsIgnoreCase(email))
+				if (verificaTutor(matricula))
+					return getTutor(matricula);
 		}
 		return null;
 	}
@@ -306,11 +269,7 @@ public class Sistema {
 	 * @return retorna o tutor procurado ou null caso nao exista.
 	 */
 	public Tutor recuperaTutorPelaMatricula(String matricula) {
-		if (listaDeAlunos.containsKey(matricula) && listaDeAlunos.get(matricula).getTipo().equals("tutor")) {
-			Tutor tutor = (Tutor) listaDeAlunos.get(matricula);
-			return tutor;
-		}
-		return null;
+		return getTutor(matricula);
 	}
 
 	/**
@@ -324,7 +283,6 @@ public class Sistema {
 	 *            dia do atendimento
 	 */
 	public void cadastrarHorario(String email, String horario, String dia) {
-
 		confereCadastrarHorario(recuperaTutorPorEmail(email), email, horario, dia);
 		recuperaTutorPorEmail(email).cadastrarHorario(horario, dia);
 	}
@@ -456,9 +414,9 @@ public class Sistema {
 	 *            eh o local da ajuda.
 	 * @return retorna o identificador do Pedido de Ajuda.
 	 */
-	public int pedirAjudaPresencial(String disciplina, String horario, String dia, String localInteresse) {
-		String tutorMatricula = escolheTutorAjudaPresencial(disciplina, horario, dia, localInteresse).getMatricula();
-		PedidoDeAjuda pedido = new AjudaPresencial(disciplina, tutorMatricula, dia, horario, localInteresse,
+	public int pedirAjudaPresencial(String matrAluno, String disciplina, String horario, String dia, String localInteresse) {
+		String tutorMatricula = escolheTutorAjudaPresencial(disciplina, horario, dia, localInteresse);//.getTutorMatricula();
+		PedidoDeAjuda pedido = new AjudaPresencial(matrAluno, disciplina, tutorMatricula, dia, horario, localInteresse,
 				getQntdPedidosAjuda() + 1);
 		this.pedidosDeAjuda.put(pedido.getIdAjuda(), pedido);
 		return pedido.getIdAjuda();
@@ -471,9 +429,9 @@ public class Sistema {
 	 *            eh a disciplina da ajuda.
 	 * @return retorna o identificador do Pedido de Ajuda.
 	 */
-	public int pedirAjudaOnline(String disciplina) {
-		String tutorMatricula = escolheTutorAjudaOnline(disciplina).getMatricula();
-		PedidoDeAjuda pedido = new AjudaOnline(disciplina, tutorMatricula, getQntdPedidosAjuda() + 1);
+	public int pedirAjudaOnline(String matrAluno, String disciplina) {
+		String tutorMatricula = escolheTutorAjudaOnline(disciplina);
+		PedidoDeAjuda pedido = new AjudaOnline(matrAluno, disciplina, tutorMatricula, getQntdPedidosAjuda() + 1);
 		this.pedidosDeAjuda.put(pedido.getIdAjuda(), pedido);
 		return pedido.getIdAjuda();
 	}
@@ -491,28 +449,16 @@ public class Sistema {
 	 *            eh o local da ajuda.
 	 * @return retorna o Tutor que melhor se encaixe nos requisitos.
 	 */
-	private Tutor escolheTutorAjudaPresencial(String disciplina, String horario, String dia, String localInteresse) {
-		Tutor possivelTutor = null;
-		Tutor tutorVerificado = null;
-		for (Aluno aluno : this.listaDeAlunos.values()) {
-			if (aluno.getTipo().equals("tutor")) {
-				tutorVerificado = (Tutor) aluno;
-				if (tutorVerificado.consultaLocal(localInteresse) && tutorVerificado.consultaHorario(horario, dia)) {
-					if (possivelTutor == null)
-						possivelTutor = tutorVerificado;
-					else {
-						if (tutorVerificado.getNota() > possivelTutor.getNota())
-							possivelTutor = tutorVerificado;
-						else if (tutorVerificado.getNota() == possivelTutor.getNota())
-							if (tutorVerificado.getId() < possivelTutor.getId())
-								possivelTutor = tutorVerificado;
-					}
-				}
-			}
-		}
-		return possivelTutor;
+	private String escolheTutorAjudaPresencial(String disciplina, String horario, String dia, String localInteresse) {
+		if(stringNullVazio(disciplina)) return null;
+		if(stringNullVazio(horario)) return null;
+		if(stringNullVazio(dia)) return null;
+		if(stringNullVazio(localInteresse)) return null;
+		return getDisciplina(disciplina).maiorProficiencia(horario, dia, localInteresse).getTutorMatricula();
 	}
-
+	
+	
+	
 	/**
 	 * Escolhe o tutor para associar a um pedido de Ajuda Online.
 	 * 
@@ -520,25 +466,9 @@ public class Sistema {
 	 *            eh a disciplina da ajuda.
 	 * @return retorna o Tutor que melhor se encaixe nos requisitos.
 	 */
-	private Tutor escolheTutorAjudaOnline(String disciplina) {
-		Tutor possivelTutor = null;
-		Tutor tutorVerificado = null;
-		for (Aluno aluno : this.listaDeAlunos.values()) {
-			if (aluno.getTipo().equals("tutor")) {
-				tutorVerificado = (Tutor) aluno;
-				if (tutorVerificado.confereSeJaEtutorDaDisciplina(disciplina))
-					if (possivelTutor == null)
-						possivelTutor = tutorVerificado;
-					else {
-						if (tutorVerificado.getNota() > possivelTutor.getNota())
-							possivelTutor = tutorVerificado;
-						else if (tutorVerificado.getNota() == possivelTutor.getNota())
-							if (tutorVerificado.getId() < possivelTutor.getId())
-								possivelTutor = tutorVerificado;
-					}
-			}
-		}
-		return possivelTutor;
+	private String escolheTutorAjudaOnline(String disciplina) {
+		if(stringNullVazio(disciplina)) return null;
+		return getDisciplina(disciplina).maiorProficiencia().getTutorMatricula();
 	}
 
 	/**
@@ -549,8 +479,13 @@ public class Sistema {
 	 *            eh o identificador do pedido de ajuda.
 	 * @return retorna a matricula do tutor responsavel pelo pedido de ajuda.
 	 */
-	public String pegarTutor(int idAjuda) {
+	public String getMatriculaTutorAjuda(int idAjuda) {
 		return this.pedidosDeAjuda.get(idAjuda).getTutorMatricula();
+	}
+	
+	public String pegarTutor(int idAjuda) {
+		validaIdAjuda("tutor", idAjuda);
+		return getAjuda(idAjuda).getDescricaoTutor();
 	}
 
 	/**
@@ -575,9 +510,10 @@ public class Sistema {
 	 * @return retorna a informacao referente ao pedido de ajuda.
 	 */
 	public String getInfoAjuda(int idAjuda, String atributo) {
+		validaIdAjuda("info da ajuda", idAjuda);
 		switch (atributo.toLowerCase()) {
 		case "tutor":
-			return this.pedidosDeAjuda.get(idAjuda).getTutorMatricula();
+			return getAjuda(idAjuda).getTutorMatricula();
 		case "disciplina":
 			return this.pedidosDeAjuda.get(idAjuda).getDisciplina();
 		case "dia":
@@ -591,15 +527,24 @@ public class Sistema {
 						"Erro na obtencao de informacao de ajuda: Ajuda Online nao tem horario");
 			AjudaPresencial ajudaHorario = (AjudaPresencial) getAjuda(idAjuda);
 			return ajudaHorario.getHorario();
-		case "local":
+		case "localinteresse":
 			if (getAjuda(idAjuda) instanceof AjudaOnline)
 				throw new IllegalArgumentException(
 						"Erro na obtencao de informacao de ajuda: Ajuda Online nao tem local");
 			AjudaPresencial ajudaLocal = (AjudaPresencial) getAjuda(idAjuda);
 			return ajudaLocal.getLocalInteresse();
 		default:
-			throw new IllegalArgumentException("Erro na obtencao de informacao de ajuda: Atributo invalido");
+			if(atributo.trim().equals("") || atributo == null)
+				throw new IllegalArgumentException("Erro ao tentar recuperar info da ajuda : atributo nao pode ser vazio ou em branco");
+			throw new IllegalArgumentException("Erro ao tentar recuperar info da ajuda : atributo nao encontrado");
 		}
+	}
+	
+	private void validaIdAjuda(String quemSouEu, int idAjuda) {
+		if(idAjuda < 0)
+			throw new IllegalArgumentException("Erro ao tentar recuperar " + quemSouEu + " : id nao pode menor que zero ");
+		else if(idAjuda > this.pedidosDeAjuda.size())
+			throw new IllegalArgumentException("Erro ao tentar recuperar " + quemSouEu + " : id nao encontrado ");
 	}
 
 	/**
@@ -672,13 +617,13 @@ public class Sistema {
 		String nivel = pegarNivel(matriculaTutor);
 		int valorSistema = 0;
 		if (nivel.equals("TOP")) {
-			valorSistema = (int) (1
-					- (90 + (((recuperaTutorPelaMatricula(matriculaTutor).getNota() - 4.5) * 10) / 100) * totalCentavos));
+			valorSistema = (int) (1 - (90
+					+ (((recuperaTutorPelaMatricula(matriculaTutor).getNota() - 4.5) * 10) / 100) * totalCentavos));
 		} else if (nivel.equals("Tutor")) {
-			valorSistema = (int)((0.2) * totalCentavos);
+			valorSistema = (int) ((0.2) * totalCentavos);
 		} else if (nivel.equals("Aprendiz")) {
-			valorSistema = (int) (1
-					- (40 - (((3.0 - recuperaTutorPelaMatricula(matriculaTutor).getNota())* 10) / 100) * totalCentavos));
+			valorSistema = (int) (1 - (40
+					- (((3.0 - recuperaTutorPelaMatricula(matriculaTutor).getNota()) * 10) / 100) * totalCentavos));
 		}
 		this.caixa += valorSistema;
 		recuperaTutorPelaMatricula(matriculaTutor).receberDoacao(totalCentavos - valorSistema);
@@ -703,4 +648,35 @@ public class Sistema {
 	public int totalDinheiroSistema() {
 		return caixa;
 	}
+
+	public Tutor getTutor(String matricula) {
+		for (Disciplina disc : this.listaDeDisciplinas) {
+			if (disc.temTutor(matricula))
+				return disc.getTutor(matricula);
+		}
+		return null;
+	}
+
+	public Aluno getAluno(String matricula) {
+		return this.listaDeAlunos.get(matricula);
+	}
+
+	public Disciplina getDisciplina(String disciplina) {
+		for (Disciplina disc : this.listaDeDisciplinas) {
+			if (disc.getDisciplina().equals(disciplina))
+				return disc;
+		}
+		return null;
+	}
+
+	public void adicionaDisciplina(String disciplina) {
+		this.listaDeDisciplinas.add(new Disciplina(disciplina));
+	}
+	
+	public boolean stringNullVazio(String stringTeste) {
+		if (stringTeste.trim().equals("") || stringTeste == null)
+			return true;
+		return false;
+	}
+
 }

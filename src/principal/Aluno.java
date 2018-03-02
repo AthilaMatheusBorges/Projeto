@@ -4,7 +4,6 @@ public class Aluno implements Comparable<Aluno> {
 	private String matricula, nome, telefone, email;
 	private int codigoCurso;
 	private double nota;
-	private String tipo;
 
 	/**
 	 * Constroi o aluno baseado nos seguintes parametros:
@@ -26,28 +25,7 @@ public class Aluno implements Comparable<Aluno> {
 		this.codigoCurso = codigoCurso;
 		this.telefone = telefone.trim();
 		this.email = email;
-		this.tipo = "aluno";
 		this.nota = 5;
-	}
-
-	/**
-	 * Retorna a String que representa o tipo do aluno (Se ele eh tutor ou somente
-	 * aluno).
-	 * 
-	 * @return A String representante do tipo.
-	 */
-	public String getTipo() {
-		return tipo;
-	}
-
-	/**
-	 * Atualiza a String que representa o tipo do aluno, caso ele se torne tutor.
-	 * 
-	 * @param tipo
-	 *            A nova String representando o tipo.
-	 */
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
 	}
 	
 	/**

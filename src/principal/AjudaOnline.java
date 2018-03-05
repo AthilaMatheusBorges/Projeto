@@ -36,7 +36,7 @@ public class AjudaOnline extends PedidoDeAjuda {
 	 * Recupera uma descricao do Tutor da ajuda.
 	 */
 	public String getDescricaoTutor() {
-		return "Tutor - " + super.getTutorMatricula() + ", disciplina- " + super.getDisciplina();
+		return "Tutor - " + super.getTutorMatricula() + ", disciplina - " + super.getDisciplina();
 	}
 
 }

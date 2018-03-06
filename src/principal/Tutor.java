@@ -2,9 +2,9 @@ package principal;
 
 import java.util.ArrayList;
 
-public class Tutor extends Aluno {
+public class Tutor {
+	private String tutorMatricula;
 	private int proficiencia, idTutor, saldo;
-	private ArrayList<String> disciplinas;
 	private double nota;
 	private Atendimento atendimento;
 
@@ -18,43 +18,23 @@ public class Tutor extends Aluno {
 	 * @param proficiencia
 	 *            eh a proficiencia do tutor sobre a discipĺina.
 	 */
-	public Tutor(Aluno aluno, String disciplina, int proficiencia, int idTutor) {
-		super(aluno.getNome(), aluno.getMatricula(), aluno.getCodigoCurso(), aluno.getTelefone(), aluno.getEmail());
+	public Tutor(String tutorMatricula, int proficiencia, int idTutor) {
+		this.tutorMatricula = tutorMatricula;
 		this.proficiencia = proficiencia;
-		this.disciplinas = new ArrayList<>();
-		adicionaDisciplina(disciplina);
 		this.nota = 4;
 		this.idTutor = idTutor;
-		super.setTipo("tutor");
 		this.atendimento = new Atendimento();
 		this.saldo = 0;
 	}
-
+	
 	/**
-	 * Adiciona uma disciplina a lista de disciplinas do tutor.
-	 * 
-	 * @param disciplina2
-	 *            eh a nova disciplina do tutor.
+	 * Recupera a matricula do tutor.
+	 * @return retorna a matricula do tutor.
 	 */
-	public void adicionaDisciplina(String disciplina) {
-		this.disciplinas.add(disciplina);
+	public String getTutorMatricula() {
+		return this.tutorMatricula;
 	}
 
-	/**
-	 * Confere se o tutor ja eh tutor de determinada disciplina.
-	 * 
-	 * @param disciplina
-	 *            eh a disciplina a ser verificada.
-	 * @return retorna true caso ja seja tutor da disciplina, false caso contrario.
-	 */
-	public boolean confereSeJaEtutorDaDisciplina(String disciplina) {
-		for (String nome : disciplinas) {
-			if (nome.equalsIgnoreCase(disciplina)) {
-				return true;
-			}
-		}
-		return false;
-	}
 
 	/**
 	 * Cadastra o horario de atendimento do tutor.
@@ -163,4 +143,5 @@ public class Tutor extends Aluno {
 	public int getSaldo() {
 		return saldo;
 	}
+
 }

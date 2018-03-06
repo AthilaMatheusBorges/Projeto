@@ -20,13 +20,14 @@ public class AjudaPresencial extends PedidoDeAjuda {
 	 * @param idAjuda
 	 *            eh o identificador do pedido de ajuda.
 	 */
-	public AjudaPresencial(String disciplina, String tutorMatricula, String dia, String horario, String localInteresse,
-			int idAjuda) {
-		super(disciplina, tutorMatricula, idAjuda);
-		verificaString("Disciplina", disciplina);
-		verificaString("Dia", dia);
-		verificaString("Horario", horario);
-		verificaString("Local", localInteresse);
+	public AjudaPresencial(String matrAluno, String disciplina, String tutorMatricula, String dia, String horario,
+			String localInteresse, int idAjuda) {
+		super(matrAluno, disciplina, tutorMatricula, idAjuda);
+		verificaString("matricula de aluno", matrAluno);
+		verificaString("disciplina", disciplina);
+		verificaString("dia", dia);
+		verificaString("horario", horario);
+		verificaString("local de interesse", localInteresse);
 		this.dia = dia;
 		this.horario = horario;
 		this.localInteresse = localInteresse;
@@ -70,6 +71,14 @@ public class AjudaPresencial extends PedidoDeAjuda {
 	private void verificaString(String quemSouEu, String stringTeste) {
 		if (stringTeste.trim().equals("") || stringTeste == null)
 			throw new IllegalArgumentException(
-					"Erro no pedido de ajuda presencial: " + quemSouEu + " nao pode ser vazio ou nulo");
+					"Erro no pedido de ajuda presencial: " + quemSouEu + " nao pode ser vazio ou em branco");
+	}
+
+	/**
+	 * Recupera uma descricao do Tutor da ajuda.
+	 */
+	public String getDescricaoTutor() {
+		return "Tutor - " + super.getTutorMatricula() + ", horario - " + this.horario + ", dia - " + this.dia
+				+ ", local - " + this.localInteresse + ", disciplina - " + super.getDisciplina();
 	}
 }

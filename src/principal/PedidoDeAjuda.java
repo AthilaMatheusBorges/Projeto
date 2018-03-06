@@ -1,8 +1,8 @@
 package principal;
 
-public class PedidoDeAjuda {
+public abstract class PedidoDeAjuda {
 
-	private String disciplina, tutorMatricula;
+	private String disciplina, tutorMatricula, matrAluno;
 	private int idAjuda;
 	private boolean avaliado;
 
@@ -17,7 +17,8 @@ public class PedidoDeAjuda {
 	 * @param idAjuda
 	 *            eh o identificador do pedido de ajuda.
 	 */
-	public PedidoDeAjuda(String disciplina, String tutorMatricula, int idAjuda) {
+	public PedidoDeAjuda(String matrAluno, String disciplina, String tutorMatricula, int idAjuda) {
+		this.matrAluno = matrAluno;
 		this.disciplina = disciplina;
 		this.idAjuda = idAjuda;
 		this.tutorMatricula = tutorMatricula;
@@ -64,5 +65,11 @@ public class PedidoDeAjuda {
 		this.avaliado = true;
 		return true;
 	}
+	
+	/**
+	 * Descricao do tutor da ajuda.
+	 * @return retorna uma descricao do tutor da ajuda.
+	 */
+	public abstract String getDescricaoTutor();
 
 }

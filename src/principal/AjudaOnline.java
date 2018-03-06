@@ -12,20 +12,31 @@ public class AjudaOnline extends PedidoDeAjuda {
 	 * @param idAjuda
 	 *            eh o identificador do pedido de ajuda.
 	 */
-	public AjudaOnline(String disciplina, String tutorMatricula, int idAjuda) {
-		super(disciplina, tutorMatricula, idAjuda);
-		verificaDisciplina(disciplina);
+	public AjudaOnline(String matrAluno, String disciplina, String tutorMatricula, int idAjuda) {
+		super(matrAluno, disciplina, tutorMatricula, idAjuda);
+		verificaString("matricula de aluno", matrAluno);
+		verificaString("disciplina", disciplina);
 	}
 
 	/**
-	 * Verifica se a disciplina passada como parametro para Ajuda Online eh valida.
+	 * Verifica se a String dos parametros passados para Ajuda Online eh valida.
 	 * 
-	 * @param disciplina
-	 *            eh a disciplina da ajuda.
+	 * @param quemSouEu
+	 *            eh quem esta sendo verficado.
+	 * @param stringTeste
+	 *            eh a String a ser verificada.
 	 */
-	private void verificaDisciplina(String disciplina) {
-		if (disciplina.trim().equals("") || disciplina == null)
-			throw new IllegalArgumentException("Erro no pedido de ajuda online: Disciplina nao pode ser vazio ou nulo");
+	private void verificaString(String quemSouEu, String stringTeste) {
+		if (stringTeste.trim().equals("") || stringTeste == null)
+			throw new IllegalArgumentException(
+					"Erro no pedido de ajuda online: " + quemSouEu + " nao pode ser vazio ou em branco");
+	}
+
+	/**
+	 * Recupera uma descricao do Tutor da ajuda.
+	 */
+	public String getDescricaoTutor() {
+		return "Tutor - " + super.getTutorMatricula() + ", disciplina - " + super.getDisciplina();
 	}
 
 }

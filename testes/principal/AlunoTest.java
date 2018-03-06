@@ -19,22 +19,6 @@ public class AlunoTest {
 		a2 = new Aluno("Flavio", "321", 10, " ", "flavinho@yahoo.com");
 	}
 
-	/**
-	 * Testa se o metodo esta retornando a String correta, que representa o tipo.
-	 */
-	@Test
-	public void testGetTipo() {
-		assertEquals("aluno", a1.getTipo());
-	}
-
-	/**
-	 * Testa se o metodo esta alterando a String corretamente.
-	 */
-	@Test
-	public void testSetTipo() {
-		a1.setTipo("tutor");
-		assertEquals("tutor", a1.getTipo());
-	}
 
 	/**
 	 * Testa se o metodo esta retornando a matricula corretamente.

@@ -18,13 +18,14 @@ public class SistemaTest {
 		sistema = new Sistema();
 		sistema.cadastrarAluno("Davi", "1234", 20, "", "davi@daqui.com");
 		sistema.cadastrarAluno("Yuri", "2323", 23, "40028922", "somdojapones@sbt.com");
+		sistema.cadastrarAluno("Trump","2444", 30, "999", "donaldinho@usa.gov");
 		sistema.tornarTutor("1234", "TV", 2);
 		sistema.tornarTutor("2323", "P3", 3);
 		sistema.cadastrarHorario("davi@daqui.com", "10:00", "seg");
 		sistema.cadastrarHorario("somdojapones@sbt.com", "14:00", "qua");
 		sistema.cadastrarLocalDeAtendimento("davi@daqui.com", "UFCG");
 		sistema.cadastrarLocalDeAtendimento("somdojapones@sbt.com", "CAA");
-		sistema.pedirAjudaPresencial("P3", "14:00", "qua", "CAA");
+		sistema.pedirAjudaPresencial("2444","P3", "14:00", "qua", "CAA");
 	}
 
 	/**
@@ -57,7 +58,7 @@ public class SistemaTest {
 	@Test
 	public void testListarAlunos() {
 		assertEquals(sistema.listarAlunos(),
-				"1234 - Davi - 20 - davi@daqui.com, 2323 - Yuri - 23 - 40028922 - somdojapones@sbt.com");
+				"1234 - Davi - 20 - davi@daqui.com, 2444 - Trump - 30 - 999 - donaldinho@usa.gov, 2323 - Yuri - 23 - 40028922 - somdojapones@sbt.com");
 	}
 
 	/**
@@ -182,14 +183,6 @@ public class SistemaTest {
 	}
 
 	/**
-	 * Testa recupera tutor por email.
-	 */
-	@Test
-	public void testRecuperaTutorPorEmail() {
-		assertEquals(sistema.recuperaTutorPorEmail("davi@daqui.com").toString(), "1234 - Davi - 20 - davi@daqui.com");
-	}
-
-	/**
 	 * Testa cadastrar horario de atendimento invalido.
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -242,7 +235,7 @@ public class SistemaTest {
 	 */
 	@Test
 	public void testPedirAjudaPresencialTudoValido() {
-		assertEquals(2, sistema.pedirAjudaPresencial("TV", "10:00", "seg", "UFCG"));
+		assertEquals(2, sistema.pedirAjudaPresencial("2444","TV", "10:00", "seg", "UFCG"));
 	}
 
 	/**
@@ -250,7 +243,7 @@ public class SistemaTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testPedirAjudaPresencialDisciplinaVazia() {
-		sistema.pedirAjudaPresencial("", "10:00", "seg", "UFCG");
+		sistema.pedirAjudaPresencial("2444","", "10:00", "seg", "UFCG");
 	}
 
 	/**
@@ -258,16 +251,16 @@ public class SistemaTest {
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testPedirAjudaPresencialDisciplinaNula() {
-		sistema.pedirAjudaPresencial(null, "10:00", "seg", "UFCG");
+		sistema.pedirAjudaPresencial("2444", null, "10:00", "seg", "UFCG");
 	}
 
 	/**
 	 * Testa se uma excecao eh lancada caso o parametro "disciplina" passe uma
 	 * disciplina invalida.
 	 */
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = NullPointerException.class)
 	public void testPedirAjudaPresencialDisciplinaInvalida() {
-		sistema.pedirAjudaPresencial("OAC", "10:00", "seg", "UFCG");
+		sistema.pedirAjudaPresencial("2444","OAC", "10:00", "seg", "UFCG");
 	}
 
 	/**
@@ -275,7 +268,7 @@ public class SistemaTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testPedirAjudaPresencialHorarioVazio() {
-		sistema.pedirAjudaPresencial("TV", "", "seg", "UFCG");
+		sistema.pedirAjudaPresencial("2444", "TV", "", "seg", "UFCG");
 	}
 
 	/**
@@ -283,16 +276,16 @@ public class SistemaTest {
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testPedirAjudaPresencialHorarioNulo() {
-		sistema.pedirAjudaPresencial("TV", null, "seg", "UFCG");
+		sistema.pedirAjudaPresencial("2444","TV", null, "seg", "UFCG");
 	}
 
 	/**
 	 * Testa se uma excecao eh lancada caso o parametro "horario" passe um horario
 	 * invalido.
 	 */
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = NullPointerException.class)
 	public void testPedirAjudaPresencialHorarioInvalido() {
-		sistema.pedirAjudaPresencial("TV", "12:00", "seg", "UFCG");
+		sistema.pedirAjudaPresencial("2444","TV", "12:00", "seg", "UFCG");
 	}
 
 	/**
@@ -300,7 +293,7 @@ public class SistemaTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testPedirAjudaPresencialDiaVazio() {
-		sistema.pedirAjudaPresencial("TV", "10:00", "", "UFCG");
+		sistema.pedirAjudaPresencial("2444","TV", "10:00", "", "UFCG");
 	}
 
 	/**
@@ -308,15 +301,15 @@ public class SistemaTest {
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testPedirAjudaPresencialDiaNulo() {
-		sistema.pedirAjudaPresencial("TV", "10:00", null, "UFCG");
+		sistema.pedirAjudaPresencial("2444","TV", "10:00", null, "UFCG");
 	}
 
 	/**
 	 * Testa se uma excecao eh lancada caso o parametro "dia" passe um dia invalido.
 	 */
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = NullPointerException.class)
 	public void testPedirAjudaPresencialDiaInvalido() {
-		sistema.pedirAjudaPresencial("TV", "10:00", "ter", "UFCG");
+		sistema.pedirAjudaPresencial("2444", "TV", "10:00", "ter", "UFCG");
 	}
 
 	/**
@@ -325,7 +318,7 @@ public class SistemaTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testPedirAjudaPresencialLocalVazio() {
-		sistema.pedirAjudaPresencial("TV", "10:00", "seg", "");
+		sistema.pedirAjudaPresencial("2444", "TV", "10:00", "seg", "");
 	}
 
 	/**
@@ -334,16 +327,16 @@ public class SistemaTest {
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testPedirAjudaPresencialLocalNulo() {
-		sistema.pedirAjudaPresencial("TV", "10:00", "seg", null);
+		sistema.pedirAjudaPresencial("2444", "TV", "10:00", "seg", null);
 	}
 
 	/**
 	 * Testa se uma excecao eh lancada caso o parametro "localInteresse" passe um
 	 * local invalido.
 	 */
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = NullPointerException.class)
 	public void testPedirAjudaPresencialLocalInvalido() {
-		sistema.pedirAjudaPresencial("TV", "10:00", "seg", "UEPB");
+		sistema.pedirAjudaPresencial("2444", "TV", "10:00", "seg", "UEPB");
 	}
 
 	/**
@@ -351,7 +344,7 @@ public class SistemaTest {
 	 */
 	@Test
 	public void testPedirAjudaOnlineValida() {
-		assertEquals(2, sistema.pedirAjudaOnline("P3"));
+		assertEquals(2, sistema.pedirAjudaOnline("2444","P3"));
 	}
 
 	/**
@@ -359,7 +352,7 @@ public class SistemaTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testPedirAjudaOnlineDisciplinaVazia() {
-		sistema.pedirAjudaOnline("");
+		sistema.pedirAjudaOnline("2444","");
 	}
 
 	/**
@@ -367,16 +360,16 @@ public class SistemaTest {
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testPedirAjudaOnlineDisciplinaNula() {
-		sistema.pedirAjudaOnline(null);
+		sistema.pedirAjudaOnline("2444",null);
 	}
 
 	/**
 	 * Testa se uma excecao eh lancada caso o parametro "disciplina" passe uma
 	 * disciplina invalida.
 	 */
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = NullPointerException.class)
 	public void testPedirAjudaOnlineDisciplinaInvalida() {
-		sistema.pedirAjudaOnline("OAC");
+		sistema.pedirAjudaOnline("2444","OAC");
 	}
 
 	/**
@@ -384,7 +377,7 @@ public class SistemaTest {
 	 */
 	@Test
 	public void testPegarTutor() {
-		assertEquals("2323", sistema.pegarTutor(1));
+		assertEquals("Tutor - 2323, horario - 14:00, dia - qua, local - CAA, disciplina - P3", sistema.pegarTutor(1));
 	}
 
 	/**
@@ -434,7 +427,7 @@ public class SistemaTest {
 	 */
 	@Test
 	public void testGetInfoAjudaLocal() {
-		assertEquals("CAA", sistema.getInfoAjuda(1, "local"));
+		assertEquals("CAA", sistema.getInfoAjuda(1, "localinteresse"));
 	}
 
 	/**
@@ -489,14 +482,6 @@ public class SistemaTest {
 	}
 
 	/**
-	 * Testa se o metodo retorna uma String dizendo que a ajuda ja foi avaliada.
-	 */
-	@Test
-	public void testAvaliarTutorJaAvaliado() {
-		assertEquals("Ajuda ja avaliada", sistema.avaliarTutor(1, 5));
-	}
-
-	/**
 	 * Testa se uma excecao eh lancada caso o parametro "idAjuda" seja negativo.
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -531,19 +516,10 @@ public class SistemaTest {
 	}
 
 	/**
-	 * Testa se o metodo esta retornando a nota corretamente.
-	 */
-	@Test
-	public void testPegarNota() {
-		sistema.avaliarTutor(1, 5);
-		assertEquals(4.1666666666667, sistema.pegarNota("2323"), 0.0001);
-	}
-
-	/**
 	 * Testa se uma excecao eh lancada caso o parametro "matricula" passe uma
 	 * matricula invalida.
 	 */
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = NullPointerException.class)
 	public void testPegarNotaMatriculaInvalida() {
 		sistema.pegarNota("117110");
 	}
@@ -559,7 +535,7 @@ public class SistemaTest {
 	/**
 	 * Testa se uma excecao eh lancada caso a matricula do tutor seja invalida.
 	 */
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = NullPointerException.class)
 	public void testPegarNivelMatriculaInvalida() {
 		sistema.pegarNivel("117110");
 	}
@@ -567,7 +543,7 @@ public class SistemaTest {
 	/**
 	 * Testa se uma excecao eh lancada caso a matricula do tutor seja vazia.
 	 */
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = NullPointerException.class)
 	public void testPegarNivelMatriculaVazia() {
 		sistema.pegarNivel("");
 	}
@@ -575,7 +551,7 @@ public class SistemaTest {
 	/**
 	 * Testa se uma excecao eh lancada caso a matricula seja invalida.
 	 */
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = NullPointerException.class)
 	public void testDoarMatriculaInvalida() {
 		sistema.doar("117110", 100);
 	}
@@ -583,7 +559,7 @@ public class SistemaTest {
 	/**
 	 * Testa se uma excecao eh lancada caso a matricula seja vazia.
 	 */
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = NullPointerException.class)
 	public void testDoarMatriculaVazia() {
 		sistema.doar("", 100);
 	}
@@ -609,7 +585,7 @@ public class SistemaTest {
 	/**
 	 * Testa se uma excecao eh lancada caso o email esteja vazio.
 	 */
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = NullPointerException.class)
 	public void testTotalDinheiroTutorEmailVazio() {
 		sistema.totalDinheiroTutor("");
 	}
@@ -617,7 +593,7 @@ public class SistemaTest {
 	/**
 	 * Testa se uma excecao eh lancada caso o email seja invalido.
 	 */
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = NullPointerException.class)
 	public void testTotalDinheiroTutorEmailInvalido() {
 		sistema.totalDinheiroTutor("somdojapones");
 	}

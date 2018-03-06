@@ -1,5 +1,6 @@
 package principal;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Tutor {
@@ -26,15 +27,15 @@ public class Tutor {
 		this.atendimento = new Atendimento();
 		this.saldo = 0;
 	}
-	
+
 	/**
 	 * Recupera a matricula do tutor.
+	 * 
 	 * @return retorna a matricula do tutor.
 	 */
 	public String getTutorMatricula() {
 		return this.tutorMatricula;
 	}
-
 
 	/**
 	 * Cadastra o horario de atendimento do tutor.
@@ -144,4 +145,12 @@ public class Tutor {
 		return saldo;
 	}
 
+	/**
+	 * Vai pegar o valor da nota e retornar formatado
+	 * 
+	 * @return retorna uma s
+	 */
+	public String pegarNota() {
+		return String.format("%.2f", getNota());
+	}
 }

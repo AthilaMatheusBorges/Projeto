@@ -237,7 +237,7 @@ public class Fachada {
 	 *            matricula do tutor
 	 * @return retorna um valor booleano da nota do tutor
 	 */
-	public double pegarNota(String matriculaTutor) {
+	public String pegarNota(String matriculaTutor) {
 		return sistema.pegarNota(matriculaTutor);
 	}
 

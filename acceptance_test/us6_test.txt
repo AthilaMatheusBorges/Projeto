@@ -11,12 +11,12 @@ expect 80 totalDinheiroTutor emailTutor="uesle_han@ccc.ufcg.edu.br"
 expect 70 totalDinheiroSistema
 
 pedirAjudaOnline matrAluno="111124242" disciplina="ATAL"
-pegarTutor idAjuda=12
-avaliarTutor idAjuda=12 nota=0
-
-pedirAjudaOnline matrAluno="111124242" disciplina="ATAL"
 pegarTutor idAjuda=13
 avaliarTutor idAjuda=13 nota=0
+
+pedirAjudaOnline matrAluno="111124242" disciplina="ATAL"
+pegarTutor idAjuda=14
+avaliarTutor idAjuda=14 nota=0
 
 doar matriculaTutor="115212345" totalCentavos=100
 expect 117 totalDinheiroTutor emailTutor="uesle_han@ccc.ufcg.edu.br"

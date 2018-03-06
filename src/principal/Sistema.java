@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class Sistema {
 
 	private Map<String, Aluno> listaDeAlunos;
@@ -210,7 +209,7 @@ public class Sistema {
 		return recuperaAluno(matricula);
 	}
 
-	//Falta corrigir tutor repetido.
+	// Falta corrigir tutor repetido.
 	/**
 	 * Lista todos os tutores do sistema.
 	 * 
@@ -414,8 +413,9 @@ public class Sistema {
 	 *            eh o local da ajuda.
 	 * @return retorna o identificador do Pedido de Ajuda.
 	 */
-	public int pedirAjudaPresencial(String matrAluno, String disciplina, String horario, String dia, String localInteresse) {
-		String tutorMatricula = escolheTutorAjudaPresencial(disciplina, horario, dia, localInteresse);//.getTutorMatricula();
+	public int pedirAjudaPresencial(String matrAluno, String disciplina, String horario, String dia,
+			String localInteresse) {
+		String tutorMatricula = escolheTutorAjudaPresencial(disciplina, horario, dia, localInteresse);// .getTutorMatricula();
 		PedidoDeAjuda pedido = new AjudaPresencial(matrAluno, disciplina, tutorMatricula, dia, horario, localInteresse,
 				getQntdPedidosAjuda() + 1);
 		this.pedidosDeAjuda.put(pedido.getIdAjuda(), pedido);
@@ -450,15 +450,17 @@ public class Sistema {
 	 * @return retorna o Tutor que melhor se encaixe nos requisitos.
 	 */
 	private String escolheTutorAjudaPresencial(String disciplina, String horario, String dia, String localInteresse) {
-		if(stringNullVazio(disciplina)) return null;
-		if(stringNullVazio(horario)) return null;
-		if(stringNullVazio(dia)) return null;
-		if(stringNullVazio(localInteresse)) return null;
+		if (stringNullVazio(disciplina))
+			return null;
+		if (stringNullVazio(horario))
+			return null;
+		if (stringNullVazio(dia))
+			return null;
+		if (stringNullVazio(localInteresse))
+			return null;
 		return getDisciplina(disciplina).maiorProficiencia(horario, dia, localInteresse).getTutorMatricula();
 	}
-	
-	
-	
+
 	/**
 	 * Escolhe o tutor para associar a um pedido de Ajuda Online.
 	 * 
@@ -467,7 +469,8 @@ public class Sistema {
 	 * @return retorna o Tutor que melhor se encaixe nos requisitos.
 	 */
 	private String escolheTutorAjudaOnline(String disciplina) {
-		if(stringNullVazio(disciplina)) return null;
+		if (stringNullVazio(disciplina))
+			return null;
 		return getDisciplina(disciplina).maiorProficiencia().getTutorMatricula();
 	}
 
@@ -482,7 +485,7 @@ public class Sistema {
 	public String getMatriculaTutorAjuda(int idAjuda) {
 		return this.pedidosDeAjuda.get(idAjuda).getTutorMatricula();
 	}
-	
+
 	public String pegarTutor(int idAjuda) {
 		validaIdAjuda("tutor", idAjuda);
 		return getAjuda(idAjuda).getDescricaoTutor();
@@ -534,16 +537,18 @@ public class Sistema {
 			AjudaPresencial ajudaLocal = (AjudaPresencial) getAjuda(idAjuda);
 			return ajudaLocal.getLocalInteresse();
 		default:
-			if(atributo.trim().equals("") || atributo == null)
-				throw new IllegalArgumentException("Erro ao tentar recuperar info da ajuda : atributo nao pode ser vazio ou em branco");
+			if (atributo.trim().equals("") || atributo == null)
+				throw new IllegalArgumentException(
+						"Erro ao tentar recuperar info da ajuda : atributo nao pode ser vazio ou em branco");
 			throw new IllegalArgumentException("Erro ao tentar recuperar info da ajuda : atributo nao encontrado");
 		}
 	}
-	
+
 	private void validaIdAjuda(String quemSouEu, int idAjuda) {
-		if(idAjuda < 0)
-			throw new IllegalArgumentException("Erro ao tentar recuperar " + quemSouEu + " : id nao pode menor que zero ");
-		else if(idAjuda > this.pedidosDeAjuda.size())
+		if (idAjuda < 0)
+			throw new IllegalArgumentException(
+					"Erro ao tentar recuperar " + quemSouEu + " : id nao pode menor que zero ");
+		else if (idAjuda > this.pedidosDeAjuda.size())
 			throw new IllegalArgumentException("Erro ao tentar recuperar " + quemSouEu + " : id nao encontrado ");
 	}
 
@@ -575,12 +580,33 @@ public class Sistema {
 	 * @return retorna uma String se tutor foi avaliado com sucesso ou nao
 	 */
 	public String avaliarTutor(int idAjuda, int nota) {
+		validaAvaliacaoTutor(idAjuda, nota);
 		if (pedidosDeAjuda.get(idAjuda).avaliarTutor()) {
 			String matricula = pedidosDeAjuda.get(idAjuda).getTutorMatricula();
 			recuperaTutorPelaMatricula(matricula).avaliarTutor(nota);
 			return "Tutor avaliado";
 		}
-		return "Ajuda ja avaliada";
+		throw new IllegalArgumentException("Erro na avaliacao de tutor: Ajuda ja avaliada");
+	}
+
+	/**
+	 * Metodo que valida se o id da ajuda existe mesmo ou se a nota está conforme
+	 * deve ser, entre 0 e 5
+	 * 
+	 * @param idAjuda
+	 *            id do pedido de ajuda em inteiro
+	 * @param nota
+	 *            o valor da nota a ser atribuido ao tutor
+	 */
+	private void validaAvaliacaoTutor(int idAjuda, int nota) {
+		if (nota > 5) {
+			throw new IllegalArgumentException("Erro na avaliacao de tutor: nota nao pode ser maior que 5");
+		} else if (nota < 0) {
+			throw new IllegalArgumentException("Erro na avaliacao de tutor: nota nao pode ser menor que 0");
+		} else if (!pedidosDeAjuda.containsKey(idAjuda)) {
+			throw new IllegalArgumentException("Erro na avaliacao de tutor: id nao encontrado ");
+		}
+
 	}
 
 	/**
@@ -590,8 +616,8 @@ public class Sistema {
 	 *            matricula do tutor
 	 * @return retorna um valor booleano da nota do tutor
 	 */
-	public double pegarNota(String matriculaTutor) {
-		return recuperaTutorPelaMatricula(matriculaTutor).getNota();
+	public String pegarNota(String matriculaTutor) {
+		return recuperaTutorPelaMatricula(matriculaTutor).pegarNota();
 	}
 
 	/**
@@ -672,7 +698,7 @@ public class Sistema {
 	public void adicionaDisciplina(String disciplina) {
 		this.listaDeDisciplinas.add(new Disciplina(disciplina));
 	}
-	
+
 	public boolean stringNullVazio(String stringTeste) {
 		if (stringTeste.trim().equals("") || stringTeste == null)
 			return true;

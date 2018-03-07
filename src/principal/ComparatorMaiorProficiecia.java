@@ -2,7 +2,7 @@ package principal;
 
 import java.util.Comparator;
 
-public class ComparatorDisciplina implements Comparator<Tutor> {
+public class ComparatorMaiorProficiecia implements Comparator<Tutor> {
 
 	@Override
 	public int compare(Tutor tutor, Tutor outroTutor) {

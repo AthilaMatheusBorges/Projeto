@@ -52,18 +52,9 @@ public abstract class PedidoDeAjuda {
 		return this.idAjuda;
 	}
 
-	/**
-	 * Retorna se ja foi feita a avaliacao do tutor pela ajuda
-	 * 
-	 * @return retorna um booleano true caso ainda nao tenha sido avaliada a ajuda e
-	 *         false caso ja tenha
-	 */
-	public boolean avaliarTutor() {
-		if (this.avaliado == true) {
-			return false;
-		}
-		this.avaliado = true;
-		return true;
+	
+	public boolean tutorAvaliado() {
+		return this.avaliado;
 	}
 	
 	/**

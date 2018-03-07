@@ -2,12 +2,14 @@ package principal;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Tutor {
 	private String tutorMatricula;
 	private int proficiencia, idTutor, saldo;
 	private double nota;
 	private Atendimento atendimento;
+	private Disciplina disciplinas;
 
 	/**
 	 * Constroi o Tutor a partir dos parametros passados.
@@ -19,15 +21,23 @@ public class Tutor {
 	 * @param proficiencia
 	 *            eh a proficiencia do tutor sobre a discipĺina.
 	 */
-	public Tutor(String tutorMatricula, int proficiencia, int idTutor) {
+	public Tutor(String tutorMatricula,int idTutor) {
 		this.tutorMatricula = tutorMatricula;
-		this.proficiencia = proficiencia;
+		this.disciplinas = new Disciplina();
 		this.nota = 4;
 		this.idTutor = idTutor;
 		this.atendimento = new Atendimento();
 		this.saldo = 0;
 	}
 
+	
+	public boolean temDisciplina(String disciplina) {
+		return this.disciplinas.temDisciplina(disciplina);
+	}
+	
+	public void adicionarDisciplina(String disciplina, int proficiencia) {
+		this.disciplinas.adicionarDisciplina(disciplina, proficiencia);
+	}
 	/**
 	 * Recupera a matricula do tutor.
 	 * 
@@ -153,4 +163,6 @@ public class Tutor {
 	public String pegarNota() {
 		return String.format("%.2f", getNota());
 	}
+	
+	
 }

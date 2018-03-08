@@ -7,29 +7,82 @@ import java.util.Map;
 
 import principal.Aluno;
 
+/**
+ * Responsavel por controlar os alunos. Armazena os alunos em um mapa<matricula,
+ * Aluno>. Todos os metodos referentes a Aluno estao encapsulados nesta classe.
+ * 
+ * @author Roundhouse Kick Group
+ *
+ */
 public class ControllerAluno {
 
 	private Map<String, Aluno> listaDeAlunos;
 
+	/**
+	 * Inicia o mapa da lista de alunos.
+	 */
 	public ControllerAluno() {
 		this.listaDeAlunos = new HashMap<>();
 	}
 
+	/**
+	 * Metodo que cria um aluno. Antes verifica se os parametros sao validos.
+	 * 
+	 * @param nome
+	 *            eh o nome do aluno.
+	 * @param matricula
+	 *            eh a matricula do aluno.
+	 * @param codigoCurso
+	 *            eh o codigo do curso.
+	 * @param telefone
+	 *            eh o telefone do aluno.
+	 * @param email
+	 *            eh o email do aluno.
+	 * @return retorna o Aluno criado.
+	 */
 	private Aluno criaAluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
 		verificaCadastroAluno(nome, matricula, telefone, email);
 		return new Aluno(nome, matricula, codigoCurso, telefone, email);
 	}
 
+	/**
+	 * Cria um aluno e diciona no mapa.
+	 * 
+	 * @param nome
+	 *            eh o nome do aluno.
+	 * @param matricula
+	 *            eh a matricula do aluno.
+	 * @param codigoCurso
+	 *            eh o codigo do curso.
+	 * @param telefone
+	 *            eh o telefone do aluno.
+	 * @param email
+	 *            eh o email do aluno.
+	 */
 	public void adicionaAluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
 		Aluno aluno = criaAluno(nome, matricula, codigoCurso, telefone, email);
 		this.listaDeAlunos.put(matricula, aluno);
 	}
 
+	/**
+	 * Recupera um aluno a apartir da matricula.
+	 * 
+	 * @param matricula
+	 *            eh a matricula do aluno.
+	 * @return retorna o toString() do aluno.
+	 */
 	public String recuperaAluno(String matricula) {
 		verificaMatricula("busca por aluno", matricula);
 		return this.listaDeAlunos.get(matricula).toString();
 	}
 
+	/**
+	 * Recupera um aluno a partir do email.
+	 * 
+	 * @param email
+	 *            eh o email do aluno.
+	 * @return retorna o objeto do aluno.
+	 */
 	public Aluno getAlunoPorEmail(String email) {
 		if (verificaEmail(email))
 			for (Aluno aluno : this.listaDeAlunos.values()) {
@@ -39,6 +92,11 @@ public class ControllerAluno {
 		return null;
 	}
 
+	/**
+	 * Lista os alunos em ordem alfabetica.
+	 * 
+	 * @return retorna uma string com a lista de todos os alunos cadastrados.
+	 */
 	public String listarAlunos() {
 		ArrayList<Aluno> alunos = new ArrayList<Aluno>(this.listaDeAlunos.values());
 		Collections.sort(alunos);
@@ -51,6 +109,15 @@ public class ControllerAluno {
 		return lista.substring(0, lista.length() - 2);
 	}
 
+	/**
+	 * Obtem uma informacao do aluno.
+	 * 
+	 * @param matricula
+	 *            eh a matricula do aluno.
+	 * @param atributo
+	 *            eh a informacao a ser recuperada do aluno.
+	 * @return retorna a informacao do aluno.
+	 */
 	public String getInfoAluno(String matricula, String atributo) {
 		verificaMatricula("obtencao de informacao de aluno", matricula);
 		switch (atributo.toLowerCase()) {
@@ -65,13 +132,20 @@ public class ControllerAluno {
 		}
 	}
 
+	/**
+	 * Verifica se a matricula esta cadastrada.
+	 * 
+	 * @param matricula
+	 *            eh a matricula a ser verificada.
+	 * @return retorna true se a matricula estiver cadastrada, false caso contrario.
+	 */
 	public boolean matriculaCadastrada(String matricula) {
 		return listaDeAlunos.containsKey(matricula);
 	}
 
 	/**
-	 * Verifica se o e-mail é valido, se a matrícula está cadastrada no sistema de
-	 * alunos e se o nome é vazio ou null
+	 * Verifica se o e-mail é valido, se a matrícula está cadastrada e se o nome é
+	 * vazio ou null
 	 * 
 	 * @param nome
 	 *            nome do aluno em String
@@ -87,7 +161,7 @@ public class ControllerAluno {
 		String erro = "";
 		if (!verificaEmail(email))
 			erro = "Email invalido";
-		else if (this.listaDeAlunos.containsKey(matricula))
+		else if (matriculaCadastrada(matricula))
 			erro = "Aluno de mesma matricula ja cadastrado";
 		else if (nome.trim().equals("") || nome == null)
 			erro = "Nome nao pode ser vazio ou nulo";
@@ -100,10 +174,10 @@ public class ControllerAluno {
 
 	/**
 	 * Verifica se o email passado como parametro eh valido possui "@" e digitos
-	 * antes e dps dele
+	 * antes e depois.
 	 * 
 	 * @param email
-	 *            email do a ser avaliado
+	 *            email a ser avaliado
 	 * @return um booleano true caso seja email valido e false caso nao
 	 */
 	private boolean verificaEmail(String email) {
@@ -123,15 +197,11 @@ public class ControllerAluno {
 	 * Verifica se a matricula nos metodos de getInfoAluno e recuperaAluno sao
 	 * validas e foram cadastradas no map de alunos
 	 * 
-	 * @param matriculaValida
-	 *            um booleano true caso a matricula esteja no hashMap e false caso
-	 *            nao
-	 * @param metodo
-	 *            nome do metodo que chama esse método em String
+	 * @param quemSouEu
+	 *            nome de quem esta sendo verificado.
 	 * @param matricula
-	 *            do aluno em String
+	 *            matricula do aluno
 	 */
-
 	private void verificaMatricula(String quemSouEu, String matricula) {
 		if (!this.listaDeAlunos.containsKey(matricula))
 			throw new IllegalArgumentException("Erro na " + quemSouEu + ": Aluno nao encontrado");

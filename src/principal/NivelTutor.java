@@ -1,5 +1,13 @@
 package principal;
 
+/**
+ * Enum para representar o nivel do tutor.
+ * Calcula a taxa do tutor de acordo com o nivel.
+ * Retorna a string do nivel do tutor de acordo com o nivel.
+ * 
+ * @author Roundhouse Kick Group 
+ *
+ */
 public enum NivelTutor implements Nivel{
 
 	TOP {

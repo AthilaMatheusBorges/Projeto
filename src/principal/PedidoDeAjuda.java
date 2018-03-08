@@ -10,6 +10,8 @@ public abstract class PedidoDeAjuda {
 	 * Constroi o Pedido de Ajuda com os parametros passados. Inicialmente define o
 	 * atributo 'avaliado' como false, indicando que a ajuda ainda nao foi avaliada.
 	 * 
+	 * @param martAluno eh a matricula do aluno do pedido de ajuda.
+	 * 
 	 * @param disciplina
 	 *            eh a disciplina da ajuda.
 	 * @param tutorMatricula
@@ -25,6 +27,9 @@ public abstract class PedidoDeAjuda {
 		this.avaliado = false;
 	}
 
+	/**
+	 * Avalida o pedido de ajuda.
+	 */
 	public void avaliar() {
 		this.avaliado = true;
 	}
@@ -56,8 +61,11 @@ public abstract class PedidoDeAjuda {
 		return this.idAjuda;
 	}
 
-	
-	public boolean tutorAvaliado() {
+	/**
+	 * Verifica se o pedido de Ajuda ja foi avaliado.
+	 * @return retorna true se a ajuda ja foi avaliada, false caso contrario.
+	 */
+	public boolean ajudaAvaliada() {
 		return this.avaliado;
 	}
 	

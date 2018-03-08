@@ -6,6 +6,9 @@ import principal.Tutor;
 
 public class ComparatorMaiorProficiecia implements Comparator<Tutor> {
 
+	/**
+	 * Compara tutores pela nota. Se as notas forem iguais, usa a ordem de cadastro.
+	 */
 	@Override
 	public int compare(Tutor tutor, Tutor outroTutor) {
 		if (tutor.getNota() > outroTutor.getNota())

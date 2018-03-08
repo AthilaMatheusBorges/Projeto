@@ -10,6 +10,11 @@ import principal.Aluno;
 import principal.PedidoDeAjuda;
 import principal.Tutor;
 
+/**
+ * Responsavel por controlar todo o sistema. Usa os outros controladores para gerenciar o sistema.
+ * @author Roundhouse Kick Group
+ *
+ */
 public class Sistema {
 
 	private ControllerAluno cAluno;
@@ -18,7 +23,7 @@ public class Sistema {
 	private ControllerCaixa cCaixa;
 
 	/**
-	 * Constroi um novo sistema.
+	 * Inicia um novo sistema com os controladores.
 	 */
 	public Sistema() {
 		cAluno = new ControllerAluno();
@@ -27,38 +32,85 @@ public class Sistema {
 		cCaixa = new ControllerCaixa();
 	}
 
+	/**
+	 * Cadastra um aluno.
+	* @param nome
+	 *            eh o nome do aluno.
+	 * @param matricula
+	 *            eh a matricula do aluno.
+	 * @param codigoCurso
+	 *            eh o codigo do curso.
+	 * @param telefone
+	 *            eh o telefone do aluno.
+	 * @param email
+	 *            eh o email do aluno.
+	 */
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
 		cAluno.adicionaAluno(nome, matricula, codigoCurso, telefone, email);
 	}
 
+	/**
+	 * Recupera o aluno a partir da matricula.
+	 * @param matricula eh a matricula do aluno.
+	 * @return retorna o toString() do aluno.
+	 */
 	public String recuperaAluno(String matricula) {
 		return cAluno.recuperaAluno(matricula);
 	}
 
+	/**
+	 * Lista os alunos.
+	 * @return retorna uma lista dos alunos ordenada por nome.
+	 */
 	public String listarAlunos() {
 		return cAluno.listarAlunos();
-
 	}
 
+	/**
+	 * Obtem uma informacao sobre o aluno.
+	 * @param matricula eh a matricula do aluno.
+	 * @param atributo eh a informacao.
+	 * @return retorna a informacao do aluno.
+	 */
 	public String getInfoAluno(String matricula, String atributo) {
 		return cAluno.getInfoAluno(matricula, atributo);
 	}
 
+	/**
+	 * Define o dono da matricula como tutor da disciplina passada.
+	 * @param matricula eh a matricula.
+	 * @param disciplina eh a disciplina.
+	 * @param proficiencia eh a proficiencia sobre a disciplina.
+	 */
 	public void tornarTutor(String matricula, String disciplina, int proficiencia) {
 		if (!matriculaCadastrada(matricula))
 			throw new IllegalArgumentException("Erro na definicao de papel: Tutor nao encontrado");
 		cTutor.tornarTutor(matricula, disciplina, proficiencia);
 	}
 
+	/**
+	 * Verifica se a matricula esta cadastrada.
+	 * @param matricula eh a matricula a ser verificada.
+	 * @return retorna true se a matricula estiver cadastrada, false caso contrario.
+	 */
 	public boolean matriculaCadastrada(String matricula) {
 		return cAluno.matriculaCadastrada(matricula);
 	}
 
+	/**
+	 * Recupera um tutor a partir da matricula.
+	 * @param matricula eh a matricula do tutor.
+	 * @return retorna uma descricao textual do tutor.
+	 */
 	public String recuperaTutor(String matricula) {
 		cTutor.verificaTutor(matricula);
 		return recuperaAluno(matricula);
 	}
 
+	/**
+	 * A partir da lista dos tutores, lista os alunos que sao tutores.
+	 * @return retorna uma lista de tutores.
+	 */
 	public String listarTutores() {
 		String saida = "";
 		for (String matricula : cTutor.listarTutores()) {
@@ -67,9 +119,13 @@ public class Sistema {
 		if (saida.equals(""))
 			return saida;
 		return saida.substring(0, saida.length() - 2);
-
 	}
 
+	/**
+	 * Recupera o tutor a partir do email.
+	 * @param email eh o email do tutor.
+	 * @return retorna o obejto tutor.
+	 */
 	public Tutor recuperaTutorPorEmail(String email) {
 		Aluno aluno = cAluno.getAlunoPorEmail(email);
 		if (aluno==null) return null;
@@ -93,7 +149,7 @@ public class Sistema {
 	}
 
 	/**
-	 * Vai conferir se o email eh de um tutor, se o email eh vazio ou em branco se o
+	 * Confere se o email eh de um tutor, se o email eh vazio ou em branco se o
 	 * horario eh vaziou ou em branco e se o dia eh vazio ou em branco
 	 * 
 	 * @param tutor
@@ -195,53 +251,101 @@ public class Sistema {
 		return recuperaTutorPorEmail(email).consultaLocal(local);
 	}
 
+	/**
+	 * Recupera um pedido de ajuda a partir do id.
+	 * @param idAjuda eh o identificador da ajuda.
+	 * @return retorna o pedido de ajuda.
+	 */
 	public PedidoDeAjuda getPedidoDeAjuda(int idAjuda) {
 		return cAjuda.getPedidoDeAjuda(idAjuda);
 	}
 
+	/**
+	 * Faz o pedido de ajuda.
+	 * @param matrAluno eh a matricula do aluno.
+	 * @param disciplina eh a disciplina do pedido de ajuda.
+	 * @param horario eh o horario.
+	 * @param dia eh o dia.
+	 * @param localInteresse eh o local de interesse.
+	 * @return retorna o identificador do pedido de ajuda realizado.
+	 */
 	public int pedirAjudaPresencial(String matrAluno, String disciplina, String horario, String dia,
 			String localInteresse) {
 		String tutorMatricula = escolheTutorAjudaPresencial(disciplina, horario, dia, localInteresse);
 		return cAjuda.adicionaAjuda(matrAluno, disciplina, tutorMatricula, horario, dia, localInteresse);
 	}
 
+	/**
+	 * Faz o pedido de ajuda.
+	 * @param matrAluno eh a matricula do aluno.
+	 * @param disciplina e a disciplina do pedido do ajuda.
+	 * @return retorna o identificador do pedido de ajuda realizado.
+	 */
 	public int pedirAjudaOnline(String matrAluno, String disciplina) {
 		String tutorMatricula = escolheTutorAjudaOnline(disciplina);
 		return cAjuda.adicionaAjuda(matrAluno, disciplina, tutorMatricula);
 	}
 
+	/**
+	 * Escolhe o tutor para ajuda presencial com base nos requisitos.
+	 * @param disciplina eh a disciplina.
+	 * @param horario eh o horario.
+	 * @param dia eh o dia.
+	 * @param localInteresse eh local de interesse.
+	 * @return retorna a matricula do tutor selecionado.
+	 */
 	private String escolheTutorAjudaPresencial(String disciplina, String horario, String dia, String localInteresse) {
-		if (stringNullVazio(disciplina))
-			return null;
-		if (stringNullVazio(horario))
-			return null;
-		if (stringNullVazio(dia))
-			return null;
-		if (stringNullVazio(localInteresse))
+		if (stringNullVazio(disciplina) || stringNullVazio(horario) || stringNullVazio(dia) || stringNullVazio(localInteresse))
 			return null;
 		return cTutor.maiorProficiencia(disciplina, horario, dia, localInteresse).getTutorMatricula();
 	}
 
+	/**
+	 * Escolhe o tutor para ajuda online.
+	 * @param disciplina eh a disciplina.
+	 * @return retorna a matricula do tutor selecionado.
+	 */
 	private String escolheTutorAjudaOnline(String disciplina) {
 		if (stringNullVazio(disciplina))
 			return null;
 		return cTutor.maiorProficiencia(disciplina).getTutorMatricula();
 	}
 
+	/**
+	 * Recupera a matricula do tutor da ajuda.
+	 * @param idAjuda eh o id da ajuda.
+	 * @return retorna a matricula do tutor da ajuda.
+	 */
 	public String getMatriculaTutorAjuda(int idAjuda) {
 		return cAjuda.getMatriculaTutorAjuda(idAjuda);
 	}
 
+	/**
+	 * Recupera o tutor da ajuda.
+	 * @param idAjuda eh o id da ajuda.
+	 * @return retorna a descricao do tutor da ajuda.
+	 */
 	public String pegarTutor(int idAjuda) {
 		cAjuda.validaIdAjuda("tutor", idAjuda);
 		return cAjuda.getDescricaoTutor(idAjuda);
 	}
 
+	/**
+	 * Recupera um pedido de ajuda.
+	 * @param idAjuda eh o id da ajuda.
+	 * @return retorna o objeto do pedido de ajuda.
+	 */
 	public PedidoDeAjuda getAjuda(int idAjuda) {
 		cAjuda.validaIdAjuda("recuperar ajuda", idAjuda);
 		return cAjuda.getPedidoDeAjuda(idAjuda);
 	}
 
+	/**
+	 * Obtem informacao da ajuda.
+	 * @param idAjuda eh o id da ajuda.
+	 * @param atributo eh a informacao.
+	 * @return retorna a informacao da ajuda.
+	 */
 	public String getInfoAjuda(int idAjuda, String atributo) {
 		cAjuda.validaIdAjuda("info da ajuda", idAjuda);
 		switch (atributo.toLowerCase()) {
@@ -274,7 +378,12 @@ public class Sistema {
 		}
 	}
 
-
+	/**
+	 * Avalida o tutor e a ajuda.
+	 * @param idAjuda eh o id da ajuda.
+	 * @param nota eh a nota da avaliacao.
+	 * @return retorna uma string confirmando a avaliacao.
+	 */
 	public String avaliarTutor(int idAjuda, int nota) {
 		if (nota > 5)
 			throw new IllegalArgumentException("Erro na avaliacao de tutor: nota nao pode ser maior que 5");
@@ -285,17 +394,29 @@ public class Sistema {
 		return cTutor.avaliarTutor(cAjuda.getMatriculaTutorAjuda(idAjuda), nota);
 	}
 
-	
+	/**
+	 * Pega a nota do tutor.
+	 * @param matriculaTutor eh a matricula do tutor.
+	 * @return
+	 */
 	public String pegarNota(String matriculaTutor) {
 		return cTutor.getTutor(matriculaTutor).pegarNota();
 	}
 
-	
+	/**
+	 * Pega o nivel do tutor.
+	 * @param matriculaTutor eh a matricula do tutor.
+	 * @return
+	 */
 	public String pegarNivel(String matriculaTutor) {
 		return cTutor.getTutor(matriculaTutor).pegarNivel();
 	}
 
-	
+	/**
+	 * Doa um valor ao tutor.
+	 * @param matriculaTutor eh a matricula do tutor.
+	 * @param totalCentavos eh o valor a ser doado.
+	 */
 	public void doar(String matriculaTutor, int totalCentavos) {
 		if(totalCentavos < 0) {
 			throw new IllegalArgumentException("Erro na doacao para tutor: totalCentavos nao pode ser menor que zero");
@@ -310,6 +431,11 @@ public class Sistema {
 		cTutor.receberDoacao(matriculaTutor, (totalCentavos - valorSistema));
 	}
 
+	/**
+	 * Recupera o saldo do tutor.
+	 * @param emailTutor eh o email do tutor.
+	 * @return retorna o saldo do tutor.
+	 */
 	public int totalDinheiroTutor(String emailTutor) {
 		if (emailTutor.trim().equals("") || emailTutor == null) {
 			throw new IllegalArgumentException("Erro na consulta de total de dinheiro do tutor: emailTutor nao pode ser vazio ou nulo");
@@ -320,11 +446,19 @@ public class Sistema {
 		return recuperaTutorPorEmail(emailTutor).getSaldo();
 	}
 
-	
+	/**
+	 * Recupera o saldo do sistema.
+	 * @return retorna o valor do caixa do sistema.
+	 */
 	public int totalDinheiroSistema() {
 		return cCaixa.getSaldo();
 	}
 
+	/**
+	 * Verifica se uma string eh valida.
+	 * @param stringTeste e a string testada.
+	 * @return retorna true se for valida, false caso contrario.
+	 */
 	public boolean stringNullVazio(String stringTeste) {
 		if (stringTeste.trim().equals("") || stringTeste == null)
 			return true;

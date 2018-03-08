@@ -5,10 +5,11 @@ import sistema.Sistema;
 
 /**
  * 
- * @authores Jonathan Allisson de Lima Silva -- 117110926 Marcelo Fagner da
- *           Silva Andrade -- 117110910 Flavio Roberto Pires Quirino Farias --
- *           117111444 Athila Matheus Barros Borges -- 117110913 ****UFCG -
- *           COMPUTACAO 2017.2****
+ * @author 	Jonathan Allisson de Lima Silva -- 117110926 
+ * @author	Marcelo Fagner da Silva Andrade -- 117110910 
+ * @author	Flavio Roberto Pires Quirino Farias -- 117111444 
+ * @author  Athila Matheus Barros Borges -- 117110913 
+ * 			       ****UFCG - COMPUTACAO 2017.2****
  */
 public class Fachada {
 

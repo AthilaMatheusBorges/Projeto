@@ -3,7 +3,6 @@ package principal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ControllerTutor {
@@ -82,6 +81,10 @@ private Map<String, Tutor> listaDeTutores;
 	public String avaliarTutor(String matricula, int nota) {
 		getTutor(matricula).avaliarTutor(nota);
 		return "Tutor avaliado";
+	}
+	
+	public double getTaxaTutor(String matriculaTutor) {
+		return getTutor(matriculaTutor).getTaxaTutor();
 	}
 	
 	public void receberDoacao(String matricula, double valor) {

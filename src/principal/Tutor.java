@@ -6,8 +6,8 @@ import java.util.List;
 
 public class Tutor {
 	private String tutorMatricula;
-	private int proficiencia, idTutor;
-	private double nota, saldo;
+	private int proficiencia, idTutor, saldo;
+	private double nota;
 	private Atendimento atendimento;
 	private Disciplina disciplinas;
 
@@ -30,6 +30,17 @@ public class Tutor {
 		this.saldo = 0;
 	}
 
+	public double getTaxaTutor() {
+		double taxa = 0;
+		if (pegarNivel().equals("TOP")) {
+			taxa = (90 + ((getNota() - 4.5)* 10)) / 100.0;
+		} else if (pegarNivel().equals("Tutor")) {
+			taxa = 80 / 100.0;
+		} else if (pegarNivel().equals("Aprendiz")) {
+			taxa = (0.4 - ((3.0 - getNota())*10)/100);
+		}
+		return taxa;
+	}
 	
 	public boolean temDisciplina(String disciplina) {
 		return this.disciplinas.temDisciplina(disciplina);
@@ -151,7 +162,7 @@ public class Tutor {
 	 * 
 	 * @return valor do saldo
 	 */
-	public double getSaldo() {
+	public int getSaldo() {
 		return saldo;
 	}
 

@@ -223,7 +223,6 @@ public class Sistema {
 		return cTutor.maiorProficiencia(disciplina).getTutorMatricula();
 	}
 
-	// verificar se eh utillizado
 	public String getMatriculaTutorAjuda(int idAjuda) {
 		return cAjuda.getMatriculaTutorAjuda(idAjuda);
 	}
@@ -276,6 +275,7 @@ public class Sistema {
 			throw new IllegalArgumentException("Erro na avaliacao de tutor: nota nao pode ser maior que 5");
 		else if (nota < 0) 
 			throw new IllegalArgumentException("Erro na avaliacao de tutor: nota nao pode ser menor que 0");
+		
 		cAjuda.avaliarAjuda(idAjuda);
 		return cTutor.avaliarTutor(cAjuda.getMatriculaTutorAjuda(idAjuda), nota);
 	}
@@ -298,31 +298,20 @@ public class Sistema {
 			throw new IllegalArgumentException("Erro na doacao para tutor: Tutor nao encontrado");
 		}
 		
-		String nivel = pegarNivel(matriculaTutor);
 		double valorSistema = 0;
-		double taxa = 0;
-	
-		if (nivel.equals("TOP")) {
-			taxa = (90 + ((cTutor.getTutor(matriculaTutor).getNota() - 4.5)* 10)) / 100.0;
-			valorSistema = ((1.0 - taxa) * totalCentavos);
-		} else if (nivel.equals("Tutor")) {
-			taxa = 80 / 100.0;
-			valorSistema = ((1 - taxa) * totalCentavos);
-		} else if (nivel.equals("Aprendiz")) {
-			taxa = (0.4 - ((3.0 - cTutor.getTutor(matriculaTutor).getNota())*10)/100);
-			valorSistema = ((1 - taxa) * totalCentavos);
-		}
-	
+		double taxa = cTutor.getTaxaTutor(matriculaTutor);
+		valorSistema = Math.ceil((1 - taxa) * totalCentavos);
 		cCaixa.adicionaAoCaixa((int) valorSistema);
-		cTutor.receberDoacao(matriculaTutor, Math.ceil((totalCentavos - valorSistema) * 100) /100);
+		cTutor.receberDoacao(matriculaTutor, (totalCentavos - valorSistema));
 	}
 
-	public double totalDinheiroTutor(String emailTutor) {
+	public int totalDinheiroTutor(String emailTutor) {
 		if (emailTutor.trim().equals("") || emailTutor == null) {
 			throw new IllegalArgumentException("Erro na consulta de total de dinheiro do tutor: emailTutor nao pode ser vazio ou nulo");
 		}else if(recuperaTutorPorEmail(emailTutor)==null) {
 			throw new NullPointerException("Erro na consulta de total de dinheiro do tutor: Tutor nao encontrado");
 		}
+		
 		return recuperaTutorPorEmail(emailTutor).getSaldo();
 	}
 

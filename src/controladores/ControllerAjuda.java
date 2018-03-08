@@ -1,7 +1,11 @@
-package principal;
+package controladores;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import principal.AjudaOnline;
+import principal.AjudaPresencial;
+import principal.PedidoDeAjuda;
 
 public class ControllerAjuda {
 

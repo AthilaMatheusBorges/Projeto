@@ -1,9 +1,11 @@
-package principal;
+package controladores;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
+import principal.Aluno;
 
 public class ControllerAluno {
 
@@ -37,16 +39,9 @@ public class ControllerAluno {
 		return null;
 	}
 
-	public String listarAlunos() {
-		ArrayList<Aluno> alunos = new ArrayList<Aluno>(this.listaDeAlunos.values());
-		Collections.sort(alunos);
-		String lista = "";
-		for (Aluno aluno : alunos) {
-			lista += aluno.toString() + ", ";
-		}
-		if (lista.length() == 0)
-			return "";
-		return lista.substring(0, lista.length() - 2);
+	public ArrayList getListaDeAlunos() {
+		ArrayList<Aluno> alunos = new ArrayList<Aluno>(listaDeAlunos.values());
+		return alunos;
 	}
 
 	public String getInfoAluno(String matricula, String atributo) {

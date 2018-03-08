@@ -1,6 +1,7 @@
-package principal;
+package fachada;
 
 import easyaccept.EasyAccept;
+import sistema.Sistema;
 
 /**
  * 
@@ -14,7 +15,7 @@ public class Fachada {
 	Sistema sistema = new Sistema();
 
 	public static void main(String[] args) {
-		args = new String[] { "principal.Fachada", 
+		args = new String[] { "fachada.Fachada", 
 				"acceptance_test/us1_test.txt", 
 				"acceptance_test/us2_test.txt",
 				"acceptance_test/us3_test.txt", 
@@ -283,4 +284,6 @@ public class Fachada {
 	public int totalDinheiroSistema() {
 		return sistema.totalDinheiroSistema();
 	}
+	
+
 }

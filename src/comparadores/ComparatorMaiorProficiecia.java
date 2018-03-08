@@ -1,6 +1,8 @@
-package principal;
+package comparadores;
 
 import java.util.Comparator;
+
+import principal.Tutor;
 
 public class ComparatorMaiorProficiecia implements Comparator<Tutor> {
 

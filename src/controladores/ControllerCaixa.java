@@ -1,4 +1,4 @@
-package principal;
+package controladores;
 
 public class ControllerCaixa {
 

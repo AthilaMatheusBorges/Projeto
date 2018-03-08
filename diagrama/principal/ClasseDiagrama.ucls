@@ -1,132 +1,218 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.2.2" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
-  <class id="1" language="java" name="principal.Sistema" project="QuemMeAjuda" 
-    file="/QuemMeAjuda/src/principal/Sistema.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="463" width="178" x="225" y="9"/>    
-    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="2" language="java" name="principal.Fachada" project="QuemMeAjuda" 
-    file="/QuemMeAjuda/src/principal/Fachada.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="461" width="139" x="18" y="11"/>    
-    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="3" language="java" name="principal.Aluno" project="QuemMeAjuda" 
-    file="/QuemMeAjuda/src/principal/Aluno.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="225" width="187" x="483" y="12"/>    
-    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="4" language="java" name="principal.Tutor" project="QuemMeAjuda" 
-    file="/QuemMeAjuda/src/principal/Tutor.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="225" width="205" x="713" y="12"/>    
-    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="5" language="java" name="principal.Atendimento" project="QuemMeAjuda" 
-    file="/QuemMeAjuda/src/principal/Atendimento.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="207" width="208" x="715" y="262"/>    
-    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="6" language="java" name="principal.AjudaOnline" project="QuemMeAjuda" 
-    file="/QuemMeAjuda/src/principal/AjudaOnline.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="561" y="613"/>    
+  <class id="1" language="java" name="comparadores.ComparatorMaiorProficiecia" project="QuemMeAjuda" 
+    file="/QuemMeAjuda/src/comparadores/ComparatorMaiorProficiecia.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="95" width="186" x="899" y="37"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="principal.AjudaPresencial" project="QuemMeAjuda" 
+  <class id="2" language="java" name="controladores.ControllerCaixa" project="QuemMeAjuda" 
+    file="/QuemMeAjuda/src/controladores/ControllerCaixa.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="131" width="149" x="349" y="1228"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="controladores.ControllerAjuda" project="QuemMeAjuda" 
+    file="/QuemMeAjuda/src/controladores/ControllerAjuda.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="221" width="298" x="863" y="1228"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="controladores.ControllerTutor" project="QuemMeAjuda" 
+    file="/QuemMeAjuda/src/controladores/ControllerTutor.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="299" width="267" x="42" y="1228"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="controladores.ControllerAluno" project="QuemMeAjuda" 
+    file="/QuemMeAjuda/src/controladores/ControllerAluno.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="257" width="285" x="538" y="1228"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="fachada.Fachada" project="QuemMeAjuda" 
+    file="/QuemMeAjuda/src/fachada/Fachada.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="474" width="335" x="448" y="37"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="principal.Disciplina" project="QuemMeAjuda" 
+    file="/QuemMeAjuda/src/principal/Disciplina.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="203" width="189" x="42" y="2044"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="principal.AjudaPresencial" project="QuemMeAjuda" 
     file="/QuemMeAjuda/src/principal/AjudaPresencial.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="265" width="223" x="234" y="481"/>    
+    <position height="221" width="309" x="852" y="2044"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="principal.AjudaOnline" project="QuemMeAjuda" 
+    file="/QuemMeAjuda/src/principal/AjudaOnline.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="113" width="196" x="616" y="2044"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="principal.Aluno" project="QuemMeAjuda" 
+    file="/QuemMeAjuda/src/principal/Aluno.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="383" width="196" x="538" y="1567"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="principal.PedidoDeAjuda" project="QuemMeAjuda" 
+    file="/QuemMeAjuda/src/principal/PedidoDeAjuda.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="275" width="212" x="852" y="1567"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="principal.Atendimento" project="QuemMeAjuda" 
+    file="/QuemMeAjuda/src/principal/Atendimento.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="203" width="246" x="271" y="2044"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="principal.Tutor" project="QuemMeAjuda" 
+    file="/QuemMeAjuda/src/principal/Tutor.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="437" width="232" x="42" y="1567"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="sistema.Sistema" project="QuemMeAjuda" 
+    file="/QuemMeAjuda/src/sistema/Sistema.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="637" width="337" x="448" y="551"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="8" language="java" name="principal.PedidoDeAjuda" project="QuemMeAjuda" 
-    file="/QuemMeAjuda/src/principal/PedidoDeAjuda.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="523" y="366"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </interface>  
-  <realization id="9">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="8"/>  
-  </realization>  
-  <realization id="10">    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="8"/>  
-  </realization>  
-  <association id="11">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="12" name="listaDeAlunos">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="13" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
+  <association id="15">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="16" name="cAjuda"/>      
+      <multiplicity id="17" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="14">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="3"/>  
-  </generalization>  
-  <association id="15">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="16" name="pedidosDeAjuda"/>      
-      <multiplicity id="17" minimum="0" maximum="2147483647"/>    
+  <association id="18">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="19" name="cTutor"/>      
+      <multiplicity id="20" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="8" navigable="true"/>    
+    <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="18">    
+  <association id="21">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="22" name="pedidosDeAjuda"/>      
+      <multiplicity id="23" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="24">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="11"/>  
+  </generalization>  
+  <association id="25">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="26" name="listaDeAlunos"/>      
+      <multiplicity id="27" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="28">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="29" name="sistema"/>      
+      <multiplicity id="30" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="31">    
     <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="19" name="atendimento">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="20" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
+      <attribute id="32" name="listaDeTutores"/>      
+      <multiplicity id="33" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="34">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="35" name="disciplinas"/>      
+      <multiplicity id="36" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="37">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="38" name="cAluno"/>      
+      <multiplicity id="39" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="21">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="22" name="sistema">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="23" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
+  <generalization id="40">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="11"/>  
+  </generalization>  
+  <association id="41">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="42" name="cCaixa"/>      
+      <multiplicity id="43" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="44">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="45" name="atendimento"/>      
+      <multiplicity id="46" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

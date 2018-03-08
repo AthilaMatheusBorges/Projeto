@@ -1,9 +1,12 @@
-package principal;
+package controladores;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
+import comparadores.ComparatorMaiorProficiecia;
+import principal.Tutor;
 
 public class ControllerTutor {
 

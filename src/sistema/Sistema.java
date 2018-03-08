@@ -1,9 +1,14 @@
-package principal;
+package sistema;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import controladores.ControllerAjuda;
+import controladores.ControllerAluno;
+import controladores.ControllerCaixa;
+import controladores.ControllerTutor;
+import principal.AjudaOnline;
+import principal.AjudaPresencial;
+import principal.Aluno;
+import principal.PedidoDeAjuda;
+import principal.Tutor;
 
 public class Sistema {
 

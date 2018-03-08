@@ -1,9 +1,11 @@
-package principal;
+package controladores;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
+import principal.Aluno;
 
 public class ControllerAluno {
 
@@ -81,7 +83,7 @@ public class ControllerAluno {
 	 * @param email
 	 *            email do aluno em String
 	 */
-	public void verificaCadastroAluno(String nome, String matricula, String telefone, String email) {
+	private void verificaCadastroAluno(String nome, String matricula, String telefone, String email) {
 		String erro = "";
 		if (!verificaEmail(email))
 			erro = "Email invalido";
@@ -130,7 +132,7 @@ public class ControllerAluno {
 	 *            do aluno em String
 	 */
 
-	public void verificaMatricula(String quemSouEu, String matricula) {
+	private void verificaMatricula(String quemSouEu, String matricula) {
 		if (!this.listaDeAlunos.containsKey(matricula))
 			throw new IllegalArgumentException("Erro na " + quemSouEu + ": Aluno nao encontrado");
 	}

@@ -1,10 +1,7 @@
 package principal;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
-
 public class Tutor {
+	private Nivel nivel;
 	private String tutorMatricula;
 	private int proficiencia, idTutor, saldo;
 	private double nota;
@@ -22,6 +19,7 @@ public class Tutor {
 	 *            eh a proficiencia do tutor sobre a discipĺina.
 	 */
 	public Tutor(String tutorMatricula,int idTutor) {
+		this.nivel = NivelTutor.TUTOR;
 		this.tutorMatricula = tutorMatricula;
 		this.disciplinas = new Disciplina();
 		this.nota = 4;
@@ -31,15 +29,7 @@ public class Tutor {
 	}
 
 	public double getTaxaTutor() {
-		double taxa = 0;
-		if (pegarNivel().equals("TOP")) {
-			taxa = (90 + ((getNota() - 4.5)* 10)) / 100.0;
-		} else if (pegarNivel().equals("Tutor")) {
-			taxa = 80 / 100.0;
-		} else if (pegarNivel().equals("Aprendiz")) {
-			taxa = (0.4 - ((3.0 - getNota())*10)/100);
-		}
-		return taxa;
+		return this.nivel.calculaTaxa(this.nota);
 	}
 	
 	public boolean temDisciplina(String disciplina) {
@@ -122,6 +112,7 @@ public class Tutor {
 	 */
 	public void avaliarTutor(int nota2) {
 		this.nota = (this.nota * 5 + nota2) / 6;
+		atualizarNivel();
 	}
 
 	/**
@@ -138,12 +129,16 @@ public class Tutor {
 	 * @return retorna uma String que representa o nivel do tutor
 	 */
 	public String pegarNivel() {
-		if (this.nota > 4.5) {
-			return "TOP";
-		} else if (3 < this.nota && this.nota <= 4.5) {
-			return "Tutor";
-		}
-		return "Aprendiz";
+		return this.nivel.pegarNivel();
+	}
+	
+	private void atualizarNivel() {
+		if(this.nota > 4.5)
+			this.nivel = NivelTutor.TOP;
+		else if (3 < this.nota && this.nota <= 4.5) 
+			this.nivel = NivelTutor.TUTOR;
+		else
+			this.nivel = NivelTutor.APRENDIZ;
 	}
 
 	/**

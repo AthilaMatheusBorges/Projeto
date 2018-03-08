@@ -19,6 +19,7 @@ public class Sistema {
 		cAluno = new ControllerAluno();
 		cTutor = new ControllerTutor();
 		cAjuda = new ControllerAjuda();
+		cCaixa = new ControllerCaixa();
 	}
 
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
@@ -229,7 +230,7 @@ public class Sistema {
 
 	public String pegarTutor(int idAjuda) {
 		cAjuda.validaIdAjuda("tutor", idAjuda);
-		return recuperaAluno(cAjuda.getMatriculaTutorAjuda(idAjuda));
+		return cAjuda.getDescricaoTutor(idAjuda);
 	}
 
 	public PedidoDeAjuda getAjuda(int idAjuda) {
@@ -271,8 +272,11 @@ public class Sistema {
 
 
 	public String avaliarTutor(int idAjuda, int nota) {
-		if(cAjuda.getPedidoDeAjuda(idAjuda).tutorAvaliado())
-			throw new IllegalArgumentException("Erro na avaliacao de tutor: Ajuda ja avaliada");
+		if (nota > 5)
+			throw new IllegalArgumentException("Erro na avaliacao de tutor: nota nao pode ser maior que 5");
+		else if (nota < 0) 
+			throw new IllegalArgumentException("Erro na avaliacao de tutor: nota nao pode ser menor que 0");
+		cAjuda.avaliarAjuda(idAjuda);
 		return cTutor.avaliarTutor(cAjuda.getMatriculaTutorAjuda(idAjuda), nota);
 	}
 
@@ -288,29 +292,37 @@ public class Sistema {
 
 	
 	public void doar(String matriculaTutor, int totalCentavos) {
-		String nivel = pegarNivel(matriculaTutor);
-		int valorSistema = 0;
-		if (nivel.equals("TOP")) {
-			valorSistema = (int) (1 - (90
-					+ (((cTutor.getTutor(matriculaTutor).getNota() - 4.5) * 10) / 100) * totalCentavos));
-		} else if (nivel.equals("Tutor")) {
-			valorSistema = (int) ((0.2) * totalCentavos);
-		} else if (nivel.equals("Aprendiz")) {
-			valorSistema = (int) (1 - (40
-					- (((3.0 - cTutor.getTutor(matriculaTutor).getNota()) * 10) / 100) * totalCentavos));
+		if(totalCentavos < 0) {
+			throw new IllegalArgumentException("Erro na doacao para tutor: totalCentavos nao pode ser menor que zero");
+		}else if(!cTutor.temTutor(matriculaTutor)) {
+			throw new IllegalArgumentException("Erro na doacao para tutor: Tutor nao encontrado");
 		}
-		cCaixa.adicionaAoCaixa(valorSistema);
-		cTutor.receberDoacao(matriculaTutor, totalCentavos - valorSistema);
+		
+		String nivel = pegarNivel(matriculaTutor);
+		double valorSistema = 0;
+		double taxa = 0;
+	
+		if (nivel.equals("TOP")) {
+			taxa = (90 + ((cTutor.getTutor(matriculaTutor).getNota() - 4.5)* 10)) / 100.0;
+			valorSistema = ((1.0 - taxa) * totalCentavos);
+		} else if (nivel.equals("Tutor")) {
+			taxa = 80 / 100.0;
+			valorSistema = ((1 - taxa) * totalCentavos);
+		} else if (nivel.equals("Aprendiz")) {
+			taxa = (0.4 - ((3.0 - cTutor.getTutor(matriculaTutor).getNota())*10)/100);
+			valorSistema = ((1 - taxa) * totalCentavos);
+		}
+	
+		cCaixa.adicionaAoCaixa((int) valorSistema);
+		cTutor.receberDoacao(matriculaTutor, Math.ceil((totalCentavos - valorSistema) * 100) /100);
 	}
 
-	/**
-	 * Retorna o dinheiro de um tutor.
-	 * 
-	 * @param emailTutor
-	 *            email do tutor
-	 * @return dinheiro do tutor
-	 */
-	public int totalDinheiroTutor(String emailTutor) {
+	public double totalDinheiroTutor(String emailTutor) {
+		if (emailTutor.trim().equals("") || emailTutor == null) {
+			throw new IllegalArgumentException("Erro na consulta de total de dinheiro do tutor: emailTutor nao pode ser vazio ou nulo");
+		}else if(recuperaTutorPorEmail(emailTutor)==null) {
+			throw new NullPointerException("Erro na consulta de total de dinheiro do tutor: Tutor nao encontrado");
+		}
 		return recuperaTutorPorEmail(emailTutor).getSaldo();
 	}
 

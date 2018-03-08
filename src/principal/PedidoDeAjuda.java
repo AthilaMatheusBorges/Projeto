@@ -25,6 +25,10 @@ public abstract class PedidoDeAjuda {
 		this.avaliado = false;
 	}
 
+	public void avaliar() {
+		this.avaliado = true;
+	}
+	
 	/**
 	 * Retorna a disciplina deste pedido de ajuda.
 	 * 

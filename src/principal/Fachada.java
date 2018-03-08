@@ -272,7 +272,7 @@ public class Fachada {
 	 * @return dinheiro do tutor
 	 */
 	public int totalDinheiroTutor(String emailTutor) {
-		return sistema.totalDinheiroTutor(emailTutor);
+		return (int) sistema.totalDinheiroTutor(emailTutor);
 	}
 
 	/**

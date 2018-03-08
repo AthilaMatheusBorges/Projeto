@@ -45,27 +45,18 @@ public class ControllerAjuda {
 			throw new IllegalArgumentException("Erro ao tentar recuperar " + quemSouEu + " : id nao encontrado ");
 	}
 	
-	public String avaliarTutor(int idAjuda, int nota) {
-		validaAvaliacaoTutor(idAjuda, nota);
-		if (getPedidoDeAjuda(idAjuda).tutorAvaliado()) {
-			String matricula = getPedidoDeAjuda(idAjuda).getTutorMatricula();
-			
-			return "Tutor avaliado";
-		}
-		throw new IllegalArgumentException("Erro na avaliacao de tutor: Ajuda ja avaliada");
-	}
-	
-	
-	private void validaAvaliacaoTutor(int idAjuda, int nota) {
-		if (nota > 5) {
-			throw new IllegalArgumentException("Erro na avaliacao de tutor: nota nao pode ser maior que 5");
-		} else if (nota < 0) {
-			throw new IllegalArgumentException("Erro na avaliacao de tutor: nota nao pode ser menor que 0");
-		} else if (!pedidosDeAjuda.containsKey(idAjuda)) {
+	public void avaliarAjuda(int idAjuda) {
+		if (!pedidosDeAjuda.containsKey(idAjuda)) 
 			throw new IllegalArgumentException("Erro na avaliacao de tutor: id nao encontrado ");
-		}
-
+		else if (getPedidoDeAjuda(idAjuda).tutorAvaliado()) 
+			throw new IllegalArgumentException("Erro na avaliacao de tutor: Ajuda ja avaliada");
+		getPedidoDeAjuda(idAjuda).avaliar();
 	}
-
+	
+	
+	
+	public String getDescricaoTutor(int idAjuda) {
+		return getPedidoDeAjuda(idAjuda).getDescricaoTutor();
+	}
 	
 }

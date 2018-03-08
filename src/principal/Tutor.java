@@ -6,8 +6,8 @@ import java.util.List;
 
 public class Tutor {
 	private String tutorMatricula;
-	private int proficiencia, idTutor, saldo;
-	private double nota;
+	private int proficiencia, idTutor;
+	private double nota, saldo;
 	private Atendimento atendimento;
 	private Disciplina disciplinas;
 
@@ -129,7 +129,7 @@ public class Tutor {
 	public String pegarNivel() {
 		if (this.nota > 4.5) {
 			return "TOP";
-		} else if (this.nota > 3 || this.nota <= 4.5) {
+		} else if (3 < this.nota && this.nota <= 4.5) {
 			return "Tutor";
 		}
 		return "Aprendiz";
@@ -141,7 +141,7 @@ public class Tutor {
 	 * @param valor
 	 *            valor da doacao
 	 */
-	public void receberDoacao(int valor) {
+	public void receberDoacao(double valor) {
 		this.saldo += valor;
 
 	}
@@ -151,7 +151,7 @@ public class Tutor {
 	 * 
 	 * @return valor do saldo
 	 */
-	public int getSaldo() {
+	public double getSaldo() {
 		return saldo;
 	}
 

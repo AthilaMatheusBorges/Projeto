@@ -41,9 +41,7 @@ private Map<String, Tutor> listaDeTutores;
 	}
 	
 	public boolean temTutor(String matricula) {
-		if(this.listaDeTutores.containsKey(matricula))
-			return true;
-		return false;
+		return this.listaDeTutores.containsKey(matricula);
 	}
 	
 	public void verificaTutor(String matricula) {	
@@ -86,7 +84,7 @@ private Map<String, Tutor> listaDeTutores;
 		return "Tutor avaliado";
 	}
 	
-	public void receberDoacao(String matricula, int valor) {
+	public void receberDoacao(String matricula, double valor) {
 		getTutor(matricula).receberDoacao(valor);
 	}
 }

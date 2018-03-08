@@ -1,20 +1,22 @@
-package principal;
+package fachada;
 
 import easyaccept.EasyAccept;
+import sistema.Sistema;
 
 /**
  * 
- * @authores Jonathan Allisson de Lima Silva -- 117110926 Marcelo Fagner da
- *           Silva Andrade -- 117110910 Flavio Roberto Pires Quirino Farias --
- *           117111444 Athila Matheus Barros Borges -- 117110913 ****UFCG -
- *           COMPUTACAO 2017.2****
+ * @author 	Jonathan Allisson de Lima Silva -- 117110926 
+ * @author	Marcelo Fagner da Silva Andrade -- 117110910 
+ * @author	Flavio Roberto Pires Quirino Farias -- 117111444 
+ * @author  Athila Matheus Barros Borges -- 117110913 
+ * 			       ****UFCG - COMPUTACAO 2017.2****
  */
 public class Fachada {
 
 	Sistema sistema = new Sistema();
 
 	public static void main(String[] args) {
-		args = new String[] { "principal.Fachada", 
+		args = new String[] { "fachada.Fachada", 
 				"acceptance_test/us1_test.txt", 
 				"acceptance_test/us2_test.txt",
 				"acceptance_test/us3_test.txt", 

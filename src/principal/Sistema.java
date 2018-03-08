@@ -640,19 +640,26 @@ public class Sistema {
 	 *            valor da doacao
 	 */
 	public void doar(String matriculaTutor, int totalCentavos) {
+		if(totalCentavos < 0) {
+			throw new IllegalArgumentException("Erro na doacao para tutor: totalCentavos nao pode ser menor que zero");
+		}else if(!verificaTutor(matriculaTutor)) {
+			throw new IllegalArgumentException("Erro na doacao para tutor: Tutor nao encontrado");
+		}
 		String nivel = pegarNivel(matriculaTutor);
-		int valorSistema = 0;
+		double valorSistema = 0;
+		double taxa = 0;
 		if (nivel.equals("TOP")) {
-			valorSistema = (int) (1 - (90
-					+ (((recuperaTutorPelaMatricula(matriculaTutor).getNota() - 4.5) * 10) / 100) * totalCentavos));
+			taxa = (90 + ((recuperaTutorPelaMatricula(matriculaTutor).getNota() - 4.5)* 10)) / 100.0;
+			valorSistema = ((1.0 - taxa) * totalCentavos) + 1;
 		} else if (nivel.equals("Tutor")) {
-			valorSistema = (int) ((0.2) * totalCentavos);
+			taxa = 80 / 100.0;
+			valorSistema = ((1 - taxa) * totalCentavos) + 1;
 		} else if (nivel.equals("Aprendiz")) {
-			valorSistema = (int) (1 - (40
+			valorSistema = (1 - (40
 					- (((3.0 - recuperaTutorPelaMatricula(matriculaTutor).getNota()) * 10) / 100) * totalCentavos));
 		}
-		this.caixa += valorSistema;
-		recuperaTutorPelaMatricula(matriculaTutor).receberDoacao(totalCentavos - valorSistema);
+		this.caixa += (int) valorSistema;
+		recuperaTutorPelaMatricula(matriculaTutor).receberDoacao(totalCentavos - (int) valorSistema);
 	}
 
 	/**
@@ -663,6 +670,11 @@ public class Sistema {
 	 * @return dinheiro do tutor
 	 */
 	public int totalDinheiroTutor(String emailTutor) {
+		if (emailTutor.trim().equals("") || emailTutor == null) {
+			throw new IllegalArgumentException("Erro na consulta de total de dinheiro do tutor: emailTutor nao pode ser vazio ou nulo");
+		}else if(recuperaTutorPorEmail(emailTutor)==null) {
+			throw new NullPointerException("Erro na consulta de total de dinheiro do tutor: Tutor nao encontrado");
+		}
 		return recuperaTutorPorEmail(emailTutor).getSaldo();
 	}
 

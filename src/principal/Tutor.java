@@ -1,13 +1,12 @@
 package principal;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-
 public class Tutor {
+	private Nivel nivel;
 	private String tutorMatricula;
-	private int proficiencia, idTutor, saldo;
+	private int idTutor, saldo;
 	private double nota;
 	private Atendimento atendimento;
+	private Disciplina disciplinas;
 
 	/**
 	 * Constroi o Tutor a partir dos parametros passados.
@@ -19,15 +18,42 @@ public class Tutor {
 	 * @param proficiencia
 	 *            eh a proficiencia do tutor sobre a discipĺina.
 	 */
-	public Tutor(String tutorMatricula, int proficiencia, int idTutor) {
+	public Tutor(String tutorMatricula,int idTutor) {
+		this.nivel = NivelTutor.TUTOR;
 		this.tutorMatricula = tutorMatricula;
-		this.proficiencia = proficiencia;
+		this.disciplinas = new Disciplina();
 		this.nota = 4;
 		this.idTutor = idTutor;
 		this.atendimento = new Atendimento();
 		this.saldo = 0;
 	}
 
+	/**
+	 * Recupera a taxa do tutor.
+	 * @return retorna a taxa do tutor.
+	 */
+	public double getTaxaTutor() {
+		return this.nivel.calculaTaxa(this.nota);
+	}
+	
+	/**
+	 * Verifica se o tutor ja eh tutor da disciplina.
+	 * @param disciplina eh a disciplina a ser verificada.
+	 * @return retorna true se for tutor da disciplina, false caso contrario.
+	 */
+	public boolean temDisciplina(String disciplina) {
+		return this.disciplinas.temDisciplina(disciplina);
+	}
+	
+	/**
+	 * Adiciona a disciplina as disciplinas do tutor.
+	 * @param disciplina eh a disciplina a ser adicionada.
+	 * @param proficiencia eh a proficiencia do tutor sobre a disciplina.
+	 */
+	public void adicionarDisciplina(String disciplina, int proficiencia) {
+		this.disciplinas.adicionarDisciplina(disciplina, proficiencia);
+	}
+	
 	/**
 	 * Recupera a matricula do tutor.
 	 * 
@@ -94,63 +120,72 @@ public class Tutor {
 	}
 
 	/**
-	 * Metodo que faz o calculo de avaliacao do tutor
+	 * Avalida o tutor e atualiza o nivel.
 	 * 
 	 * @param nota2
-	 *            valor da nota de uma ajuda em double
+	 *            valor da avaliacao.
 	 */
 	public void avaliarTutor(int nota2) {
 		this.nota = (this.nota * 5 + nota2) / 6;
+		atualizarNivel();
 	}
 
 	/**
-	 * metodo que retorna o valor da nota do tutor
+	 * Recupera a nota do tutor.
+	 * @return retorna a nota do tutor.
 	 */
 	public double getNota() {
 		return this.nota;
 	}
 
 	/**
-	 * Metodo que apartir da nota de avaliacao do tutor retorna um String com o
-	 * nivel dele
-	 * 
-	 * @return retorna uma String que representa o nivel do tutor
+	 * Pega o nivel do tutor.
+	 * @return retorna uma string do nivel do tutor.
 	 */
 	public String pegarNivel() {
-		if (this.nota > 4.5) {
-			return "TOP";
-		} else if (this.nota > 3 || this.nota <= 4.5) {
-			return "Tutor";
-		}
-		return "Aprendiz";
+		return this.nivel.pegarNivel();
+	}
+	
+	/**
+	 * Atualiza o nivel do tutor a partir de sua nota.
+	 */
+	private void atualizarNivel() {
+		if(this.nota > 4.5)
+			this.nivel = NivelTutor.TOP;
+		else if (3 < this.nota && this.nota <= 4.5) 
+			this.nivel = NivelTutor.TUTOR;
+		else
+			this.nivel = NivelTutor.APRENDIZ;
 	}
 
 	/**
-	 * Esse metodo recebe uma doacao para o tutor
+	 * Recebe uma doacao para o tutor.
 	 * 
 	 * @param valor
-	 *            valor da doacao
+	 *            valor da doacao.
 	 */
-	public void receberDoacao(int valor) {
+	public void receberDoacao(double valor) {
 		this.saldo += valor;
 
 	}
 
 	/**
-	 * Retorna o saldo que o tutor tem
+	 * Retorna o saldo do tutor.
 	 * 
-	 * @return valor do saldo
+	 * @return valor do saldo.
 	 */
 	public int getSaldo() {
 		return saldo;
 	}
 
 	/**
-	 * Vai pegar o valor da nota e retornar formatado
+	 * Recupera a nota do tutor.
 	 * 
-	 * @return retorna uma s
+	 * @return retorna a nota do tutor com duas casas decimais.
 	 */
 	public String pegarNota() {
 		return String.format("%.2f", getNota());
 	}
+	
+	
 }

@@ -138,7 +138,7 @@ public class Aluno implements Comparable<Aluno> {
 	}
 
 	/**
-	 * Metodo responsavel por comparar dois alunos.
+	 * Metodo responsavel por comparar alunos.
 	 * 
 	 * @param outroAluno
 	 *            O outro aluno que vai ser comparado.

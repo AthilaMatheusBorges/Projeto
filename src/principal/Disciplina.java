@@ -1,76 +1,75 @@
 package principal;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class Disciplina {
 
-	String disciplina;
-	Map<String, Tutor> listaDeTutores;
+	private Map<String, Integer> disciplinas;
 
-	public Disciplina(String disciplina) {
-		this.disciplina = disciplina;
-		this.listaDeTutores = new HashMap<>();
+	public Disciplina() {
+		this.disciplinas = new HashMap<>();
 	}
 
-	public Map<String, Tutor> getListaDeTutores() {
-		return this.listaDeTutores;
+	/**
+	 * Adiciona uma disciplina e a proficiencia ao mapa.
+	 * @param disciplina eh a disciplina.
+	 * @param proficiencia eh a proficiencia.
+	 */
+	public void adicionarDisciplina(String disciplina, int proficiencia) {
+		verificaProficiencia(proficiencia);
+		verificaDisciplina(disciplina);
+		this.disciplinas.put(disciplina, proficiencia);
 	}
-
-	public Tutor getTutor(String matricula) {
-		return this.listaDeTutores.get(matricula);
+	
+	/**
+	 * Retorna um set com as disciplinas.
+	 * @return retorna um set com as disciplinas.
+	 */
+	public Set<String> getDisciplinas(){
+		return this.disciplinas.keySet();
 	}
-
-	public void adicionarTutor(Tutor tutor) {
-		this.listaDeTutores.put(tutor.getTutorMatricula(), tutor);
+	
+	/**
+	 * Verifica se a lista de disciplinas tem determinada disciplina.
+	 * @param disciplina eh a disciplina ser verificada.
+	 * @return retorna true se a disciplina estiver na lista, false caso contrario.
+	 */
+	public boolean temDisciplina(String disciplina) {
+		return this.disciplinas.containsKey(disciplina);
 	}
-
-	public String getDisciplina() {
-		return this.disciplina;
+	
+	/**
+	 * Valida a disciplina nova.
+	 * @param disciplina eh a disciplina a ser validada.
+	 * @return retorna uma excecao se a disciplina estiver na lista, false caso contrairo.
+	 */
+	private boolean verificaDisciplina(String disciplina) {
+		if(this.disciplinas.containsKey(disciplina))
+			throw new IllegalArgumentException("Erro na definicao de papel: Ja eh tutor dessa disciplina");
+		return false;
 	}
-
-	public boolean temTutor(String matricula) {
-		return this.listaDeTutores.containsKey(matricula);
+	
+	/**
+	 * Valida a proficiencia.
+	 * @param proficiencia eh a proficiencia a ser validada.
+	 */
+	private void verificaProficiencia(int proficiencia) {
+		if (proficiencia < 1 || proficiencia > 5)
+			throw new IllegalArgumentException("Erro na definicao de papel: Proficiencia invalida");
 	}
-
-	public Tutor maiorProficiencia(String horario, String dia, String localInteresse) {
-		Tutor possivelTutor = null;
-		for (Tutor tutor : this.listaDeTutores.values()) {
-			if (tutor.consultaLocal(localInteresse) && tutor.consultaHorario(horario, dia)) {
-				if (possivelTutor == null)
-					possivelTutor = tutor;
-				else {
-					if (tutor.getNota() > possivelTutor.getNota())
-						possivelTutor = tutor;
-					else if (tutor.getNota() == possivelTutor.getNota())
-						if (tutor.getId() < possivelTutor.getId())
-							possivelTutor = tutor;
-				}
-			}
-		}
-		return possivelTutor;
+	
+	/**
+	 * Recupera a proficiencia.
+	 * @param disciplina eh a disciplina.
+	 * @return retorna a proficiencia associada a disciplina.
+	 */
+	public int recuperaProficiencia(String disciplina) {
+		if(temDisciplina(disciplina))
+			return this.disciplinas.get(disciplina);
+		return -1;
 	}
-
-	public Tutor maiorProficiencia() {
-		Tutor possivelTutor = null;
-		for (Tutor tutor : this.listaDeTutores.values()) {
-			if (possivelTutor == null)
-				possivelTutor = tutor;
-			else {
-				if (tutor.getNota() > possivelTutor.getNota())
-					possivelTutor = tutor;
-				else if (tutor.getNota() == possivelTutor.getNota())
-					if (tutor.getId() < possivelTutor.getId())
-						possivelTutor = tutor;
-			}
-		}
-		return possivelTutor;
-	}
-
-	public String getDescricaoTutor(String matricula) {
-		return "Tutor - " + matricula + ", disciplina- " + this.disciplina;
-	}
+	
 
 }

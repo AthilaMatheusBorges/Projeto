@@ -28,7 +28,9 @@ public class ControllerAjuda {
 
 	/**
 	 * Recupera um Pedido de Ajuda e retorna o proprio objeto.
-	 * @param idAjuda eh o idendificador da ajuda.
+	 * 
+	 * @param idAjuda
+	 *            eh o idendificador da ajuda.
 	 * @return retorna o objeto do Pedido de Ajuda.
 	 */
 	public PedidoDeAjuda getPedidoDeAjuda(int idAjuda) {
@@ -36,15 +38,21 @@ public class ControllerAjuda {
 	}
 
 	/**
-	 * Adiciona um Pedido de Ajuda Presencial no mapa. 
-	 * Cria o objeto do pedido e o adiciona ao mapa.
+	 * Adiciona um Pedido de Ajuda Presencial no mapa. Cria o objeto do pedido e o
+	 * adiciona ao mapa.
 	 * 
-	 * @param matrAluno eh a matricula do aluno que fez o pedido de ajuda.
-	 * @param disciplina eh a disciplina da ajuda.
-	 * @param tutorMatricula eh a matricula do tutor da ajuda.
-	 * @param horario eh o horario da ajuda.
-	 * @param dia eh o dia da ajuda.
-	 * @param localInteresse eh o local da ajuda.
+	 * @param matrAluno
+	 *            eh a matricula do aluno que fez o pedido de ajuda.
+	 * @param disciplina
+	 *            eh a disciplina da ajuda.
+	 * @param tutorMatricula
+	 *            eh a matricula do tutor da ajuda.
+	 * @param horario
+	 *            eh o horario da ajuda.
+	 * @param dia
+	 *            eh o dia da ajuda.
+	 * @param localInteresse
+	 *            eh o local da ajuda.
 	 * @return retorna o identificador do pedido de ajuda.
 	 */
 	public int adicionaAjuda(String matrAluno, String disciplina, String tutorMatricula, String horario, String dia,
@@ -56,12 +64,15 @@ public class ControllerAjuda {
 	}
 
 	/**
-	 * Adiciona um Pedido de Ajuda Online no mapa.
-	 * Cria o objeto do pedido e o adiciona ao mapa.
+	 * Adiciona um Pedido de Ajuda Online no mapa. Cria o objeto do pedido e o
+	 * adiciona ao mapa.
 	 * 
-	 * @param matrAluno eh a matricula do aluno que fez o pedido de ajuda.
-	 * @param disciplina eh a disciplina da ajuda.
-	 * @param tutorMatricula eh a matricula do tutor da ajuda.
+	 * @param matrAluno
+	 *            eh a matricula do aluno que fez o pedido de ajuda.
+	 * @param disciplina
+	 *            eh a disciplina da ajuda.
+	 * @param tutorMatricula
+	 *            eh a matricula do tutor da ajuda.
 	 * @return retorna o identificador do pedido de ajuda.
 	 */
 	public int adicionaAjuda(String matrAluno, String disciplina, String tutorMatricula) {
@@ -72,6 +83,7 @@ public class ControllerAjuda {
 
 	/**
 	 * Retorna a quantidade de pedidos de ajuda realizados.
+	 * 
 	 * @return a quantidade de pedidos de ajuda realizados.
 	 */
 	public int getQntdPedidosAjuda() {
@@ -80,7 +92,9 @@ public class ControllerAjuda {
 
 	/**
 	 * Recupera a matricula do tutor da ajuda.
-	 * @param idAjuda eh o identificador da ajuda.
+	 * 
+	 * @param idAjuda
+	 *            eh o identificador da ajuda.
 	 * @return retorna a matricula do tutor.
 	 */
 	public String getMatriculaTutorAjuda(int idAjuda) {
@@ -89,8 +103,11 @@ public class ControllerAjuda {
 
 	/**
 	 * Valida o identificador da ajuda.
-	 * @param quemSouEu eh o nome de quem esta sendo verificado.
-	 * @param idAjuda eh o identificador da ajuda.
+	 * 
+	 * @param quemSouEu
+	 *            eh o nome de quem esta sendo verificado.
+	 * @param idAjuda
+	 *            eh o identificador da ajuda.
 	 */
 	public void validaIdAjuda(String quemSouEu, int idAjuda) {
 		if (idAjuda < 0)
@@ -102,7 +119,9 @@ public class ControllerAjuda {
 
 	/**
 	 * Avalia a ajuda. Antes verifica se a ajuda ja esta avaliada.
-	 * @param idAjuda eh o identificador da ajuda.
+	 * 
+	 * @param idAjuda
+	 *            eh o identificador da ajuda.
 	 */
 	public void avaliarAjuda(int idAjuda) {
 		if (!pedidosDeAjuda.containsKey(idAjuda))
@@ -114,11 +133,29 @@ public class ControllerAjuda {
 
 	/**
 	 * Recupera a descricao do tutor da ajuda.
-	 * @param idAjuda eh o identificador da ajuda.
+	 * 
+	 * @param idAjuda
+	 *            eh o identificador da ajuda.
 	 * @return retorna a descricao do tutor da ajuda.
 	 */
 	public String getDescricaoTutor(int idAjuda) {
 		return getPedidoDeAjuda(idAjuda).getDescricaoTutor();
+	}
+
+	/**
+	 * Retorna uma informacao do pedido de ajuda baseado em um atributo.
+	 * 
+	 * @param idAjuda
+	 *            A ajuda a ser acessada.
+	 * @param atributo
+	 *            O atributo que indica a informacao de retorno.
+	 * @return A informacao pedida.
+	 */
+	public String getInfoAjuda(int idAjuda, String atributo) {
+		validaIdAjuda("info da ajuda", idAjuda);
+		PedidoDeAjuda ajuda = getPedidoDeAjuda(idAjuda);
+		return ajuda.getInfoAjuda(atributo);
+
 	}
 
 }

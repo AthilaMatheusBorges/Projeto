@@ -81,4 +81,34 @@ public class AjudaPresencial extends PedidoDeAjuda {
 		return "Tutor - " + super.getTutorMatricula() + ", horario - " + this.horario + ", dia - " + this.dia
 				+ ", local - " + this.localInteresse + ", disciplina - " + super.getDisciplina();
 	}
+
+	/**
+	 * Retorna uma informacao baseada no atributo que pode ser "tutor",
+	 * "disciplina", "dia", "horario" ou "localinteresse". Caso nao seja nenhum
+	 * desses, uma excecao eh lancada.
+	 * 
+	 * @param atributo
+	 *            O atributo que corresponde a informacao a ser retornada.
+	 * @return A informacao pedida.
+	 */
+	@Override
+	public String getInfoAjuda(String atributo) {
+		switch (atributo.toLowerCase()) {
+		case "tutor":
+			return getTutorMatricula();
+		case "disciplina":
+			return getDisciplina();
+		case "dia":
+			return getDia();
+		case "horario":
+			return getHorario();
+		case "localinteresse":
+			return getLocalInteresse();
+		default:
+			if (atributo.trim().equals("") || atributo == null)
+				throw new IllegalArgumentException(
+						"Erro ao tentar recuperar info da ajuda : atributo nao pode ser vazio ou em branco");
+			throw new IllegalArgumentException("Erro ao tentar recuperar info da ajuda : atributo nao encontrado");
+		}
+	}
 }

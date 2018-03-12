@@ -31,6 +31,7 @@ public class Sistema {
 	private ControllerAjuda cAjuda;
 	private ControllerCaixa cCaixa;
 	private Comparator ordenacao;
+
 	/**
 	 * Inicia um novo sistema com os controladores.
 	 */
@@ -88,7 +89,6 @@ public class Sistema {
 		return saida.substring(0, saida.length() - 2);
 	}
 
-
 	/**
 	 * Obtem uma informacao sobre o aluno.
 	 * 
@@ -120,8 +120,7 @@ public class Sistema {
 		String emailTemp = alunoTemporario.getEmail();
 		cTutor.tornarTutor(matricula, disciplina, proficiencia, nomeTemp, emailTemp);
 	}
-	
-	
+
 	/**
 	 * Verifica se a matricula esta cadastrada.
 	 * 
@@ -163,7 +162,7 @@ public class Sistema {
 		if (saida.equals(""))
 			return saida;
 		return saida.substring(0, saida.length() - 2);
-		
+
 	}
 
 	/**
@@ -423,35 +422,7 @@ public class Sistema {
 	 * @return retorna a informacao da ajuda.
 	 */
 	public String getInfoAjuda(int idAjuda, String atributo) {
-		cAjuda.validaIdAjuda("info da ajuda", idAjuda);
-		switch (atributo.toLowerCase()) {
-		case "tutor":
-			return getAjuda(idAjuda).getTutorMatricula();
-		case "disciplina":
-			return getAjuda(idAjuda).getDisciplina();
-		case "dia":
-			if (getAjuda(idAjuda) instanceof AjudaOnline)
-				throw new IllegalArgumentException("Erro na obtencao de informacao de ajuda: Ajuda Online nao tem dia");
-			AjudaPresencial ajudaDia = (AjudaPresencial) getAjuda(idAjuda);
-			return ajudaDia.getDia();
-		case "horario":
-			if (getAjuda(idAjuda) instanceof AjudaOnline)
-				throw new IllegalArgumentException(
-						"Erro na obtencao de informacao de ajuda: Ajuda Online nao tem horario");
-			AjudaPresencial ajudaHorario = (AjudaPresencial) getAjuda(idAjuda);
-			return ajudaHorario.getHorario();
-		case "localinteresse":
-			if (getAjuda(idAjuda) instanceof AjudaOnline)
-				throw new IllegalArgumentException(
-						"Erro na obtencao de informacao de ajuda: Ajuda Online nao tem local");
-			AjudaPresencial ajudaLocal = (AjudaPresencial) getAjuda(idAjuda);
-			return ajudaLocal.getLocalInteresse();
-		default:
-			if (atributo.trim().equals("") || atributo == null)
-				throw new IllegalArgumentException(
-						"Erro ao tentar recuperar info da ajuda : atributo nao pode ser vazio ou em branco");
-			throw new IllegalArgumentException("Erro ao tentar recuperar info da ajuda : atributo nao encontrado");
-		}
+		return cAjuda.getInfoAjuda(idAjuda, atributo);
 	}
 
 	/**
@@ -556,9 +527,10 @@ public class Sistema {
 			return true;
 		return false;
 	}
-	
+
 	/**
 	 * Metodo que decide o tipo de ordenacao usada no sistema
+	 * 
 	 * @param atributo
 	 */
 	public void configuraOrdem(String atributo) {
@@ -577,6 +549,5 @@ public class Sistema {
 		}
 
 	}
-	
 
 }

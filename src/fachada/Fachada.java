@@ -213,7 +213,7 @@ public class Fachada {
 	 *            eh o identificador do pedido de ajuda.
 	 * @param atributo
 	 *            eh a informacao que o usario quer sobre o pedido de ajudar.
-	 * @return retorna a informacao pedida pelo usuario.
+	 * @return retorna a informacao pedida pelo usuario atraves do atributo.
 	 */
 	public String getInfoAjuda(int idAjuda, String atributo) {
 		return sistema.getInfoAjuda(idAjuda, atributo);

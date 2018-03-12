@@ -1,6 +1,6 @@
 package principal;
 
-public class Aluno implements Comparable<Aluno> {
+public class Aluno{
 	private String matricula, nome, telefone, email;
 	private int codigoCurso;
 	private double nota;
@@ -137,15 +137,6 @@ public class Aluno implements Comparable<Aluno> {
 				+ getEmail();
 	}
 
-	/**
-	 * Metodo responsavel por comparar alunos.
-	 * 
-	 * @param outroAluno
-	 *            O outro aluno que vai ser comparado.
-	 */
-	@Override
-	public int compareTo(Aluno outroAluno) {
-		return getNome().compareTo(outroAluno.getNome());
-	}
+
 
 }

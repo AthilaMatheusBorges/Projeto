@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import comparadores.OrdenaPorNomeAlunos;
 import principal.Aluno;
 
 /**
@@ -91,6 +92,10 @@ public class ControllerAluno {
 			}
 		return null;
 	}
+	
+	public Aluno getAlunoPorMatricula(String matricula) {
+		return listaDeAlunos.get(matricula);
+	}
 
 	/**
 	 * Lista os alunos em ordem alfabetica.
@@ -99,7 +104,7 @@ public class ControllerAluno {
 	 */
 	public String listarAlunos() {
 		ArrayList<Aluno> alunos = new ArrayList<Aluno>(this.listaDeAlunos.values());
-		Collections.sort(alunos);
+		Collections.sort(alunos, new OrdenaPorNomeAlunos());
 		String lista = "";
 		for (Aluno aluno : alunos) {
 			lista += aluno.toString() + ", ";
@@ -205,5 +210,14 @@ public class ControllerAluno {
 	private void verificaMatricula(String quemSouEu, String matricula) {
 		if (!this.listaDeAlunos.containsKey(matricula))
 			throw new IllegalArgumentException("Erro na " + quemSouEu + ": Aluno nao encontrado");
+	}
+	
+	/**
+	 * metodo que tem como finalidade retornar um array de alunos do controller de alunos
+	 * @return
+	 */
+	public ArrayList<Aluno> getListaDeAlunos() {
+		ArrayList<Aluno> alunos = new ArrayList<Aluno>(listaDeAlunos.values());
+		return alunos;
 	}
 }

@@ -285,4 +285,12 @@ public class Fachada {
 	public int totalDinheiroSistema() {
 		return sistema.totalDinheiroSistema();
 	}
+	
+	/**
+	 * Metodo que decide o tipo de ordenacao usada na listagem
+	 * @param atributo
+	 */
+	public void configurarOrdem(String atributo) {
+		sistema.configuraOrdem(atributo);
+	}
 }

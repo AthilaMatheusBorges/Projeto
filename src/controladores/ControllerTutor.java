@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import comparadores.ComparatorMaiorProficiecia;
+import principal.Aluno;
 import principal.Tutor;
 
 /**
@@ -36,9 +37,6 @@ public class ControllerTutor {
 	 *            eh o identificador do tutor.
 	 * @return retorna o tutor criado.
 	 */
-	private Tutor criarTutor(String matricula, int identificador) {
-		return new Tutor(matricula, this.listaDeTutores.size());
-	}
 
 	/**
 	 * Adiciona um tutor ao mapa de tutores.
@@ -61,11 +59,11 @@ public class ControllerTutor {
 	 * @param proficiencia
 	 *            eh a proficiencia.
 	 */
-	public void tornarTutor(String matricula, String disciplina, int proficiencia) {
+	public void tornarTutor(String matricula, String disciplina, int proficiencia, String nomeTemp, String emailTemp) {
 		if (temTutor(matricula))
 			getTutor(matricula).adicionarDisciplina(disciplina, proficiencia);
 		else {
-			Tutor tutor = criarTutor(matricula, this.listaDeTutores.size());
+			Tutor tutor = new Tutor(matricula, this.listaDeTutores.size());
 			tutor.adicionarDisciplina(disciplina, proficiencia);
 			adicionarTutor(tutor);
 		}

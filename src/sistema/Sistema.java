@@ -1,5 +1,12 @@
 package sistema;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+import comparadores.OrdenaPorEmailAlunos;
+import comparadores.OrdenaPorMatriculaAlunos;
+import comparadores.OrdenaPorNomeAlunos;
 import controladores.ControllerAjuda;
 import controladores.ControllerAluno;
 import controladores.ControllerCaixa;
@@ -11,7 +18,9 @@ import principal.PedidoDeAjuda;
 import principal.Tutor;
 
 /**
- * Responsavel por controlar todo o sistema. Usa os outros controladores para gerenciar o sistema.
+ * Responsavel por controlar todo o sistema. Usa os outros controladores para
+ * gerenciar o sistema.
+ * 
  * @author Roundhouse Kick Group
  *
  */
@@ -21,7 +30,7 @@ public class Sistema {
 	private ControllerTutor cTutor;
 	private ControllerAjuda cAjuda;
 	private ControllerCaixa cCaixa;
-
+	private Comparator ordenacao;
 	/**
 	 * Inicia um novo sistema com os controladores.
 	 */
@@ -30,11 +39,13 @@ public class Sistema {
 		cTutor = new ControllerTutor();
 		cAjuda = new ControllerAjuda();
 		cCaixa = new ControllerCaixa();
+		ordenacao = new OrdenaPorNomeAlunos();
 	}
 
 	/**
 	 * Cadastra um aluno.
-	* @param nome
+	 * 
+	 * @param nome
 	 *            eh o nome do aluno.
 	 * @param matricula
 	 *            eh a matricula do aluno.
@@ -51,7 +62,9 @@ public class Sistema {
 
 	/**
 	 * Recupera o aluno a partir da matricula.
-	 * @param matricula eh a matricula do aluno.
+	 * 
+	 * @param matricula
+	 *            eh a matricula do aluno.
 	 * @return retorna o toString() do aluno.
 	 */
 	public String recuperaAluno(String matricula) {
@@ -60,16 +73,29 @@ public class Sistema {
 
 	/**
 	 * Lista os alunos.
+	 * 
 	 * @return retorna uma lista dos alunos ordenada por nome.
 	 */
 	public String listarAlunos() {
-		return cAluno.listarAlunos();
+		ArrayList<Aluno> alunos = cAluno.getListaDeAlunos();
+		Collections.sort(alunos, this.ordenacao);
+		String saida = "";
+		for (Aluno aluno1 : alunos) {
+			saida += aluno1.toString() + ", ";
+		}
+		if (saida.equals(""))
+			return saida;
+		return saida.substring(0, saida.length() - 2);
 	}
+
 
 	/**
 	 * Obtem uma informacao sobre o aluno.
-	 * @param matricula eh a matricula do aluno.
-	 * @param atributo eh a informacao.
+	 * 
+	 * @param matricula
+	 *            eh a matricula do aluno.
+	 * @param atributo
+	 *            eh a informacao.
 	 * @return retorna a informacao do aluno.
 	 */
 	public String getInfoAluno(String matricula, String atributo) {
@@ -78,19 +104,29 @@ public class Sistema {
 
 	/**
 	 * Define o dono da matricula como tutor da disciplina passada.
-	 * @param matricula eh a matricula.
-	 * @param disciplina eh a disciplina.
-	 * @param proficiencia eh a proficiencia sobre a disciplina.
+	 * 
+	 * @param matricula
+	 *            eh a matricula.
+	 * @param disciplina
+	 *            eh a disciplina.
+	 * @param proficiencia
+	 *            eh a proficiencia sobre a disciplina.
 	 */
 	public void tornarTutor(String matricula, String disciplina, int proficiencia) {
 		if (!matriculaCadastrada(matricula))
 			throw new IllegalArgumentException("Erro na definicao de papel: Tutor nao encontrado");
-		cTutor.tornarTutor(matricula, disciplina, proficiencia);
+		Aluno alunoTemporario = cAluno.getAlunoPorMatricula(matricula);
+		String nomeTemp = alunoTemporario.getNome();
+		String emailTemp = alunoTemporario.getEmail();
+		cTutor.tornarTutor(matricula, disciplina, proficiencia, nomeTemp, emailTemp);
 	}
-
+	
+	
 	/**
 	 * Verifica se a matricula esta cadastrada.
-	 * @param matricula eh a matricula a ser verificada.
+	 * 
+	 * @param matricula
+	 *            eh a matricula a ser verificada.
 	 * @return retorna true se a matricula estiver cadastrada, false caso contrario.
 	 */
 	public boolean matriculaCadastrada(String matricula) {
@@ -99,7 +135,9 @@ public class Sistema {
 
 	/**
 	 * Recupera um tutor a partir da matricula.
-	 * @param matricula eh a matricula do tutor.
+	 * 
+	 * @param matricula
+	 *            eh a matricula do tutor.
 	 * @return retorna uma descricao textual do tutor.
 	 */
 	public String recuperaTutor(String matricula) {
@@ -109,26 +147,36 @@ public class Sistema {
 
 	/**
 	 * A partir da lista dos tutores, lista os alunos que sao tutores.
+	 * 
 	 * @return retorna uma lista de tutores.
 	 */
 	public String listarTutores() {
+		ArrayList<Aluno> tutores = new ArrayList<>();
 		String saida = "";
 		for (String matricula : cTutor.listarTutores()) {
-			saida += cAluno.recuperaAluno(matricula) + ", ";
+			tutores.add(cAluno.getAlunoPorMatricula(matricula));
+		}
+		Collections.sort(tutores, this.ordenacao);
+		for (Aluno aluno1 : tutores) {
+			saida += aluno1.toString() + ", ";
 		}
 		if (saida.equals(""))
 			return saida;
 		return saida.substring(0, saida.length() - 2);
+		
 	}
 
 	/**
 	 * Recupera o tutor a partir do email.
-	 * @param email eh o email do tutor.
+	 * 
+	 * @param email
+	 *            eh o email do tutor.
 	 * @return retorna o obejto tutor.
 	 */
 	public Tutor recuperaTutorPorEmail(String email) {
 		Aluno aluno = cAluno.getAlunoPorEmail(email);
-		if (aluno==null) return null;
+		if (aluno == null)
+			return null;
 		cTutor.verificaTutor(aluno.getMatricula());
 		return cTutor.getTutor(aluno.getMatricula());
 	}
@@ -253,7 +301,9 @@ public class Sistema {
 
 	/**
 	 * Recupera um pedido de ajuda a partir do id.
-	 * @param idAjuda eh o identificador da ajuda.
+	 * 
+	 * @param idAjuda
+	 *            eh o identificador da ajuda.
 	 * @return retorna o pedido de ajuda.
 	 */
 	public PedidoDeAjuda getPedidoDeAjuda(int idAjuda) {
@@ -262,11 +312,17 @@ public class Sistema {
 
 	/**
 	 * Faz o pedido de ajuda.
-	 * @param matrAluno eh a matricula do aluno.
-	 * @param disciplina eh a disciplina do pedido de ajuda.
-	 * @param horario eh o horario.
-	 * @param dia eh o dia.
-	 * @param localInteresse eh o local de interesse.
+	 * 
+	 * @param matrAluno
+	 *            eh a matricula do aluno.
+	 * @param disciplina
+	 *            eh a disciplina do pedido de ajuda.
+	 * @param horario
+	 *            eh o horario.
+	 * @param dia
+	 *            eh o dia.
+	 * @param localInteresse
+	 *            eh o local de interesse.
 	 * @return retorna o identificador do pedido de ajuda realizado.
 	 */
 	public int pedirAjudaPresencial(String matrAluno, String disciplina, String horario, String dia,
@@ -277,8 +333,11 @@ public class Sistema {
 
 	/**
 	 * Faz o pedido de ajuda.
-	 * @param matrAluno eh a matricula do aluno.
-	 * @param disciplina e a disciplina do pedido do ajuda.
+	 * 
+	 * @param matrAluno
+	 *            eh a matricula do aluno.
+	 * @param disciplina
+	 *            e a disciplina do pedido do ajuda.
 	 * @return retorna o identificador do pedido de ajuda realizado.
 	 */
 	public int pedirAjudaOnline(String matrAluno, String disciplina) {
@@ -288,21 +347,29 @@ public class Sistema {
 
 	/**
 	 * Escolhe o tutor para ajuda presencial com base nos requisitos.
-	 * @param disciplina eh a disciplina.
-	 * @param horario eh o horario.
-	 * @param dia eh o dia.
-	 * @param localInteresse eh local de interesse.
+	 * 
+	 * @param disciplina
+	 *            eh a disciplina.
+	 * @param horario
+	 *            eh o horario.
+	 * @param dia
+	 *            eh o dia.
+	 * @param localInteresse
+	 *            eh local de interesse.
 	 * @return retorna a matricula do tutor selecionado.
 	 */
 	private String escolheTutorAjudaPresencial(String disciplina, String horario, String dia, String localInteresse) {
-		if (stringNullVazio(disciplina) || stringNullVazio(horario) || stringNullVazio(dia) || stringNullVazio(localInteresse))
+		if (stringNullVazio(disciplina) || stringNullVazio(horario) || stringNullVazio(dia)
+				|| stringNullVazio(localInteresse))
 			return null;
 		return cTutor.maiorProficiencia(disciplina, horario, dia, localInteresse).getTutorMatricula();
 	}
 
 	/**
 	 * Escolhe o tutor para ajuda online.
-	 * @param disciplina eh a disciplina.
+	 * 
+	 * @param disciplina
+	 *            eh a disciplina.
 	 * @return retorna a matricula do tutor selecionado.
 	 */
 	private String escolheTutorAjudaOnline(String disciplina) {
@@ -313,7 +380,9 @@ public class Sistema {
 
 	/**
 	 * Recupera a matricula do tutor da ajuda.
-	 * @param idAjuda eh o id da ajuda.
+	 * 
+	 * @param idAjuda
+	 *            eh o id da ajuda.
 	 * @return retorna a matricula do tutor da ajuda.
 	 */
 	public String getMatriculaTutorAjuda(int idAjuda) {
@@ -322,7 +391,9 @@ public class Sistema {
 
 	/**
 	 * Recupera o tutor da ajuda.
-	 * @param idAjuda eh o id da ajuda.
+	 * 
+	 * @param idAjuda
+	 *            eh o id da ajuda.
 	 * @return retorna a descricao do tutor da ajuda.
 	 */
 	public String pegarTutor(int idAjuda) {
@@ -332,7 +403,9 @@ public class Sistema {
 
 	/**
 	 * Recupera um pedido de ajuda.
-	 * @param idAjuda eh o id da ajuda.
+	 * 
+	 * @param idAjuda
+	 *            eh o id da ajuda.
 	 * @return retorna o objeto do pedido de ajuda.
 	 */
 	public PedidoDeAjuda getAjuda(int idAjuda) {
@@ -342,8 +415,11 @@ public class Sistema {
 
 	/**
 	 * Obtem informacao da ajuda.
-	 * @param idAjuda eh o id da ajuda.
-	 * @param atributo eh a informacao.
+	 * 
+	 * @param idAjuda
+	 *            eh o id da ajuda.
+	 * @param atributo
+	 *            eh a informacao.
 	 * @return retorna a informacao da ajuda.
 	 */
 	public String getInfoAjuda(int idAjuda, String atributo) {
@@ -380,23 +456,28 @@ public class Sistema {
 
 	/**
 	 * Avalida o tutor e a ajuda.
-	 * @param idAjuda eh o id da ajuda.
-	 * @param nota eh a nota da avaliacao.
+	 * 
+	 * @param idAjuda
+	 *            eh o id da ajuda.
+	 * @param nota
+	 *            eh a nota da avaliacao.
 	 * @return retorna uma string confirmando a avaliacao.
 	 */
 	public String avaliarTutor(int idAjuda, int nota) {
 		if (nota > 5)
 			throw new IllegalArgumentException("Erro na avaliacao de tutor: nota nao pode ser maior que 5");
-		else if (nota < 0) 
+		else if (nota < 0)
 			throw new IllegalArgumentException("Erro na avaliacao de tutor: nota nao pode ser menor que 0");
-		
+
 		cAjuda.avaliarAjuda(idAjuda);
 		return cTutor.avaliarTutor(cAjuda.getMatriculaTutorAjuda(idAjuda), nota);
 	}
 
 	/**
 	 * Pega a nota do tutor.
-	 * @param matriculaTutor eh a matricula do tutor.
+	 * 
+	 * @param matriculaTutor
+	 *            eh a matricula do tutor.
 	 * @return
 	 */
 	public String pegarNota(String matriculaTutor) {
@@ -405,7 +486,9 @@ public class Sistema {
 
 	/**
 	 * Pega o nivel do tutor.
-	 * @param matriculaTutor eh a matricula do tutor.
+	 * 
+	 * @param matriculaTutor
+	 *            eh a matricula do tutor.
 	 * @return
 	 */
 	public String pegarNivel(String matriculaTutor) {
@@ -414,16 +497,19 @@ public class Sistema {
 
 	/**
 	 * Doa um valor ao tutor.
-	 * @param matriculaTutor eh a matricula do tutor.
-	 * @param totalCentavos eh o valor a ser doado.
+	 * 
+	 * @param matriculaTutor
+	 *            eh a matricula do tutor.
+	 * @param totalCentavos
+	 *            eh o valor a ser doado.
 	 */
 	public void doar(String matriculaTutor, int totalCentavos) {
-		if(totalCentavos < 0) {
+		if (totalCentavos < 0) {
 			throw new IllegalArgumentException("Erro na doacao para tutor: totalCentavos nao pode ser menor que zero");
-		}else if(!cTutor.temTutor(matriculaTutor)) {
+		} else if (!cTutor.temTutor(matriculaTutor)) {
 			throw new IllegalArgumentException("Erro na doacao para tutor: Tutor nao encontrado");
 		}
-		
+
 		double valorSistema = 0;
 		double taxa = cTutor.getTaxaTutor(matriculaTutor);
 		valorSistema = Math.ceil((1 - taxa) * totalCentavos);
@@ -433,21 +519,25 @@ public class Sistema {
 
 	/**
 	 * Recupera o saldo do tutor.
-	 * @param emailTutor eh o email do tutor.
+	 * 
+	 * @param emailTutor
+	 *            eh o email do tutor.
 	 * @return retorna o saldo do tutor.
 	 */
 	public int totalDinheiroTutor(String emailTutor) {
 		if (emailTutor.trim().equals("") || emailTutor == null) {
-			throw new IllegalArgumentException("Erro na consulta de total de dinheiro do tutor: emailTutor nao pode ser vazio ou nulo");
-		}else if(recuperaTutorPorEmail(emailTutor)==null) {
+			throw new IllegalArgumentException(
+					"Erro na consulta de total de dinheiro do tutor: emailTutor nao pode ser vazio ou nulo");
+		} else if (recuperaTutorPorEmail(emailTutor) == null) {
 			throw new NullPointerException("Erro na consulta de total de dinheiro do tutor: Tutor nao encontrado");
 		}
-		
+
 		return recuperaTutorPorEmail(emailTutor).getSaldo();
 	}
 
 	/**
 	 * Recupera o saldo do sistema.
+	 * 
 	 * @return retorna o valor do caixa do sistema.
 	 */
 	public int totalDinheiroSistema() {
@@ -456,7 +546,9 @@ public class Sistema {
 
 	/**
 	 * Verifica se uma string eh valida.
-	 * @param stringTeste e a string testada.
+	 * 
+	 * @param stringTeste
+	 *            e a string testada.
 	 * @return retorna true se for valida, false caso contrario.
 	 */
 	public boolean stringNullVazio(String stringTeste) {
@@ -464,5 +556,27 @@ public class Sistema {
 			return true;
 		return false;
 	}
+	
+	/**
+	 * Metodo que decide o tipo de ordenacao usada no sistema
+	 * @param atributo
+	 */
+	public void configuraOrdem(String atributo) {
+		switch (atributo.toUpperCase()) {
+		case "NOME":
+			this.ordenacao = new OrdenaPorNomeAlunos();
+			break;
+		case "MATRICULA":
+			this.ordenacao = new OrdenaPorMatriculaAlunos();
+			break;
+		case "EMAIL":
+			this.ordenacao = new OrdenaPorEmailAlunos();
+			break;
+		default:
+			throw new IllegalArgumentException("Ordenacao nao identificada");
+		}
+
+	}
+	
 
 }

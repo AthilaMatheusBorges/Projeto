@@ -36,6 +36,7 @@ public class ControllerAjuda implements Serializable{
 	 * @return retorna o objeto do Pedido de Ajuda.
 	 */
 	public PedidoDeAjuda getPedidoDeAjuda(int idAjuda) {
+		validaIdAjuda("ajuda", idAjuda);
 		return this.pedidosDeAjuda.get(idAjuda);
 	}
 

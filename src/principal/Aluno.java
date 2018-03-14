@@ -1,6 +1,12 @@
 package principal;
 
-public class Aluno{
+import java.io.Serializable;
+
+public class Aluno implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3847073061835887184L;
 	private String matricula, nome, telefone, email;
 	private int codigoCurso;
 	private double nota;

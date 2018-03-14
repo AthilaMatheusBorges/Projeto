@@ -1,5 +1,6 @@
 package controladores;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -17,8 +18,9 @@ import principal.Tutor;
  * @author Roundhouse Kick Group
  *
  */
-public class ControllerTutor {
+public class ControllerTutor implements Serializable{
 
+	private static final long serialVersionUID = -5600144571916066270L;
 	private Map<String, Tutor> listaDeTutores;
 
 	/**

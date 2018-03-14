@@ -1,12 +1,15 @@
 package controladores;
 
+import java.io.Serializable;
+
 /**
  * Responsavel por controlar o caixa do sistema.
  * @author Roundhouse Kick Group
  *
  */
-public class ControllerCaixa {
+public class ControllerCaixa implements Serializable{
 
+	private static final long serialVersionUID = -579402274383333408L;
 	private int caixa;
 	
 	/**

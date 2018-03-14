@@ -2,6 +2,7 @@ package principal;
 
 public class AjudaPresencial extends PedidoDeAjuda {
 
+	private static final long serialVersionUID = 7127262900317145512L;
 	private String dia, horario, localInteresse;
 
 	/**

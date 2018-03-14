@@ -2,6 +2,8 @@ package principal;
 
 public class AjudaOnline extends PedidoDeAjuda {
 
+	private static final long serialVersionUID = -2665583070988638093L;
+
 	/**
 	 * Constroi o pedido de Ajuda Online com o parametros passados.
 	 * 

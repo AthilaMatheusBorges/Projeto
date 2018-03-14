@@ -1,6 +1,12 @@
 package principal;
 
-public class Tutor {
+import java.io.Serializable;
+
+public class Tutor implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2339490982350104891L;
 	private Nivel nivel;
 	private String tutorMatricula;
 	private int idTutor, saldo;

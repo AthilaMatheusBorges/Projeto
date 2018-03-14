@@ -1,11 +1,13 @@
 package principal;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class Disciplina {
+public class Disciplina implements Serializable{
 
+	private static final long serialVersionUID = -4727746398973325902L;
 	private Map<String, Integer> disciplinas;
 
 	public Disciplina() {

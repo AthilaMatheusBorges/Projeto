@@ -20,7 +20,6 @@ avaliarTutor idAjuda=14 nota=0
 
 doar matriculaTutor="115212345" totalCentavos=100
 expect 117 totalDinheiroTutor emailTutor="uesle_han@ccc.ufcg.edu.br"
-
 # Testes com exception
 
 expectError "Erro na consulta de total de dinheiro do tutor: emailTutor nao pode ser vazio ou nulo" totalDinheiroTutor emailTutor=""
@@ -28,31 +27,3 @@ expectError "Erro na consulta de total de dinheiro do tutor: Tutor nao encontrad
 expectError "Erro na doacao para tutor: totalCentavos nao pode ser menor que zero" doar matriculaTutor="115260904" totalCentavos=-1
 expectError "Erro na doacao para tutor: Tutor nao encontrado" doar matriculaTutor="101001010" totalCentavos=500
 
-
-expect " " listarTutores
-
-expect " " listarAlunos
-
-configurarOrdem atributo="MATRICULA"
-
-expect "     " listarTutores
-
-expect "    " listarAlunos
-
-
-configurarOrdem atributo="NOME"
-
-expect "     " listarTutores
-
-expect "    " listarAlunos
-
-
-configurarOrdem atributo="EMAIL"
-
-expect "     " listarTutores
-
-expect "    " listarAlunos
-
-
- 
-expectError "Ordenacao nao identificada" configurarOrdem atributo="MATRajsikdso"

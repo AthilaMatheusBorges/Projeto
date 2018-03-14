@@ -22,7 +22,8 @@ public class Fachada {
 				"acceptance_test/us3_test.txt", 
 				"acceptance_test/us4_test.txt", 
 				"acceptance_test/us5_test.txt", 
-				"acceptance_test/us6_test.txt" };
+				"acceptance_test/us6_test.txt",
+				"acceptance_test/us8_test.txt"};
 		EasyAccept.main(args);
 	}
 
@@ -292,5 +293,13 @@ public class Fachada {
 	 */
 	public void configurarOrdem(String atributo) {
 		sistema.configuraOrdem(atributo);
+	}
+	
+	public void salvar() {
+		sistema.salvar();
+	}
+	
+	public void carregar() {
+		sistema.carregar();
 	}
 }

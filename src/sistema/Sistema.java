@@ -1,5 +1,7 @@
 package sistema;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -14,6 +16,7 @@ import controladores.ControllerTutor;
 import principal.AjudaOnline;
 import principal.AjudaPresencial;
 import principal.Aluno;
+import principal.EntradaESaida;
 import principal.PedidoDeAjuda;
 import principal.Tutor;
 
@@ -31,6 +34,7 @@ public class Sistema {
 	private ControllerAjuda cAjuda;
 	private ControllerCaixa cCaixa;
 	private Comparator ordenacao;
+	private EntradaESaida io;
 
 	/**
 	 * Inicia um novo sistema com os controladores.
@@ -41,6 +45,7 @@ public class Sistema {
 		cAjuda = new ControllerAjuda();
 		cCaixa = new ControllerCaixa();
 		ordenacao = new OrdenaPorNomeAlunos();
+		io = new EntradaESaida();
 	}
 
 	/**
@@ -549,5 +554,28 @@ public class Sistema {
 		}
 
 	}
+	
+	public void salvar() {
+		try{
+			io.salvar(cAluno, "aluno-dados");
+			io.salvar(cTutor, "tutor-dados");
+			io.salvar(cAjuda, "ajuda-dados");
+			io.salvar(cCaixa, "caixa-dados");
+		}catch(IOException e){
+			System.out.println("Algo deu errado :/");
+		}
+	}
+
+	public void carregar() {
+		try{
+			this.cAluno = (ControllerAluno) io.carregar("aluno-dados");
+			this.cTutor = (ControllerTutor) io.carregar("tutor-dados");
+			this.cAjuda = (ControllerAjuda) io.carregar("ajuda-dados");
+			this.cCaixa = (ControllerCaixa) io.carregar("caixa-dados");
+		}catch(IOException | ClassNotFoundException e){
+			System.out.println("Algo deu errado");
+		}
+	}
+	
 
 }

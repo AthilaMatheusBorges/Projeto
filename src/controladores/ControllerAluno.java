@@ -1,5 +1,6 @@
 package controladores;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -15,8 +16,9 @@ import principal.Aluno;
  * @author Roundhouse Kick Group
  *
  */
-public class ControllerAluno {
+public class ControllerAluno implements Serializable{
 
+	private static final long serialVersionUID = 6225428294330458797L;
 	private Map<String, Aluno> listaDeAlunos;
 
 	/**

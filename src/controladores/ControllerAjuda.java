@@ -1,5 +1,6 @@
 package controladores;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,8 +16,9 @@ import principal.PedidoDeAjuda;
  * @author Roundhouse Kick Group
  *
  */
-public class ControllerAjuda {
+public class ControllerAjuda implements Serializable{
 
+	private static final long serialVersionUID = -945899848719041173L;
 	private Map<Integer, PedidoDeAjuda> pedidosDeAjuda;
 
 	/**

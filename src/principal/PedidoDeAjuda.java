@@ -1,7 +1,11 @@
 package principal;
 
-public abstract class PedidoDeAjuda {
+import java.io.Serializable;
 
+public abstract class PedidoDeAjuda implements Serializable{
+
+
+	private static final long serialVersionUID = -4260731781338538338L;
 	private String disciplina, tutorMatricula, matrAluno;
 	private int idAjuda;
 	private boolean avaliado;

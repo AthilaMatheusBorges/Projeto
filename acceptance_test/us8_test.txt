@@ -1,0 +1,13 @@
+#cadastrarAluno nome="Nicolas Maduro" matricula="171" codigoCurso="171" telefone="" email="nicolas@venezuela.com"
+#tornarTutor matricula="171" disciplina="Ditadura" proficiencia=1
+#pedirAjudaOnline matrAluno="111124242" disciplina="Ditadura"
+#doar matriculaTutor="171" totalCentavos=25
+
+salvar
+#expect "171 - Nicolas Maduro - 171 - nicolas@venezuela.com" recuperaAluno matricula="171"
+#expect "171 - Nicolas Maduro - 171 - nicolas@venezuela.com" recuperaTutor matricula="171"
+#expect "Tutor - 171, disciplina - Ditadura" pegarTutor matricula="15"
+#expect 138 totalDinheiroSistema
+
+#id 15
+#vts 134

@@ -1,10 +1,12 @@
 package principal;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Atendimento {
+public class Atendimento implements Serializable{
 
+	private static final long serialVersionUID = -848089048954410954L;
 	private HashMap<String, ArrayList<String>> horarios;
 	private ArrayList<String> locais;
 

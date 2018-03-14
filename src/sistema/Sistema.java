@@ -554,28 +554,48 @@ public class Sistema {
 		}
 
 	}
-	
+
+	/**
+	 * Salva o estado atual do sistema.
+	 */
 	public void salvar() {
-		try{
+		try {
 			io.salvar(cAluno, "aluno-dados");
 			io.salvar(cTutor, "tutor-dados");
 			io.salvar(cAjuda, "ajuda-dados");
 			io.salvar(cCaixa, "caixa-dados");
-		}catch(IOException e){
+		} catch (IOException e) {
 			System.out.println("Algo deu errado :/");
 		}
 	}
 
+	/**
+	 * Carrega o estado atual do sistema, salvo anteriormente.
+	 */
 	public void carregar() {
-		try{
+		try {
 			this.cAluno = (ControllerAluno) io.carregar("aluno-dados");
 			this.cTutor = (ControllerTutor) io.carregar("tutor-dados");
 			this.cAjuda = (ControllerAjuda) io.carregar("ajuda-dados");
 			this.cCaixa = (ControllerCaixa) io.carregar("caixa-dados");
-		}catch(IOException | ClassNotFoundException e){
+		} catch (IOException | ClassNotFoundException e) {
 			System.out.println("Algo deu errado");
 		}
 	}
-	
+
+	/**
+	 * Limpa o estado atual do sistema.
+	 */
+	public void limpar() {
+		File arquivo = new File("aluno-dados");
+		File arquivo2 = new File("tutor-dados");
+		File arquivo3 = new File("ajuda-dados");
+		File arquivo4 = new File("caixa-dados");
+		arquivo.delete();
+		arquivo2.delete();
+		arquivo3.delete();
+		arquivo4.delete();
+
+	}
 
 }

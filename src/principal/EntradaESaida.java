@@ -14,114 +14,48 @@ import controladores.ControllerTutor;
 
 public class EntradaESaida {
 
+	/**
+	 * Salva o estado atual do sistema.
+	 * 
+	 * @param objeto
+	 *            O objeto a ser salvo.
+	 * @param nomeArquivo
+	 *            O nome do arquivo onde sera salvo o objeto.
+	 * @throws IOException
+	 *             A excecao de Entrada e Saida.
+	 */
 	public void salvar(Object objeto, String nomeArquivo) throws IOException {
 		ObjectOutputStream objectOut = null;
 		try {
-			objectOut = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(nomeArquivo)));			
+			objectOut = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(nomeArquivo)));
 			objectOut.writeObject(objeto);
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		finally {
-			if (objectOut != null) objectOut.close();
+		} finally {
+			if (objectOut != null)
+				objectOut.close();
 		}
 	}
-	
+
+	/**
+	 * Carrega o estado do sistema salvo anteriormente.
+	 * 
+	 * @param nomeArquivo
+	 *            O nome do arquivo onde esta salvo o estado.
+	 * @return O objeto.
+	 * @throws IOException
+	 *             A excecao de entrada e saida.
+	 * @throws ClassNotFoundException
+	 *             A excecao de classe nao encontrada.
+	 */
 	public Object carregar(String nomeArquivo) throws IOException, ClassNotFoundException {
 		ObjectInputStream arqObjectos = null;
-		try{
+		try {
 			arqObjectos = new ObjectInputStream(new FileInputStream(nomeArquivo));
 			return arqObjectos.readObject();
-		}finally{
-			if(arqObjectos != null)
+		} finally {
+			if (arqObjectos != null)
 				arqObjectos.close();
 		}
 	}
-//
-//	public ControllerTutor carregarTutor(String nomeArquivo) throws IOException, ClassNotFoundException {
-//		ObjectInputStream arqObjectos = null;
-//		try{
-//			arqObjectos = new ObjectInputStream(new FileInputStream(nomeArquivo));
-//			return (ControllerTutor) arqObjectos.readObject();
-//		}finally{
-//			if(arqObjectos != null)
-//				arqObjectos.close();
-//		}
-//	}
-//	
-//	
-//	public ControllerAjuda carregarAjuda(String nomeArquivo) throws IOException, ClassNotFoundException {
-//		ObjectInputStream arqObjectos = null;
-//		try{
-//			arqObjectos = new ObjectInputStream(new FileInputStream(nomeArquivo));
-//			return (ControllerAjuda) arqObjectos.readObject();
-//		}finally{
-//			if(arqObjectos != null)
-//				arqObjectos.close();
-//		}
-//	}
-//	
-//	public ControllerCaixa carregarCaixa(String nomeArquivo) throws IOException, ClassNotFoundException {
-//		ObjectInputStream arqObjectos = null;
-//		try{
-//			arqObjectos = new ObjectInputStream(new FileInputStream(nomeArquivo));
-//			return (ControllerCaixa) arqObjectos.readObject();
-//		}finally{
-//			if(arqObjectos != null)
-//				arqObjectos.close();
-//		}
-//	}
-	
-//	public void salvarControllerAluno(ControllerAluno cAluno, String nomeArquivo) throws IOException {
-//		ObjectOutputStream objectOut = null;
-//		try {
-//			objectOut = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(nomeArquivo)));			
-//			objectOut.writeObject(cAluno);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		finally {
-//			if (objectOut != null) objectOut.close();
-//		}
-//	}
-//
-//	public void salvarControllerTutor(ControllerTutor cTutor, String nomeArquivo) throws IOException {
-//		ObjectOutputStream objectOut = null;
-//		try {
-//			objectOut = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(nomeArquivo)));			
-//			objectOut.writeObject(cTutor);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		finally {
-//			if (objectOut != null) objectOut.close();
-//		}
-//	}
-//
-//	public void salvarControllerAjuda(ControllerAjuda cAjuda, String nomeArquivo) throws IOException {
-//		ObjectOutputStream objectOut = null;
-//		try {
-//			objectOut = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(nomeArquivo)));			
-//			objectOut.writeObject(cAjuda);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		finally {
-//			if (objectOut != null) objectOut.close();
-//		}
-//	}
-//
-//		
-//	public void salvarControllerCaixa(ControllerCaixa cCaixa, String nomeArquivo) throws IOException {
-//		ObjectOutputStream objectOut = null;
-//		try {
-//			objectOut = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(nomeArquivo)));			
-//			objectOut.writeObject(cCaixa);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		finally {
-//			if (objectOut != null) objectOut.close();
-//		}
-//	}
 }

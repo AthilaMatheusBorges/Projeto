@@ -295,11 +295,24 @@ public class Fachada {
 		sistema.configuraOrdem(atributo);
 	}
 	
+	/**
+	 * Salva o estado atual do sistema, exceto o estado da ordenacao.
+	 */
 	public void salvar() {
 		sistema.salvar();
 	}
 	
+	/**
+	 * Carrega o estado do sistema que foi salvo anteriormente
+	 */
 	public void carregar() {
 		sistema.carregar();
+	}
+	
+	/**
+	 * Limpa o estado do sistema que foi salvo anteriormente.
+	 */
+	public void limpar() {
+		sistema.limpar();
 	}
 }

@@ -4,8 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
+import aluno.Aluno;
+import comparadores.EstrategiaOrdenacaoAlunos;
 import comparadores.OrdenaPorEmailAlunos;
 import comparadores.OrdenaPorMatriculaAlunos;
 import comparadores.OrdenaPorNomeAlunos;
@@ -13,12 +14,9 @@ import controladores.ControllerAjuda;
 import controladores.ControllerAluno;
 import controladores.ControllerCaixa;
 import controladores.ControllerTutor;
-import principal.AjudaOnline;
-import principal.AjudaPresencial;
-import principal.Aluno;
-import principal.EntradaESaida;
-import principal.PedidoDeAjuda;
-import principal.Tutor;
+import entradaESaida.EntradaESaida;
+import pedidoAjuda.PedidoDeAjuda;
+import tutoria.Tutor;
 
 /**
  * Responsavel por controlar todo o sistema. Usa os outros controladores para
@@ -33,7 +31,7 @@ public class Sistema {
 	private ControllerTutor cTutor;
 	private ControllerAjuda cAjuda;
 	private ControllerCaixa cCaixa;
-	private Comparator ordenacao;
+	private EstrategiaOrdenacaoAlunos ordenacao;
 	private EntradaESaida io;
 
 	/**
@@ -120,7 +118,6 @@ public class Sistema {
 	public void tornarTutor(String matricula, String disciplina, int proficiencia) {
 		if (!matriculaCadastrada(matricula))
 			throw new IllegalArgumentException("Erro na definicao de papel: Tutor nao encontrado");
-		Aluno alunoTemporario = cAluno.getAlunoPorMatricula(matricula);
 		cTutor.tornarTutor(matricula, disciplina, proficiencia);
 	}
 
@@ -194,40 +191,10 @@ public class Sistema {
 	 *            dia do atendimento
 	 */
 	public void cadastrarHorario(String email, String horario, String dia) {
-		confereCadastrarHorario(recuperaTutorPorEmail(email), email, horario, dia);
+		verificaEmailDeTutor(email, "horario");
 		recuperaTutorPorEmail(email).cadastrarHorario(horario, dia);
 	}
 
-	/**
-	 * Confere se o email eh de um tutor, se o email eh vazio ou em branco se o
-	 * horario eh vaziou ou em branco e se o dia eh vazio ou em branco
-	 * 
-	 * @param tutor
-	 *            tutor da classe Tutor
-	 * @param email
-	 *            email do aluno em String
-	 * @param horario
-	 *            horario para encontro em String
-	 * @param dia
-	 *            dia do encontro em String
-	 */
-
-	public void confereCadastrarHorario(Tutor tutor, String email, String horario, String dia) {
-		String erro = "";
-		if (email.trim().equals("")) {
-			erro = "email nao pode ser vazio ou em branco";
-		} else if (tutor == null) {
-			erro = "tutor nao cadastrado";
-		} else if (horario.trim().equals("")) {
-			erro = "horario nao pode ser vazio ou em branco";
-		} else if (dia.trim().equals("")) {
-			erro = "dia nao pode ser vazio ou em branco";
-		}
-		if (!erro.equals("")) {
-			throw new IllegalArgumentException("Erro no cadastrar horario: " + erro);
-		}
-
-	}
 
 	/**
 	 * Cadastra um local de atendimento para o tutor.
@@ -238,37 +205,23 @@ public class Sistema {
 	 *            local do atendimento.
 	 */
 	public void cadastrarLocalDeAtendimento(String email, String local) {
-		confereCadastrarLocalDeAtendimento(recuperaTutorPorEmail(email), email, local);
+		verificaEmailDeTutor(email, "local de atendimento");
 		recuperaTutorPorEmail(email).cadastrarLocalDeAtendimento(local);
 
 	}
 
 	/**
-	 * Confere se o email eh de um tutor, se o email eh vazio ou em branco e se o
-	 * local eh vazio ou em branco
-	 * 
-	 * @param tutor
-	 *            um tutor da classe Tutor
-	 * @param email
-	 *            email do aluno em String
-	 * @param local
-	 *            local para o encontro em String
+	 * Verifica se o email passado eh valido e se eh de um tutor.
+	 * @param emailTest eh o email a ser verificado.
+	 * @param quemSouEu eh quem esta solicitando a verificacao.
 	 */
-	public void confereCadastrarLocalDeAtendimento(Tutor tutor, String email, String local) {
-		String erro = "";
-		if (email.trim().equals("")) {
-			erro = "email nao pode ser vazio ou em branco";
-		} else if (tutor == null) {
-			erro = "tutor nao cadastrado";
-		} else if (local.trim().equals("")) {
-			erro = "local nao pode ser vazio ou em branco";
-		}
-		if (!erro.equals("")) {
-			throw new IllegalArgumentException("Erro no cadastrar local de atendimento: " + erro);
-		}
-
+	private void verificaEmailDeTutor(String emailTest, String quemSouEu) {
+		if(emailTest == null || emailTest.trim().equals(""))
+			throw new IllegalArgumentException("Erro no cadastrar " + quemSouEu + ": email nao pode ser vazio ou em branco");  
+		if (recuperaTutorPorEmail(emailTest) == null)
+			throw new IllegalArgumentException("Erro no cadastrar " + quemSouEu + ": tutor nao cadastrado");
 	}
-
+	
 	/**
 	 * Retorna se o horario passado esta cadastrado para atendimento.
 	 * 
@@ -559,10 +512,10 @@ public class Sistema {
 	 */
 	public void salvar() {
 		try {
-			io.salvar(cAluno, "aluno-dados");
-			io.salvar(cTutor, "tutor-dados");
-			io.salvar(cAjuda, "ajuda-dados");
-			io.salvar(cCaixa, "caixa-dados");
+			io.salvar(cAluno, "arquivos_sistema/aluno-dados");
+			io.salvar(cTutor, "arquivos_sistema/tutor-dados");
+			io.salvar(cAjuda, "arquivos_sistema/ajuda-dados");
+			io.salvar(cCaixa, "arquivos_sistema/caixa-dados");
 		} catch (IOException e) {
 			System.out.println("Algo deu errado :/");
 		}
@@ -573,10 +526,10 @@ public class Sistema {
 	 */
 	public void carregar() {
 		try {
-			this.cAluno = (ControllerAluno) io.carregar("aluno-dados");
-			this.cTutor = (ControllerTutor) io.carregar("tutor-dados");
-			this.cAjuda = (ControllerAjuda) io.carregar("ajuda-dados");
-			this.cCaixa = (ControllerCaixa) io.carregar("caixa-dados");
+			this.cAluno = (ControllerAluno) io.carregar("arquivos_sistema/aluno-dados");
+			this.cTutor = (ControllerTutor) io.carregar("arquivos_sistema/tutor-dados");
+			this.cAjuda = (ControllerAjuda) io.carregar("arquivos_sistema/ajuda-dados");
+			this.cCaixa = (ControllerCaixa) io.carregar("arquivos_sistema/caixa-dados");
 		} catch (IOException | ClassNotFoundException e) {
 			System.out.println("Algo deu errado");
 		}
@@ -586,10 +539,10 @@ public class Sistema {
 	 * Limpa o estado atual do sistema.
 	 */
 	public void limpar() {
-		File arquivo = new File("aluno-dados");
-		File arquivo2 = new File("tutor-dados");
-		File arquivo3 = new File("ajuda-dados");
-		File arquivo4 = new File("caixa-dados");
+		File arquivo = new File("arquivos_sistema/aluno-dados");
+		File arquivo2 = new File("arquivos_sistema/tutor-dados");
+		File arquivo3 = new File("arquivos_sistema/ajuda-dados");
+		File arquivo4 = new File("arquivos_sistema/caixa-dados");
 		arquivo.delete();
 		arquivo2.delete();
 		arquivo3.delete();

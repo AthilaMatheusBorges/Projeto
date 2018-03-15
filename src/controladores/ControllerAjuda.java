@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import principal.AjudaOnline;
-import principal.AjudaPresencial;
-import principal.PedidoDeAjuda;
+import pedidoAjuda.AjudaOnline;
+import pedidoAjuda.AjudaPresencial;
+import pedidoAjuda.PedidoDeAjuda;
 
 /**
  * Responsavel por controlar os pedidos de ajuda. Armazena os pedidos em

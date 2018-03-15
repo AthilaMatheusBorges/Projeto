@@ -6,8 +6,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import aluno.Aluno;
 import comparadores.OrdenaPorNomeAlunos;
-import principal.Aluno;
 
 /**
  * Responsavel por controlar os alunos. Armazena os alunos em um mapa<matricula,

@@ -1,6 +1,6 @@
 package comparadores;
 
-import principal.Aluno;
+import aluno.Aluno;
 
 public class OrdenaPorNomeAlunos implements EstrategiaOrdenacaoAlunos {
 

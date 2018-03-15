@@ -7,8 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import comparadores.ComparatorMaiorProficiecia;
-import principal.Aluno;
-import principal.Tutor;
+import tutoria.Tutor;
 
 /**
  * Responsavel por controlar os tutores. Armazena os tutores em um

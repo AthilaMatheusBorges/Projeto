@@ -2,7 +2,7 @@ package comparadores;
 
 import java.util.Comparator;
 
-import principal.Aluno;
+import aluno.Aluno;
 
 public interface EstrategiaOrdenacaoAlunos extends Comparator<Aluno> {
 

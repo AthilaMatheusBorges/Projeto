@@ -2,7 +2,7 @@ package comparadores;
 
 import java.util.Comparator;
 
-import principal.Tutor;
+import tutoria.Tutor;
 
 public class ComparatorMaiorProficiecia implements Comparator<Tutor> {
 

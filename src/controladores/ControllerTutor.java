@@ -61,7 +61,7 @@ public class ControllerTutor implements Serializable{
 	 * @param proficiencia
 	 *            eh a proficiencia.
 	 */
-	public void tornarTutor(String matricula, String disciplina, int proficiencia, String nomeTemp, String emailTemp) {
+	public void tornarTutor(String matricula, String disciplina, int proficiencia) {
 		if (temTutor(matricula))
 			getTutor(matricula).adicionarDisciplina(disciplina, proficiencia);
 		else {

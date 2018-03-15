@@ -121,9 +121,7 @@ public class Sistema {
 		if (!matriculaCadastrada(matricula))
 			throw new IllegalArgumentException("Erro na definicao de papel: Tutor nao encontrado");
 		Aluno alunoTemporario = cAluno.getAlunoPorMatricula(matricula);
-		String nomeTemp = alunoTemporario.getNome();
-		String emailTemp = alunoTemporario.getEmail();
-		cTutor.tornarTutor(matricula, disciplina, proficiencia, nomeTemp, emailTemp);
+		cTutor.tornarTutor(matricula, disciplina, proficiencia);
 	}
 
 	/**
@@ -537,6 +535,7 @@ public class Sistema {
 	 * Metodo que decide o tipo de ordenacao usada no sistema
 	 * 
 	 * @param atributo
+	 *            tipo de ordenacao desejada
 	 */
 	public void configuraOrdem(String atributo) {
 		switch (atributo.toUpperCase()) {

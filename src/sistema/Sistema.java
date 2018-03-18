@@ -512,6 +512,10 @@ public class Sistema {
 	 */
 	public void salvar() {
 		try {
+			File diretorio = new File("arquivos_sistema");
+			if(!diretorio.exists()) {
+				diretorio.mkdirs();
+			}
 			io.salvar(cAluno, "arquivos_sistema/aluno-dados");
 			io.salvar(cTutor, "arquivos_sistema/tutor-dados");
 			io.salvar(cAjuda, "arquivos_sistema/ajuda-dados");

@@ -1,9 +1,11 @@
 
 package comparadores;
 
+import java.util.Comparator;
+
 import aluno.Aluno;
 
-public class OrdenaPorEmailAlunos implements EstrategiaOrdenacaoAlunos {
+public class OrdenaPorEmailAlunos implements Comparator<Aluno> {
 
 	/**
 	 * Metodo que compara aluno por email e se a matricula for a mesma compara por
@@ -16,5 +18,6 @@ public class OrdenaPorEmailAlunos implements EstrategiaOrdenacaoAlunos {
 		}
 		return umAluno.getEmail().compareTo(outroAluno.getEmail());
 	}
+
 
 }

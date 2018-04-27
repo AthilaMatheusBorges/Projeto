@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 import aluno.Aluno;
-import comparadores.EstrategiaOrdenacaoAlunos;
 import comparadores.OrdenaPorEmailAlunos;
 import comparadores.OrdenaPorMatriculaAlunos;
 import comparadores.OrdenaPorNomeAlunos;
@@ -31,7 +31,7 @@ public class Sistema {
 	private ControllerTutor cTutor;
 	private ControllerAjuda cAjuda;
 	private ControllerCaixa cCaixa;
-	private EstrategiaOrdenacaoAlunos ordenacao;
+	private Comparator ordenacao;
 	private EntradaESaida io;
 
 	/**

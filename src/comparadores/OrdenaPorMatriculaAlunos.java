@@ -1,9 +1,11 @@
 
 package comparadores;
 
+import java.util.Comparator;
+
 import aluno.Aluno;
 
-public class OrdenaPorMatriculaAlunos implements EstrategiaOrdenacaoAlunos {
+public class OrdenaPorMatriculaAlunos implements Comparator<Aluno> {
 
 	/**
 	 * Metodo que compara por matricula

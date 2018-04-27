@@ -1,8 +1,10 @@
 package comparadores;
 
+import java.util.Comparator;
+
 import aluno.Aluno;
 
-public class OrdenaPorNomeAlunos implements EstrategiaOrdenacaoAlunos {
+public class OrdenaPorNomeAlunos implements Comparator<Aluno> {
 
 	/**
 	 * Metodo que compara por nome, mas se o nome for igual comparara por matricula
